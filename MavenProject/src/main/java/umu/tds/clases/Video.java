@@ -1,4 +1,4 @@
-package umu.tds;
+package umu.tds.clases;
 
 import java.util.HashSet;
 import java.util.Set;

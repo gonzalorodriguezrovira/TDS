@@ -1,4 +1,4 @@
-package umu.tds;
+package umu.tds.clases;
 
 public class Etiqueta {
 	private String nombre;
