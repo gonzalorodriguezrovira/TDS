@@ -49,7 +49,7 @@ public class Prueba extends JFrame {
 	public Prueba() {
 		setResizable(false);
 		setBackground(new Color(192, 192, 192));
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Prueba.class.getResource("/junit/runner/logo.gif")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Prueba.class.getResource("/imagenes/playPeque.gif")));
 		setTitle("AppVideo");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 673, 524);
@@ -95,7 +95,7 @@ public class Prueba extends JFrame {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 		
 		JLabel lApp = new JLabel("App");
-		lApp.setIcon(new ImageIcon(Prueba.class.getResource("/junit/runner/logo.gif")));
+		lApp.setIcon(new ImageIcon(Prueba.class.getResource("/imagenes/play.gif")));
 		lApp.setFont(new Font("DejaVu Sans Condensed", Font.BOLD, 14));
 		panel.add(lApp);
 		
