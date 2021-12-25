@@ -65,22 +65,25 @@ public class Prueba extends JFrame {
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		
 		JPanel explorar = new JPanel();
-		explorar.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.ORANGE, Color.ORANGE, Color.ORANGE, Color.ORANGE));
+		explorar.setBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255,163,26), new Color(255,163,26)));
 		explorar.setBackground(Color.GRAY);
 		tabbedPane.addTab("Explorar", null, explorar, null);
 		tabbedPane.setForegroundAt(0, new Color(255,163,26));
 		
 		JPanel misListas = new JPanel();
+		misListas.setBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255,163,26), new Color(255,163,26)));
 		misListas.setBackground(Color.GRAY);
 		tabbedPane.addTab("Mis Listas", null, misListas, null);
 		tabbedPane.setForegroundAt(1, new Color(255,163,26));
 		
 		JPanel recientes = new JPanel();
+		recientes.setBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255,163,26), new Color(255,163,26)));
 		recientes.setBackground(Color.GRAY);
 		tabbedPane.addTab("Recientes", null, recientes, null);
 		tabbedPane.setForegroundAt(2, new Color(255,163,26));
 		
 		JPanel nuevaLista = new JPanel();
+		nuevaLista.setBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255,163,26), new Color(255,163,26)));
 		nuevaLista.setBackground(Color.GRAY);
 		tabbedPane.addTab("Nueva Lista", null, nuevaLista, null);
 		tabbedPane.setForegroundAt(3, new Color(255,163,26));
