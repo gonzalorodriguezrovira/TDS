@@ -18,15 +18,16 @@ import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
 import java.awt.Color;
 import java.awt.Toolkit;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.CompoundBorder;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+
 import javax.swing.border.EtchedBorder;
 
 public class Prueba extends JFrame {
 
 	private JPanel contentPane;
-
+	private PantallaLogin PantallaLogin = new PantallaLogin();
 	/**
 	 * Launch the application.
 	 */
@@ -34,8 +35,8 @@ public class Prueba extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Prueba frame = new Prueba();
-					frame.setVisible(true);
+					Prueba Prueba = new Prueba();
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -43,26 +44,26 @@ public class Prueba extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	
 	public Prueba() {
-		setResizable(false);
-		setBackground(new Color(192, 192, 192));
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Prueba.class.getResource("/imagenes/playPeque.gif")));
-		setTitle("AppVideo");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 673, 524);
+		 final JFrame ventana=new JFrame();
+		ventana.setResizable(false);
+		ventana.setVisible(true);
+		ventana.setBackground(new Color(192, 192, 192));
+		ventana.setIconImage(Toolkit.getDefaultToolkit().getImage(Prueba.class.getResource("/imagenes/playPeque.gif")));
+		ventana.setTitle("AppVideo");
+		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ventana.setBounds(100, 100, 673, 524);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(29, 29, 29));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));<>
+		ventana.setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(Color.ORANGE);
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		contentPane.add(tabbedPane, BorderLayout.CENTER);
+		ventana.add(tabbedPane, BorderLayout.CENTER);
 		
 		JPanel explorar = new JPanel();
 		explorar.setBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255,163,26), new Color(255,163,26)));
@@ -91,7 +92,7 @@ public class Prueba extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(80, 80, 80));
 		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		contentPane.add(panel, BorderLayout.NORTH);
+		ventana.add(panel, BorderLayout.NORTH);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 		
 		JLabel lApp = new JLabel("App");
@@ -114,6 +115,22 @@ public class Prueba extends JFrame {
 		JButton bLogin = new JButton("Login");
 		bLogin.setBackground(Color.BLACK);
 		panel.add(bLogin);
+		bLogin.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				if (ventana.getContentPane()==contentPane){
+					ventana.setContentPane(PantallaLogin);
+					ventana.revalidate();
+					
+				} else {
+					ventana.setContentPane(contentPane);
+					ventana.revalidate();
+				}
+
+				
+			}
+		});
 		
 		Component rigidArea_1 = Box.createRigidArea(new Dimension(40, 40));
 		panel.add(rigidArea_1);
@@ -130,6 +147,7 @@ public class Prueba extends JFrame {
 		bPremium.setBackground(Color.BLACK);
 		bPremium.setForeground(new Color(255,163,26));
 		panel.add(bPremium);
+		
 	}
 
 }
