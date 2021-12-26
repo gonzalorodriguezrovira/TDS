@@ -70,7 +70,7 @@ public class AppVideo extends JFrame {
 				Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/imagenes/playPeque.gif")));
 		ventana.setTitle("AppVideo");
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ventana.setBounds(100, 100, 673, 524);
+		ventana.setBounds(100, 100, 707, 639);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(29, 29, 29));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

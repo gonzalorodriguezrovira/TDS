@@ -42,7 +42,7 @@ public class Registro extends JPanel {
 		Box verticalBox = Box.createVerticalBox();
 		add(verticalBox);
 		
-		Component rigidArea = Box.createRigidArea(new Dimension(350, 50));
+		Component rigidArea = Box.createRigidArea(new Dimension(350, 60));
 		verticalBox.add(rigidArea);
 		
 		Box horizontalBox = Box.createHorizontalBox();
@@ -51,7 +51,7 @@ public class Registro extends JPanel {
 		Component rigidArea_2_4 = Box.createRigidArea(new Dimension(55, 20));
 		horizontalBox.add(rigidArea_2_4);
 		
-		JLabel lblNewLabel = new JLabel("*Nombre");
+		JLabel lblNewLabel = new JLabel("*Nombre: ");
 		lblNewLabel.setForeground(Color.WHITE);
 		horizontalBox.add(lblNewLabel);
 		
@@ -68,7 +68,7 @@ public class Registro extends JPanel {
 		Component rigidArea_2_4_2 = Box.createRigidArea(new Dimension(55, 20));
 		horizontalBox_1.add(rigidArea_2_4_2);
 		
-		JLabel lblNewLabel_1 = new JLabel("Apellidos");
+		JLabel lblNewLabel_1 = new JLabel("Apellidos: ");
 		lblNewLabel_1.setForeground(Color.WHITE);
 		horizontalBox_1.add(lblNewLabel_1);
 		
@@ -82,7 +82,7 @@ public class Registro extends JPanel {
 		Box horizontalBox_1_1 = Box.createHorizontalBox();
 		verticalBox.add(horizontalBox_1_1);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("Fecha de nacimiento");
+		JLabel lblNewLabel_1_1 = new JLabel("Fecha de nacimiento: ");
 		lblNewLabel_1_1.setForeground(Color.WHITE);
 		horizontalBox_1_1.add(lblNewLabel_1_1);
 		
@@ -102,7 +102,7 @@ public class Registro extends JPanel {
 		Component rigidArea_2_4_2_1 = Box.createRigidArea(new Dimension(74, 20));
 		horizontalBox_1_2.add(rigidArea_2_4_2_1);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("email");
+		JLabel lblNewLabel_1_2 = new JLabel("email: ");
 		lblNewLabel_1_2.setForeground(Color.WHITE);
 		horizontalBox_1_2.add(lblNewLabel_1_2);
 		
@@ -119,7 +119,7 @@ public class Registro extends JPanel {
 		Component rigidArea_2_1 = Box.createRigidArea(new Dimension(58, 20));
 		horizontalBox_1_1_1.add(rigidArea_2_1);
 		
-		JLabel lblNewLabel_1_1_1 = new JLabel("*Usuario");
+		JLabel lblNewLabel_1_1_1 = new JLabel("*Usuario: ");
 		lblNewLabel_1_1_1.setForeground(Color.WHITE);
 		horizontalBox_1_1_1.add(lblNewLabel_1_1_1);
 		
@@ -139,7 +139,7 @@ public class Registro extends JPanel {
 		Component rigidArea_2_2 = Box.createRigidArea(new Dimension(38, 20));
 		horizontalBox_1_1_2.add(rigidArea_2_2);
 		
-		JLabel lblNewLabel_1_1_2 = new JLabel("*Contraseña");
+		JLabel lblNewLabel_1_1_2 = new JLabel("*Contraseña: ");
 		lblNewLabel_1_1_2.setForeground(Color.WHITE);
 		horizontalBox_1_1_2.add(lblNewLabel_1_1_2);
 		
@@ -159,7 +159,7 @@ public class Registro extends JPanel {
 		Component rigidArea_2_3 = Box.createRigidArea(new Dimension(2, 20));
 		horizontalBox_1_1_3.add(rigidArea_2_3);
 		
-		JLabel lblNewLabel_1_1_3 = new JLabel("*Repetir contraseña\r\n");
+		JLabel lblNewLabel_1_1_3 = new JLabel("*Repetir contraseña\r\n: ");
 		lblNewLabel_1_1_3.setForeground(Color.WHITE);
 		horizontalBox_1_1_3.add(lblNewLabel_1_1_3);
 		
@@ -205,5 +205,12 @@ public class Registro extends JPanel {
 		Component rigidArea_5 = Box.createRigidArea(new Dimension(100, 20));
 		horizontalBox_3.add(rigidArea_5);
 		pRegistro.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout c = (CardLayout)(AppVideo.vDisplay.getLayout());
+				c.show(AppVideo.vDisplay, AppVideo.BRUH);
+			}
+		});
 	}
 }
