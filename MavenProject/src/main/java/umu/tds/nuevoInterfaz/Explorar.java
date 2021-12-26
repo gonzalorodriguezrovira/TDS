@@ -21,8 +21,15 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
+import java.awt.Scrollbar;
+import java.awt.ScrollPane;
+import java.awt.Color;
+import javax.swing.JTextArea;
+import java.awt.TextArea;
+import java.awt.Label;
 
 public class Explorar extends JPanel {
+	private JTextField textField;
 
 	/**
 	 * Create the panel.
@@ -31,15 +38,108 @@ public class Explorar extends JPanel {
 		setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(65, 0, 10, 81);
+		panel.setBackground(Color.GRAY);
+		panel.setBounds(0, 0, 531, 107);
 		add(panel);
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(109, 200, 27, 46);
-		add(panel_1);
+		Box verticalBox = Box.createVerticalBox();
+		panel.add(verticalBox);
+		
+		Component rigidArea_1 = Box.createRigidArea(new Dimension(420, 20));
+		verticalBox.add(rigidArea_1);
+		
+		Box horizontalBox = Box.createHorizontalBox();
+		verticalBox.add(horizontalBox);
+		
+		JLabel lblNewLabel = new JLabel("Buscar titulo: ");
+		lblNewLabel.setForeground(Color.WHITE);
+		horizontalBox.add(lblNewLabel);
+		
+		textField = new JTextField();
+		horizontalBox.add(textField);
+		textField.setColumns(10);
+		
+		Component rigidArea = Box.createRigidArea(new Dimension(20, 20));
+		horizontalBox.add(rigidArea);
+		
+		JButton btnNewButton = new JButton("Buscar");
+		horizontalBox.add(btnNewButton);
+		
+		Component rigidArea_2 = Box.createRigidArea(new Dimension(20, 20));
+		verticalBox.add(rigidArea_2);
+		
+		Box horizontalBox_1 = Box.createHorizontalBox();
+		verticalBox.add(horizontalBox_1);
+		
+		Component rigidArea_3 = Box.createRigidArea(new Dimension(120, 20));
+		horizontalBox_1.add(rigidArea_3);
+		
+		JButton btnNewButton_1 = new JButton("Nueva búsqueda");
+		horizontalBox_1.add(btnNewButton_1);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(260, 143, 33, 56);
+		panel_2.setBackground(Color.GRAY);
+		panel_2.setBounds(530, 0, 151, 504);
 		add(panel_2);
+		
+		Box verticalBox_1 = Box.createVerticalBox();
+		panel_2.add(verticalBox_1);
+		
+		Component rigidArea_4 = Box.createRigidArea(new Dimension(20, 20));
+		verticalBox_1.add(rigidArea_4);
+		
+		Box horizontalBox_2 = Box.createHorizontalBox();
+		verticalBox_1.add(horizontalBox_2);
+		
+		JLabel lblNewLabel_1 = new JLabel("Etiquetas disponibles");
+		lblNewLabel_1.setForeground(Color.WHITE);
+		horizontalBox_2.add(lblNewLabel_1);
+		
+		Component rigidArea_4_1 = Box.createRigidArea(new Dimension(20, 20));
+		verticalBox_1.add(rigidArea_4_1);
+		
+	
+		
+		JTextArea area = new JTextArea();
+		area.setText("a\r\na\r\na\r\na\r\na\r\na\r\na\r\n");
+		area.setWrapStyleWord(true);
+		area.setRows(8);
+		area.setLineWrap(true);
+		area.setColumns(15);
+		verticalBox_1.add(area);
+		
+		JScrollPane scroll = new JScrollPane(area);
+		verticalBox_1.add(scroll);
+		
+		Component rigidArea_5 = Box.createRigidArea(new Dimension(20, 70));
+		verticalBox_1.add(rigidArea_5);
+		
+		Box horizontalBox_3 = Box.createHorizontalBox();
+		verticalBox_1.add(horizontalBox_3);
+		
+		JLabel lblNewLabel_2 = new JLabel("Buscar etiquetas");
+		lblNewLabel_2.setForeground(Color.WHITE);
+		horizontalBox_3.add(lblNewLabel_2);
+		
+		Component rigidArea_4_1_1 = Box.createRigidArea(new Dimension(20, 20));
+		verticalBox_1.add(rigidArea_4_1_1);
+		JTextArea area1 = new JTextArea();
+		area1.setText("a\r\na\r\na\r\na\r\na\r\na\r\na\r\n");
+		area1.setWrapStyleWord(true);
+		area1.setRows(8);
+		area1.setLineWrap(true);
+		area1.setColumns(15);
+		verticalBox_1.add(area1);
+		
+		JScrollPane scroll1 = new JScrollPane(area1);
+		verticalBox_1.add(scroll1);
+		
+		ScrollPane scrollPane = new ScrollPane();
+		scrollPane.setBackground(Color.GRAY);
+		scrollPane.setBounds(0, 107, 531, 397);
+		add(scrollPane);
+		
+		
 	}
 }
