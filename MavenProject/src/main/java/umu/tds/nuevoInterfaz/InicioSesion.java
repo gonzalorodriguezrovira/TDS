@@ -23,11 +23,7 @@ public class InicioSesion extends JPanel {
 	private JTextField txtPassword;
 
 	public InicioSesion() {
-		FlowLayout flowLayout = new FlowLayout(FlowLayout.CENTER, 5, 5);
-		setLayout(flowLayout);
-		
-		Component rigidArea = Box.createRigidArea(new Dimension(400, 80));
-		add(rigidArea);
+		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		Box verticalBox = Box.createVerticalBox();
 		verticalBox.setBackground(Color.LIGHT_GRAY);
@@ -82,7 +78,7 @@ public class InicioSesion extends JPanel {
 		JButton bCancelarLogin = new JButton("Cancelar");
 		horizontalBox_2.add(bCancelarLogin);
 
-		Component rigidArea_7_IS = Box.createRigidArea(new Dimension(100, 15));
+		Component rigidArea_7_IS = Box.createRigidArea(new Dimension(20, 15));
 		verticalBox.add(rigidArea_7_IS);
 		
 		bCancelarLogin.addActionListener(new ActionListener() {
