@@ -23,7 +23,6 @@ import java.awt.Insets;
 import javax.swing.JTextField;
 
 public class Explorar extends JPanel {
-	private JTextField textField;
 
 	/**
 	 * Create the panel.
@@ -32,31 +31,15 @@ public class Explorar extends JPanel {
 		setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 473, 389);
+		panel.setBounds(65, 0, 10, 81);
 		add(panel);
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel.add(panel_1);
-		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
+		panel_1.setBounds(109, 200, 27, 46);
+		add(panel_1);
 		
-		Component rigidArea = Box.createRigidArea(new Dimension(20, 80));
-		panel_1.add(rigidArea);
-		
-		Box horizontalBox = Box.createHorizontalBox();
-		panel_1.add(horizontalBox);
-		
-		JLabel lblNewLabel = new JLabel("New label");
-		horizontalBox.add(lblNewLabel);
-		
-		textField = new JTextField();
-		horizontalBox.add(textField);
-		textField.setColumns(10);
-		
-		JPanel pEtiquetas = new JPanel();
-		pEtiquetas.setBounds(471, 0, 176, 389);
-		pEtiquetas.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		add(pEtiquetas);
+		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(260, 143, 33, 56);
+		add(panel_2);
 	}
 }
