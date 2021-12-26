@@ -56,43 +56,39 @@ public class Prueba extends JFrame {
 		ventana.setBounds(100, 100, 673, 524);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(29, 29, 29));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));<>
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		ventana.setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBackground(Color.ORANGE);
+		tabbedPane.setBackground(Color.GRAY);
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		ventana.add(tabbedPane, BorderLayout.CENTER);
+		ventana.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
 		JPanel explorar = new JPanel();
-		explorar.setBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255,163,26), new Color(255,163,26)));
-		explorar.setBackground(Color.GRAY);
+		explorar.setBackground(Color.LIGHT_GRAY);
 		tabbedPane.addTab("Explorar", null, explorar, null);
 		tabbedPane.setForegroundAt(0, new Color(255,163,26));
 		
 		JPanel misListas = new JPanel();
-		misListas.setBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255,163,26), new Color(255,163,26)));
-		misListas.setBackground(Color.GRAY);
+		misListas.setBackground(Color.LIGHT_GRAY);
 		tabbedPane.addTab("Mis Listas", null, misListas, null);
 		tabbedPane.setForegroundAt(1, new Color(255,163,26));
 		
 		JPanel recientes = new JPanel();
-		recientes.setBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255,163,26), new Color(255,163,26)));
-		recientes.setBackground(Color.GRAY);
+		recientes.setBackground(Color.LIGHT_GRAY);
 		tabbedPane.addTab("Recientes", null, recientes, null);
 		tabbedPane.setForegroundAt(2, new Color(255,163,26));
 		
 		JPanel nuevaLista = new JPanel();
-		nuevaLista.setBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255,163,26), new Color(255,163,26)));
-		nuevaLista.setBackground(Color.GRAY);
+		nuevaLista.setBackground(Color.LIGHT_GRAY);
 		tabbedPane.addTab("Nueva Lista", null, nuevaLista, null);
 		tabbedPane.setForegroundAt(3, new Color(255,163,26));
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(80, 80, 80));
 		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		ventana.add(panel, BorderLayout.NORTH);
+		ventana.getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 		
 		JLabel lApp = new JLabel("App");
@@ -105,15 +101,15 @@ public class Prueba extends JFrame {
 		lVideo.setFont(new Font("DejaVu Sans Condensed", Font.BOLD, 18));
 		panel.add(lVideo);
 		
-		Component rigidArea = Box.createRigidArea(new Dimension(150, 40));
+		Component rigidArea = Box.createRigidArea(new Dimension(110, 40));
 		panel.add(rigidArea);
 		
 		JButton bRegistro = new JButton("Registro");
-		bRegistro.setBackground(Color.BLACK);
+		bRegistro.setBackground(Color.LIGHT_GRAY);
 		panel.add(bRegistro);
 		
 		JButton bLogin = new JButton("Login");
-		bLogin.setBackground(Color.BLACK);
+		bLogin.setBackground(Color.LIGHT_GRAY);
 		panel.add(bLogin);
 		bLogin.addActionListener(new ActionListener() {
 			
@@ -136,7 +132,7 @@ public class Prueba extends JFrame {
 		panel.add(rigidArea_1);
 		
 		JButton bLogout = new JButton("Logout");
-		bLogout.setBackground(Color.BLACK);
+		bLogout.setBackground(Color.LIGHT_GRAY);
 		panel.add(bLogout);
 		
 		Component rigidArea_2 = Box.createRigidArea(new Dimension(40, 40));
