@@ -24,8 +24,6 @@ import umu.tds.interfaz.Principal;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.FlowLayout;
-import java.awt.BorderLayout;
 
 public class AppVideo extends JFrame {
 
@@ -40,8 +38,8 @@ public class AppVideo extends JFrame {
 	
 	private InicioSesion pIS = new InicioSesion();
 	private PantallaBase pPB = new PantallaBase();
-	Registro pR = new Registro();
-	Explorar pE = new Explorar();
+	private Registro pR = new Registro();
+	private Explorar pE = new Explorar();
 	
 	/**
 	 * Launch the application.
@@ -72,7 +70,7 @@ public class AppVideo extends JFrame {
 				Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/imagenes/playPeque.gif")));
 		ventana.setTitle("AppVideo");
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ventana.setBounds(100, 100, 707, 639);
+		ventana.setBounds(100, 100, 673, 524);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(29, 29, 29));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -177,7 +175,6 @@ public class AppVideo extends JFrame {
 		
 		vDisplay.add(pPB, BRUH);
 		vDisplay.add(pIS, INICIO_SESION);
-		pIS.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		vDisplay.add(pE, EXPLORAR);
 		vDisplay.add(pR, REGISTRO);
 		
