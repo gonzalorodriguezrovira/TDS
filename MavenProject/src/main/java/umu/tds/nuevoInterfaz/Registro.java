@@ -20,6 +20,10 @@ import com.toedter.calendar.JDateChooser;
 import java.awt.GridBagConstraints;
 import javax.swing.SwingConstants;
 import java.awt.Color;
+import com.jgoodies.looks.plastic.PlasticComboBoxUI;
+import javax.swing.JPopupMenu;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Registro extends JPanel {
 
@@ -29,7 +33,6 @@ public class Registro extends JPanel {
 	JPanel pRegistro = new JPanel();
 	private JTextField textField;
 	private JTextField textField_1;
-	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
@@ -48,7 +51,7 @@ public class Registro extends JPanel {
 		Box horizontalBox = Box.createHorizontalBox();
 		verticalBox.add(horizontalBox);
 		
-		Component rigidArea_2_4 = Box.createRigidArea(new Dimension(55, 20));
+		Component rigidArea_2_4 = Box.createRigidArea(new Dimension(67, 20));
 		horizontalBox.add(rigidArea_2_4);
 		
 		JLabel lblNewLabel = new JLabel("*Nombre: ");
@@ -65,7 +68,7 @@ public class Registro extends JPanel {
 		Box horizontalBox_1 = Box.createHorizontalBox();
 		verticalBox.add(horizontalBox_1);
 		
-		Component rigidArea_2_4_2 = Box.createRigidArea(new Dimension(55, 20));
+		Component rigidArea_2_4_2 = Box.createRigidArea(new Dimension(65, 20));
 		horizontalBox_1.add(rigidArea_2_4_2);
 		
 		JLabel lblNewLabel_1 = new JLabel("Apellidos: ");
@@ -86,9 +89,8 @@ public class Registro extends JPanel {
 		lblNewLabel_1_1.setForeground(Color.WHITE);
 		horizontalBox_1_1.add(lblNewLabel_1_1);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		horizontalBox_1_1.add(textField_2);
+		JDateChooser dateChooser = new JDateChooser();
+		horizontalBox_1_1.add(dateChooser);
 		
 		Component rigidArea_2_4_1 = Box.createRigidArea(new Dimension(50, 20));
 		horizontalBox_1_1.add(rigidArea_2_4_1);
@@ -99,7 +101,7 @@ public class Registro extends JPanel {
 		Box horizontalBox_1_2 = Box.createHorizontalBox();
 		verticalBox.add(horizontalBox_1_2);
 		
-		Component rigidArea_2_4_2_1 = Box.createRigidArea(new Dimension(74, 20));
+		Component rigidArea_2_4_2_1 = Box.createRigidArea(new Dimension(86, 20));
 		horizontalBox_1_2.add(rigidArea_2_4_2_1);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("email: ");
@@ -116,7 +118,7 @@ public class Registro extends JPanel {
 		Box horizontalBox_1_1_1 = Box.createHorizontalBox();
 		verticalBox.add(horizontalBox_1_1_1);
 		
-		Component rigidArea_2_1 = Box.createRigidArea(new Dimension(58, 20));
+		Component rigidArea_2_1 = Box.createRigidArea(new Dimension(68, 20));
 		horizontalBox_1_1_1.add(rigidArea_2_1);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("*Usuario: ");
@@ -136,7 +138,7 @@ public class Registro extends JPanel {
 		Box horizontalBox_1_1_2 = Box.createHorizontalBox();
 		verticalBox.add(horizontalBox_1_1_2);
 		
-		Component rigidArea_2_2 = Box.createRigidArea(new Dimension(38, 20));
+		Component rigidArea_2_2 = Box.createRigidArea(new Dimension(45, 20));
 		horizontalBox_1_1_2.add(rigidArea_2_2);
 		
 		JLabel lblNewLabel_1_1_2 = new JLabel("*Contraseña: ");
@@ -210,6 +212,23 @@ public class Registro extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout c = (CardLayout)(AppVideo.vDisplay.getLayout());
 				c.show(AppVideo.vDisplay, AppVideo.BRUH);
+			}
+		});
+	}
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
 			}
 		});
 	}
