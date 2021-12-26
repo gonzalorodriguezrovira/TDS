@@ -12,9 +12,12 @@ public class Registro extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+	JPanel pRegistro = new JPanel();
+	
 	public Registro() {
+		
 		JButton bCancelarRegistro = new JButton("Cancelar");
-		add(bCancelarRegistro);
+		pRegistro.add(bCancelarRegistro);
 		
 		bCancelarRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -22,7 +25,6 @@ public class Registro extends JPanel {
 				c.show(AppVideo.vDisplay, AppVideo.BRUH);
 			}
 		});
-		
 	}
 
 }
