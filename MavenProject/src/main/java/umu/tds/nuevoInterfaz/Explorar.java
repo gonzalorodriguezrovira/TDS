@@ -35,11 +35,12 @@ public class Explorar extends JPanel {
 	 * Create the panel.
 	 */
 	public Explorar() {
+		setBackground(Color.GRAY);
 		setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.GRAY);
-		panel.setBounds(0, 0, 531, 107);
+		panel.setBounds(0, 0, 500, 107);
 		add(panel);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
@@ -72,7 +73,7 @@ public class Explorar extends JPanel {
 		Box horizontalBox_1 = Box.createHorizontalBox();
 		verticalBox.add(horizontalBox_1);
 		
-		Component rigidArea_3 = Box.createRigidArea(new Dimension(120, 20));
+		Component rigidArea_3 = Box.createRigidArea(new Dimension(300, 20));
 		horizontalBox_1.add(rigidArea_3);
 		
 		JButton btnNewButton_1 = new JButton("Nueva búsqueda");
@@ -80,7 +81,7 @@ public class Explorar extends JPanel {
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
-		panel_2.setBounds(530, 0, 151, 504);
+		panel_2.setBounds(519, 0, 136, 504);
 		add(panel_2);
 		
 		Box verticalBox_1 = Box.createVerticalBox();
@@ -102,10 +103,11 @@ public class Explorar extends JPanel {
 	
 		
 		JTextArea area = new JTextArea();
-		area.setText("a\r\na\r\na\r\na\r\na\r\na\r\na\r\n");
+		area.setEditable(false);
 		area.setWrapStyleWord(true);
-		area.setRows(8);
 		area.setLineWrap(true);
+		area.setText("a\r\na\r\na\r\na\r\na\r\na\r\na\r\n");
+		area.setRows(8);
 		area.setColumns(15);
 		verticalBox_1.add(area);
 		
@@ -125,6 +127,7 @@ public class Explorar extends JPanel {
 		Component rigidArea_4_1_1 = Box.createRigidArea(new Dimension(20, 20));
 		verticalBox_1.add(rigidArea_4_1_1);
 		JTextArea area1 = new JTextArea();
+		area1.setEditable(false);
 		area1.setText("a\r\na\r\na\r\na\r\na\r\na\r\na\r\n");
 		area1.setWrapStyleWord(true);
 		area1.setRows(8);
@@ -135,9 +138,12 @@ public class Explorar extends JPanel {
 		JScrollPane scroll1 = new JScrollPane(area1);
 		verticalBox_1.add(scroll1);
 		
+		Component rigidArea_6 = Box.createRigidArea(new Dimension(20, 20));
+		panel_2.add(rigidArea_6);
+		
 		ScrollPane scrollPane = new ScrollPane();
 		scrollPane.setBackground(Color.GRAY);
-		scrollPane.setBounds(0, 107, 531, 397);
+		scrollPane.setBounds(0, 107, 500, 397);
 		add(scrollPane);
 		
 		

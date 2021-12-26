@@ -24,7 +24,6 @@ public class InicioSesion extends JPanel {
 	private JTextField textField_1;
 
 	public InicioSesion() {
-		setBorder(new BevelBorder(BevelBorder.LOWERED, Color.GRAY, null, null, null));
 		setBackground(Color.GRAY);
 		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
@@ -106,6 +105,13 @@ public class InicioSesion extends JPanel {
 		
 		Component rigidArea_1 = Box.createRigidArea(new Dimension(20, 20));
 		verticalBox_2.add(rigidArea_1);
+		
+		bCancelarLogin_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout c = (CardLayout)(AppVideo.vDisplay.getLayout());
+				c.show(AppVideo.vDisplay, AppVideo.BRUH);
+			}
+		});
 		
 	}
 }

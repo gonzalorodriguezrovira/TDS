@@ -24,6 +24,7 @@ import umu.tds.interfaz.Principal;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.FlowLayout;
 
 public class AppVideo extends JFrame {
 
@@ -33,6 +34,7 @@ public class AppVideo extends JFrame {
 	final static String BRUH = "borrame cuando tengas ventana de inicio";
 	final static String REGISTRO = "Registro de usuario";
 	final static String EXPLORAR = "Explorar videos";
+	final static String MIS_LISTAS = "Buscar en las listas de usuario";
 	//VENTANAS
 	final static JPanel vDisplay = new JPanel();
 	
@@ -40,7 +42,7 @@ public class AppVideo extends JFrame {
 	private PantallaBase pPB = new PantallaBase();
 	private Registro pR = new Registro();
 	private Explorar pE = new Explorar();
-	
+	private MisListas pML = new MisListas();
 	/**
 	 * Launch the application.
 	 */
@@ -177,6 +179,7 @@ public class AppVideo extends JFrame {
 		vDisplay.add(pIS, INICIO_SESION);
 		vDisplay.add(pE, EXPLORAR);
 		vDisplay.add(pR, REGISTRO);
+		vDisplay.add(pML, MIS_LISTAS);
 		
 		bLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -196,6 +199,13 @@ public class AppVideo extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout c = (CardLayout)(vDisplay.getLayout());
 				c.show(vDisplay, EXPLORAR);
+			}
+		});
+		
+		bMisListas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout c = (CardLayout)(vDisplay.getLayout());
+				c.show(vDisplay, MIS_LISTAS);
 			}
 		});
 		
