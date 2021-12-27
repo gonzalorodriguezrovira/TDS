@@ -181,14 +181,14 @@ public class Registro extends JPanel {
 		Component rigidArea_4 = Box.createRigidArea(new Dimension(50, 20));
 		horizontalBox_2.add(rigidArea_4);
 		
-		JButton btnNewButton = new JButton("Registrar");
-		horizontalBox_2.add(btnNewButton);
+		JButton bRegistrar = new JButton("Registrar");
+		horizontalBox_2.add(bRegistrar);
 		
 		Component rigidArea_4_1 = Box.createRigidArea(new Dimension(50, 20));
 		horizontalBox_2.add(rigidArea_4_1);
 		
-		JButton btnNewButton_1 = new JButton("Cancelar");
-		horizontalBox_2.add(btnNewButton_1);
+		JButton bCancelar = new JButton("Cancelar");
+		horizontalBox_2.add(bCancelar);
 		
 		Component rigidArea_3_2 = Box.createRigidArea(new Dimension(20, 25));
 		verticalBox.add(rigidArea_3_2);
@@ -208,12 +208,16 @@ public class Registro extends JPanel {
 		horizontalBox_3.add(rigidArea_5);
 		pRegistro.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
+		CardLayout c = (CardLayout)(AppVideo.vDisplay.getLayout());
+		bCancelar.addActionListener(ev -> c.show(AppVideo.vDisplay, AppVideo.BRUH));
+		/*
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CardLayout c = (CardLayout)(AppVideo.vDisplay.getLayout());
+				CardLayout c = (CardLayout)(AppVideo.getVdisplay().getLayout());
 				c.show(AppVideo.vDisplay, AppVideo.BRUH);
 			}
 		});
+		*/
 	}
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {

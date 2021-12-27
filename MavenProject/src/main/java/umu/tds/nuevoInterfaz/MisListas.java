@@ -82,12 +82,15 @@ public class MisListas extends JPanel {
 		JLabel lblNewLabel_1 = new JLabel("seguramente haya que hacer otro cardlayout y cuando se haga click en uno de los videos ponerlo en pantalla. Posible reutilización de los videos en explorar");
 		panel_2.add(lblNewLabel_1);
 		
+		CardLayout c = (CardLayout)(AppVideo.vDisplay.getLayout());
+		bCancelarML.addActionListener(ev -> c.show(AppVideo.vDisplay, AppVideo.BRUH));
+		/*
 		bCancelarML.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout c = (CardLayout)(AppVideo.vDisplay.getLayout());
 				c.show(AppVideo.vDisplay, AppVideo.BRUH);
 			}
 		});
-
+		*/
 	}
 }

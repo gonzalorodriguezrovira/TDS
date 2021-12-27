@@ -35,14 +35,15 @@ public class AppVideo extends JFrame {
 	final static String REGISTRO = "Registro de usuario";
 	final static String EXPLORAR = "Explorar videos";
 	final static String MIS_LISTAS = "Buscar en las listas de usuario";
-	//VENTANAS
-	final static JPanel vDisplay = new JPanel();
+	// VENTANAS
+	final static JPanel vDisplay = new JPanel(new CardLayout(0, 0));
 	
 	private InicioSesion pIS = new InicioSesion();
 	private PantallaBase pPB = new PantallaBase();
 	private Registro pR = new Registro();
 	private Explorar pE = new Explorar();
 	private MisListas pML = new MisListas();
+
 	/**
 	 * Launch the application.
 	 */
@@ -51,14 +52,15 @@ public class AppVideo extends JFrame {
 			public void run() {
 				try {
 					AppVideo frame = new AppVideo();
-					//frame.setVisible(true);
+					// frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
 	}
-
+	
+	
 	/**
 	 * Create the frame.
 	 */
@@ -173,7 +175,6 @@ public class AppVideo extends JFrame {
 		gbc_vDisplay.gridx = 0;
 		gbc_vDisplay.gridy = 2;
 		contentPane.add(vDisplay, gbc_vDisplay);
-		vDisplay.setLayout(new CardLayout(0, 0));
 		
 		vDisplay.add(pPB, BRUH);
 		vDisplay.add(pIS, INICIO_SESION);
@@ -181,34 +182,43 @@ public class AppVideo extends JFrame {
 		vDisplay.add(pR, REGISTRO);
 		vDisplay.add(pML, MIS_LISTAS);
 		
+		CardLayout c = (CardLayout)(vDisplay.getLayout());
+		bLogin.addActionListener(ev -> c.show(vDisplay, INICIO_SESION));
+		/*
 		bLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout c = (CardLayout)(vDisplay.getLayout());
 				c.show(vDisplay, INICIO_SESION);
 			}
 		});
-		
+		*/
+		bRegistro.addActionListener(ev -> c.show(vDisplay, REGISTRO));
+		/*
 		bRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout c = (CardLayout)(vDisplay.getLayout());
 				c.show(vDisplay, REGISTRO);
 			}
 		});
-		
+		*/
+		bExplorar.addActionListener(ev -> c.show(vDisplay, EXPLORAR));
+		/*
 		bExplorar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout c = (CardLayout)(vDisplay.getLayout());
 				c.show(vDisplay, EXPLORAR);
 			}
 		});
-		
+		*/
+		bMisListas.addActionListener(ev -> c.show(vDisplay, MIS_LISTAS));
+		/*
 		bMisListas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout c = (CardLayout)(vDisplay.getLayout());
 				c.show(vDisplay, MIS_LISTAS);
 			}
 		});
-		
+		*/
 	}
 
 }

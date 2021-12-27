@@ -91,14 +91,14 @@ public class InicioSesion extends JPanel {
 		Component rigidArea_1_1_3 = Box.createRigidArea(new Dimension(20, 20));
 		horizontalBox_2_1.add(rigidArea_1_1_3);
 		
-		JButton bAceptarLogin_1 = new JButton("Aceptar");
-		horizontalBox_2_1.add(bAceptarLogin_1);
+		JButton bAceptarLogin = new JButton("Aceptar");
+		horizontalBox_2_1.add(bAceptarLogin);
 		
 		Component rigidArea_6_IS_1 = Box.createRigidArea(new Dimension(80, 20));
 		horizontalBox_2_1.add(rigidArea_6_IS_1);
 		
-		JButton bCancelarLogin_1 = new JButton("Cancelar");
-		horizontalBox_2_1.add(bCancelarLogin_1);
+		JButton bCancelarLogin = new JButton("Cancelar");
+		horizontalBox_2_1.add(bCancelarLogin);
 		
 		Component rigidArea_1_1_2 = Box.createRigidArea(new Dimension(20, 20));
 		horizontalBox_2_1.add(rigidArea_1_1_2);
@@ -106,12 +106,15 @@ public class InicioSesion extends JPanel {
 		Component rigidArea_1 = Box.createRigidArea(new Dimension(20, 20));
 		verticalBox_2.add(rigidArea_1);
 		
+		CardLayout c = (CardLayout)(AppVideo.vDisplay.getLayout());
+		bCancelarLogin.addActionListener(ev -> c.show(AppVideo.vDisplay, AppVideo.BRUH));
+		/*
 		bCancelarLogin_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout c = (CardLayout)(AppVideo.vDisplay.getLayout());
 				c.show(AppVideo.vDisplay, AppVideo.BRUH);
 			}
 		});
-		
+		*/
 	}
 }
