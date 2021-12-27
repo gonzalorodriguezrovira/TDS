@@ -20,7 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
-import umu.tds.interfaz.Principal;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -71,7 +70,7 @@ public class AppVideo extends JFrame {
 		ventana.setVisible(true);
 		ventana.setBackground(new Color(192, 192, 192));
 		ventana.setIconImage(
-				Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/imagenes/playPeque.gif")));
+				Toolkit.getDefaultToolkit().getImage(AppVideo.class.getResource("/imagenes/playPeque.gif")));
 		ventana.setTitle("AppVideo");
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.setBounds(100, 100, 707, 639);
@@ -99,7 +98,7 @@ public class AppVideo extends JFrame {
 		barraSuperior.setLayout(new BoxLayout(barraSuperior, BoxLayout.X_AXIS));
 
 		JLabel lApp = new JLabel("App");
-		lApp.setIcon(new ImageIcon(Principal.class.getResource("/imagenes/play.gif")));
+		lApp.setIcon(new ImageIcon(AppVideo.class.getResource("/imagenes/play.gif")));
 		lApp.setFont(new Font("DejaVu Sans Condensed", Font.BOLD, 14));
 		barraSuperior.add(lApp);
 
