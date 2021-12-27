@@ -24,4 +24,18 @@ public class Video {
 		return numRepro;
 	}
 
+	public String getUrl() {
+		return url;
+	}
+	
+	public String getTitulo() {
+		return titulo;
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.getClass().getName() + "url: " + url +"titulo: "+titulo;
+	}
+
 }
