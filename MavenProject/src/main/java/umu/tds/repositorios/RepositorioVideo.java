@@ -9,9 +9,17 @@ import umu.tds.clases.Etiqueta;
 import umu.tds.clases.Video;
 
 public class RepositorioVideo {
+	
+	private static RepositorioVideo unicaInstancia = new RepositorioVideo();
+	
+	//Base de datos local
 	private Set<Video> bdVideos = new HashSet<Video>();
 
 	// CONSTRUCTOR POR DEFECTO
+	
+	public static RepositorioVideo getUnicaInstancia() {
+		return unicaInstancia;
+	}
 
 	public boolean addVideo(String url, String titulo,Etiqueta... etiquetas) {
 		Video bdu = bdVideos.stream()

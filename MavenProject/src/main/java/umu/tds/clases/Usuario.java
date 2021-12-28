@@ -53,6 +53,18 @@ public class Usuario {
 		return listaVideos.stream().filter(l -> l.getName().contains(name)).collect(Collectors.toList());
 	}
 
+	public void addRecientes(Video video) {
+		Video aux = recientes.stream()
+				.filter(v -> v.getUrl().equals(video.getUrl()))
+				.findAny()
+				.orElse(null);
+		if(aux == null) {
+			recientes.add(0, video);
+			if(recientes.size() > tamHistorial)
+				recientes.remove(tamHistorial);
+		}
+	}
+	
 	@Override
 	public String toString() {
 		return getClass().getSimpleName() + " - nombre= [" + nombre + "], " + "email= [" + email + "], "

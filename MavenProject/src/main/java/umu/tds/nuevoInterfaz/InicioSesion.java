@@ -20,8 +20,8 @@ import java.awt.GridBagConstraints;
 import javax.swing.border.LineBorder;
 
 public class InicioSesion extends JPanel {
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField txtLogin;
+	private JTextField txtPassword;
 
 	public InicioSesion() {
 		setBackground(Color.GRAY);
@@ -52,9 +52,9 @@ public class InicioSesion extends JPanel {
 		lblNewLabel_2.setForeground(Color.WHITE);
 		horizontalBox_3.add(lblNewLabel_2);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		horizontalBox_3.add(textField);
+		txtLogin = new JTextField();
+		txtLogin.setColumns(10);
+		horizontalBox_3.add(txtLogin);
 		
 		Component rigidArea_1_1_4 = Box.createRigidArea(new Dimension(20, 20));
 		horizontalBox_3.add(rigidArea_1_1_4);
@@ -72,11 +72,11 @@ public class InicioSesion extends JPanel {
 		JLabel lblNewLabel_1_1 = new JLabel("Password: ");
 		lblNewLabel_1_1.setForeground(Color.WHITE);
 		horizontalBox_1_1.add(lblNewLabel_1_1);
-		
-		textField_1 = new JTextField();
-		textField_1.setToolTipText("");
-		textField_1.setColumns(10);
-		horizontalBox_1_1.add(textField_1);
+
+		txtPassword = new JTextField();
+		txtPassword.setToolTipText("");
+		txtPassword.setColumns(10);
+		horizontalBox_1_1.add(txtPassword);
 		
 		Component rigidArea_1_1_5 = Box.createRigidArea(new Dimension(20, 20));
 		horizontalBox_1_1.add(rigidArea_1_1_5);
@@ -116,5 +116,7 @@ public class InicioSesion extends JPanel {
 			}
 		});
 		*/
+		
+		bAceptarLogin.addActionListener(ev -> System.out.println(txtPassword.getText()));
 	}
 }

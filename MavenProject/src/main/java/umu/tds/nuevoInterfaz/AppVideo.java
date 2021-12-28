@@ -43,26 +43,6 @@ public class AppVideo extends JFrame {
 	private Explorar pE = new Explorar();
 	private MisListas pML = new MisListas();
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AppVideo frame = new AppVideo();
-					// frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
-	
-	/**
-	 * Create the frame.
-	 */
 	public AppVideo() {
 
 		JFrame ventana = new JFrame();

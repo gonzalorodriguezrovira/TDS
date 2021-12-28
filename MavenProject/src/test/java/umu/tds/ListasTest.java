@@ -35,8 +35,25 @@ public class ListasTest {
 		repoU.addListaVideo(user, miLista);
 		repoU.addListaVideo(user, otra);
 		
-		System.out.println(user.findLista("miLista"));
 		
 		
+		
+		LinkedList<Integer> listaa = new LinkedList<>();
+		listaa.add(5);
+		listaa.add(0,4);
+		listaa.add(0,3);
+		listaa.add(0,2);
+		listaa.add(0,1);
+		
+		listaa.remove(5);
+		
+		System.out.println(listaa);
+				
+				
+				
+				
+				
+				
+				
 	}	
 }

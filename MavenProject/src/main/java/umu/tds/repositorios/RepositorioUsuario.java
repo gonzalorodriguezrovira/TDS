@@ -11,10 +11,15 @@ import umu.tds.clases.Usuario;
 public class RepositorioUsuario {
 	private static final int tamDefault = 5;
 
+	private static RepositorioUsuario unicaInstancia = new RepositorioUsuario();
+	
 	// ATRIBUTOS DE PRUEBA LOCALES
 	private Set<Usuario> bdUser = new HashSet<Usuario>();
 
-	// CONSTRUCTOR POR DEFECTO
+
+	public static RepositorioUsuario getUnicaInstancia() {
+		return unicaInstancia;
+	}
 
 	public boolean addUsuario(String nombre, String email, int tamHistorial, String user, String password) {
 		Usuario bdu = bdUser.stream()
@@ -51,5 +56,6 @@ public class RepositorioUsuario {
 	public List<ListaVideos> findListaVideo(Usuario user, String name){
 		return user.findLista(name);
 	}
+
 
 }
