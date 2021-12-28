@@ -1,9 +1,12 @@
 package umu.tds.repositorios;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import umu.tds.clases.ListaVideos;
 import umu.tds.clases.Usuario;
+
 
 public class RepositorioUsuario {
 	private static final int tamDefault = 5;
@@ -13,31 +16,40 @@ public class RepositorioUsuario {
 
 	// CONSTRUCTOR POR DEFECTO
 
-	public boolean addUsuario(String nombre, String email, int tamHistorial, String usuario, String password) {
+	public boolean addUsuario(String nombre, String email, int tamHistorial, String user, String password) {
 		Usuario bdu = bdUser.stream()
-							.filter(u -> usuario.equals(u.getUsuario()))
+							.filter(u -> user.equals(u.getUsuario()))
 							.findAny()
 							.orElse(null);
 		if (bdu == null) {
-			Usuario usr = new Usuario(nombre, email, tamHistorial, usuario, password);
+			Usuario usr = new Usuario(nombre, email, tamHistorial, user, password);
 			bdUser.add(usr);
 		}
 		return bdu == null;
 	}
 
-	public boolean addUsuario(String nombre, String email, String usuario, String password) {
-		return this.addUsuario(nombre, email, tamDefault, usuario, password);
+	public boolean addUsuario(String nombre, String email, String user, String password) {
+		return this.addUsuario(nombre, email, tamDefault, user, password);
 	}
 
 	public boolean removeUsuario(Usuario usr) {
 		return bdUser.remove(usr);
 	}
 
-	public Usuario findUsuario(String usuario) {
+	public Usuario findUsuario(String user) {
 		return bdUser.stream()
-				.filter(u -> usuario.equals(u.getUsuario()))
+				.filter(u -> user.equals(u.getUsuario()))
 				.findAny()
 				.orElse(null);
+	}
+	
+	//TODO mirar si es correcto
+	public void addListaVideo(Usuario user, ListaVideos lista) {
+		user.addListaVideo(lista);
+	}
+	
+	public List<ListaVideos> findListaVideo(Usuario user, String name){
+		return user.findLista(name);
 	}
 
 }

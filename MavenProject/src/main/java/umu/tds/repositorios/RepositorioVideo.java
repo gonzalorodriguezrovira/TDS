@@ -1,13 +1,14 @@
 package umu.tds.repositorios;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import umu.tds.clases.Etiqueta;
 import umu.tds.clases.Video;
 
-public class RepositorioVideos {
+public class RepositorioVideo {
 	private Set<Video> bdVideos = new HashSet<Video>();
 
 	// CONSTRUCTOR POR DEFECTO
@@ -24,14 +25,14 @@ public class RepositorioVideos {
 		return bdu == null;
 	}
 
-	public boolean removeUsuario(Video video) {
+	public boolean removeVideo(Video video) {
 		return bdVideos.remove(video);
 	}
-
-	public Set<Video> findUsuario(String palabra) {
+	
+	public List<Video> findVideo(String palabra) {
 		return bdVideos.stream()
 				.filter(v -> v.getTitulo().contains(palabra))
-				.collect(Collectors.toSet());
+				.collect(Collectors.toList());
 			
 	}
 }

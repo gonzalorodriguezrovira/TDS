@@ -7,14 +7,25 @@ public class ListaVideos {
 
 	private String name;
 	private List<Video> videos;
-
-	public ListaVideos(String name) {
+	
+	//TODO mirar si está bien
+	public ListaVideos(String name, List<Video> videos) {
 		this.name = name;
-		this.videos = new LinkedList<Video>();
+		this.videos = new LinkedList<Video>(videos);
+	}
+	
+	public ListaVideos(String name) {
+		this(name, new LinkedList<Video>());
 	}
 
 	public String getName() {
 		return name;
 	}
-
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return getClass().getSimpleName() + " - name=["+name+"], videos="+videos.toString()+"";
+	}
+	
 }

@@ -35,7 +35,7 @@ public class Video {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return this.getClass().getName() + "url: " + url +"titulo: "+titulo;
+		return getClass().getSimpleName() + " - url= [" + url +"], titulo= ["+titulo+"], numRepro= ["+numRepro+"], etiquetas= "+etiquetas;
 	}
 
 }
