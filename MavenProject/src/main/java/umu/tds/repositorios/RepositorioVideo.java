@@ -20,7 +20,7 @@ public class RepositorioVideo {
 	public static RepositorioVideo getUnicaInstancia() {
 		return unicaInstancia;
 	}
-
+/*
 	public boolean addVideo(String url, String titulo,Etiqueta... etiquetas) {
 		Video bdu = bdVideos.stream()
 							.filter(u -> url.equals(u.getUrl()))
@@ -28,6 +28,17 @@ public class RepositorioVideo {
 							.orElse(null);
 		if (bdu == null) {
 			Video video = new Video(url, titulo, etiquetas);
+			bdVideos.add(video);
+		}
+		return bdu == null;
+	}*/
+	
+	public boolean addVideo(Video video) {
+		Video bdu = bdVideos.stream()
+							.filter(u -> video.getUrl().equals(u.getUrl()))
+							.findAny()
+							.orElse(null);
+		if (bdu == null) {
 			bdVideos.add(video);
 		}
 		return bdu == null;

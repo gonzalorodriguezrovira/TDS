@@ -1,5 +1,6 @@
 package umu.tds.clases;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,12 +13,13 @@ public class Usuario {
 	private String email;
 	private String usuario;
 	private String password;
+	private Date nacimiento;
 	private boolean premium;
 	private List<ListaVideos> listaVideos;
 	private List<Video> recientes;
 	private int tamHistorial;
 
-	public Usuario(String nombre, String email, int tamHistorial, String usuario, String password) {
+	public Usuario(String nombre, String email, int tamHistorial, String usuario, String password,Date nacimiento) {
 		this.nombre = nombre;
 		this.email = email;
 		this.premium = false;
@@ -26,10 +28,11 @@ public class Usuario {
 		this.tamHistorial = tamHistorial;
 		this.usuario = usuario;
 		this.password = password;
+		this.nacimiento = nacimiento;
 	}
 
-	public Usuario(String nombre, String email, String usuario, String password) {
-		this(nombre, email, tamDefault, usuario, password);
+	public Usuario(String nombre, String email, String usuario, String password,Date nacimiento) {
+		this(nombre, email, tamDefault, usuario, password,nacimiento);
 	}
 
 	public String getNombre() {
