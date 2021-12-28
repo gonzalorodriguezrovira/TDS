@@ -1,4 +1,4 @@
-package umu.tds.nuevoInterfaz;
+package umu.tds.Interfaz;
 
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;

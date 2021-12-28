@@ -2,7 +2,7 @@ package umu.tds;
 
 import java.awt.EventQueue;
 
-import umu.tds.nuevoInterfaz.AppVideo;
+import umu.tds.Interfaz.AppVideo;
 
 public class Lanzador {	
 	public static void main(String[] args) {

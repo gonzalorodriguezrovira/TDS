@@ -1,4 +1,4 @@
-package umu.tds.nuevoInterfaz;
+package umu.tds.Interfaz;
 
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
