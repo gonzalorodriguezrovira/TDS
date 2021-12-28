@@ -117,6 +117,12 @@ public class InicioSesion extends JPanel {
 		});
 		*/
 		
-		bAceptarLogin.addActionListener(ev -> System.out.println(txtPassword.getText()));
+		bAceptarLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String nombre = 
+				}
+			}
+				
+										);
 	}
 }
