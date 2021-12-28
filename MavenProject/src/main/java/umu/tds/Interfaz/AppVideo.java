@@ -20,6 +20,8 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
+import umu.tds.clases.Usuario;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -42,6 +44,8 @@ public class AppVideo extends JFrame {
 	private Registro pR = new Registro();
 	private Explorar pE = new Explorar();
 	private MisListas pML = new MisListas();
+	//TODO mirar
+	private String usuario= ""; 
 
 	public AppVideo() {
 
@@ -198,6 +202,14 @@ public class AppVideo extends JFrame {
 			}
 		});
 		*/
+	}
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	 void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
 }

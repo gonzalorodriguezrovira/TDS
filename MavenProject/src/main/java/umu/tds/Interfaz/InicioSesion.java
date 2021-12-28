@@ -19,9 +19,12 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.border.LineBorder;
 
+import umu.tds.App;
+
 public class InicioSesion extends JPanel {
 	private JTextField txtLogin;
 	private JTextField txtPassword;
+	private JLabel  lalerta;
 
 	public InicioSesion() {
 		setBackground(Color.GRAY);
@@ -119,10 +122,18 @@ public class InicioSesion extends JPanel {
 		
 		bAceptarLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String nombre = 
+				String nombre = txtLogin.getText().trim();
+				String password = txtPassword.getText().trim();
+				if (nombre.isEmpty() || password.isEmpty())
+					lalerta.setVisible(true);
+				else {
+					lalerta.setVisible(false);
+					if(App.getInstancia().findUsuario(nombre)!=null) {
+						AppVideo.se
+					}
 				}
 			}
-				
+		}	
 										);
 	}
 }
