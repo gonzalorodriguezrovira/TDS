@@ -1,12 +1,9 @@
-package umu.tds.repositorios;
+package umu.tds.clases;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import umu.tds.clases.Etiqueta;
-import umu.tds.clases.Video;
 
 public class RepositorioVideo {
 	

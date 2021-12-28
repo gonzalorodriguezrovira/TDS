@@ -1,13 +1,15 @@
 package umu.tds;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 import umu.tds.clases.Etiqueta;
+import umu.tds.clases.ListaVideos;
+import umu.tds.clases.RepositorioUsuario;
+import umu.tds.clases.RepositorioVideo;
 import umu.tds.clases.Usuario;
 import umu.tds.clases.Video;
-import umu.tds.repositorios.RepositorioUsuario;
-import umu.tds.repositorios.RepositorioVideo;
 
 public class App 
 {
@@ -31,7 +33,7 @@ public class App
 		repositorioVideo= RepositorioVideo.getUnicaInstancia();
 	}
 	
-	public boolean registrarUsuario(String nombre, String email, String usuario, String password,Date nacimiento) {
+	public boolean registrarUsuario(String nombre, String email, String usuario, String password,LocalDate nacimiento) {
 		// No se controla que existan dnis duplicados
 		Usuario usr= new Usuario(nombre,email,usuario,password,nacimiento);
 		//adaptadorCliente.registrarCliente(usr);
@@ -65,6 +67,12 @@ public class App
 		return repositorioVideo.findVideo(palabra);
 	}
 
-		
+	public void addListaVideo(Usuario user, ListaVideos lista) {
+		repositorioUsuario.addListaVideo(user, lista);
+	}
+	
+	public List<ListaVideos> findListaVideo(Usuario user, String name){
+		return repositorioUsuario.findListaVideo(user, name);
+	}
 	
 }
