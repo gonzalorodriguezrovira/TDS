@@ -132,14 +132,16 @@ public class AppVideo extends JFrame {
 
 		Component rigidArea_1 = Box.createRigidArea(new Dimension(4, 20));
 		barraExploracion.add(rigidArea_1);
+		
+		JButton bMisListas = new JButton("Mis Listas"); 
+		bMisListas.setBackground(Color.LIGHT_GRAY);
+		barraExploracion.add(bMisListas);
 
 		JButton bExplorar = new JButton("Explorar");
 		bExplorar.setBackground(Color.LIGHT_GRAY);
 		barraExploracion.add(bExplorar);
 
-		JButton bMisListas = new JButton("Mis Listas");
-		bMisListas.setBackground(Color.LIGHT_GRAY);
-		barraExploracion.add(bMisListas);
+		
 
 		JButton bRecientes = new JButton("Recientes");
 		bRecientes.setBackground(Color.LIGHT_GRAY);
