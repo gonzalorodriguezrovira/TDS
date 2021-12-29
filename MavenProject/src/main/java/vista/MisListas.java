@@ -1,4 +1,4 @@
-package umu.tds.Interfaz;
+package vista;
 
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;

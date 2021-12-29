@@ -1,8 +1,8 @@
-package umu.tds;
+package main;
 
 import java.awt.EventQueue;
 
-import umu.tds.Interfaz.AppVideo;
+import vista.AppVideo;
 
 public class Lanzador {	
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package umu.tds.Interfaz;
+package vista;
 
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -19,7 +19,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.border.LineBorder;
 
-import umu.tds.App;
+import controlador.App;
 
 public class InicioSesion extends JPanel {
 	private JTextField txtLogin;

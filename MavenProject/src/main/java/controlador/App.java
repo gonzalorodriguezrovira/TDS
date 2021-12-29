@@ -1,15 +1,15 @@
-package umu.tds;
+package controlador;
 
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-import umu.tds.clases.Etiqueta;
-import umu.tds.clases.ListaVideos;
-import umu.tds.clases.RepositorioUsuario;
-import umu.tds.clases.RepositorioVideo;
-import umu.tds.clases.Usuario;
-import umu.tds.clases.Video;
+import modelo.Etiqueta;
+import modelo.ListaVideos;
+import modelo.RepositorioUsuario;
+import modelo.RepositorioVideo;
+import modelo.Usuario;
+import modelo.Video;
 
 public class App 
 {

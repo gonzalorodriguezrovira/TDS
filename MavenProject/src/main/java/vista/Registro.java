@@ -1,4 +1,4 @@
-package umu.tds.Interfaz;
+package vista;
 
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;

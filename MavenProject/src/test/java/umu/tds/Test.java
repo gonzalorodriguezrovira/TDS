@@ -4,10 +4,11 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
-import umu.tds.clases.Etiqueta;
-import umu.tds.clases.ListaVideos;
-import umu.tds.clases.Usuario;
-import umu.tds.clases.Video;
+import controlador.App;
+import modelo.Etiqueta;
+import modelo.ListaVideos;
+import modelo.Usuario;
+import modelo.Video;
 
 public class Test {
 	public static void main(String[] args) {

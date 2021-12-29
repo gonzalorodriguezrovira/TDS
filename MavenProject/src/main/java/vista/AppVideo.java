@@ -1,4 +1,4 @@
-package umu.tds.Interfaz;
+package vista;
 
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
-import umu.tds.clases.Usuario;
+import modelo.Usuario;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
