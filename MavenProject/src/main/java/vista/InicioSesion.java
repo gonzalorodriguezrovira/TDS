@@ -25,7 +25,6 @@ import modelo.Usuario;
 public class InicioSesion extends JPanel {
 	private JTextField txtLogin;
 	private JTextField txtPassword;
-	private JLabel lalerta;
 
 	public InicioSesion(AppVideo v) {
 		setBackground(Color.GRAY);
@@ -84,7 +83,12 @@ public class InicioSesion extends JPanel {
 
 		Component rigidArea_1_1_5 = Box.createRigidArea(new Dimension(20, 20));
 		horizontalBox_1_1.add(rigidArea_1_1_5);
-
+		
+		Box horizontalBox = Box.createHorizontalBox();
+		verticalBox_2.add(horizontalBox);
+		
+		JLabel camposVacios = new JLabel("");
+		horizontalBox.add(camposVacios);
 		Component rigidArea_5_IS_1 = Box.createRigidArea(new Dimension(20, 80));
 		verticalBox_2.add(rigidArea_5_IS_1);
 
@@ -122,26 +126,33 @@ public class InicioSesion extends JPanel {
 
 		bAceptarLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String nombre = txtLogin.getText().trim();
-				txtLogin.setText("");
-				v.inicioValido(nombre);/*
+				String nombre = txtLogin.getText().trim();			
 				String password = txtPassword.getText().trim();
-				if (nombre.isEmpty() || password.isEmpty())
-					lalerta.setVisible(true);					//añadir mensaje campo vacio
+			
+				
+				if (nombre.isEmpty() || password.isEmpty()) {
+					camposVacios.setText("Campos vacios");
+					camposVacios.setVisible(true);					
+				}
 				else {
 					Usuario aux = App.getInstancia().findUsuario(nombre);
-					lalerta.setVisible(false);
+					camposVacios.setVisible(false);
 					if (aux != null) {
 						if (App.getInstancia().comprobarPassword(aux, password)) {
 							v.inicioValido(nombre);
+							txtLogin.setText("");
+							txtPassword.setText("");
 						}else {
-							//añadir mensaje contraseña incorrecta
+							camposVacios.setText("Contraseña incorrecta");
+							camposVacios.setVisible(true);	
 						}
 					}else {
-						//añadir mensaje usuario no existe
+						camposVacios.setText("Usuario no existe");
+						camposVacios.setVisible(true);	
+
 					}
 				}
-			*/}
+			}
 		});
 	}
 }

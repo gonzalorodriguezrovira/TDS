@@ -9,6 +9,8 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.util.Date;
 
 import javax.imageio.plugins.bmp.BMPImageWriteParam;
 import javax.swing.Box;
@@ -21,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
+import controlador.App;
 import modelo.Usuario;
 
 import java.awt.GridBagLayout;
@@ -42,7 +45,7 @@ public class AppVideo extends JFrame {
 
 	private InicioSesion pIS = new InicioSesion(this);
 	private PantallaBase pPB = new PantallaBase();
-	private Registro pR = new Registro();
+	private Registro pR = new Registro(this);
 	private Explorar pE = new Explorar();
 	private MisListas pML = new MisListas();
 	
@@ -242,6 +245,13 @@ public class AppVideo extends JFrame {
 			bRecientes.setEnabled(false);
 			bNuevaLista.setEnabled(false);
 			lbUsuario.setVisible(false);
+		}
+	}
+	
+	public void registrarUsuario(String nombre, String email, String usuario, String password,Date nacimiento) {
+		if(App.getInstancia().registrarUsuario(nombre, email, usuario, password, nacimiento)) {
+			CardLayout c = (CardLayout) (vDisplay.getLayout());
+			c.show(vDisplay, INICIO_SESION);
 		}
 	}
 

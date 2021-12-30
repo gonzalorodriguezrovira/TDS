@@ -33,7 +33,7 @@ public class App
 		repositorioVideo= RepositorioVideo.getUnicaInstancia();
 	}
 	
-	public boolean registrarUsuario(String nombre, String email, String usuario, String password,LocalDate nacimiento) {
+	public boolean registrarUsuario(String nombre, String email, String usuario, String password,Date nacimiento) {
 		// No se controla que existan dnis duplicados
 		Usuario usr= new Usuario(nombre,email,usuario,password,nacimiento);
 		//adaptadorCliente.registrarCliente(usr);
