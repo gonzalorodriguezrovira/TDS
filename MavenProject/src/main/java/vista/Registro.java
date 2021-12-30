@@ -223,7 +223,7 @@ public class Registro extends JPanel {
 				String password = txtContraseña.getText().trim();
 				String passwordRep = txtRepContraseña.getText().trim();
 				String email = txtEmail.getText().trim();
-				String apellidos = txtContraseña.getText();
+				String apellidos = txtApellidos.getText();
 				String usuario= txtUsuario.getText().trim();
 				Date nacimiento= dateFechaNa.getDate();
 
@@ -238,6 +238,7 @@ public class Registro extends JPanel {
 									txtNombre.setText("");
 									txtRepContraseña.setText("");
 									txtUsuario.setText("");
+									dateFechaNa.setCalendar(null);
 									v.registrarUsuario(nombre, email, usuario, passwordRep,nacimiento);
 								}else {
 									//TODO popup consataseñas no cinciden
