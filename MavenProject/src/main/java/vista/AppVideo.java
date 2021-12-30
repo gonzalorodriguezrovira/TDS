@@ -10,6 +10,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.imageio.plugins.bmp.BMPImageWriteParam;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -38,18 +39,23 @@ public class AppVideo extends JFrame {
 	final static String MIS_LISTAS = "Buscar en las listas de usuario";
 	// VENTANAS
 	final static JPanel vDisplay = new JPanel(new CardLayout(0, 0));
-	
+
 	private InicioSesion pIS = new InicioSesion(this);
 	private PantallaBase pPB = new PantallaBase();
 	private Registro pR = new Registro();
 	private Explorar pE = new Explorar();
 	private MisListas pML = new MisListas();
-	//TODO mirar
-	private String usuario= ""; 
 	
-	//BOTONES
+	// BOTONES
 	private JButton bLogin;
-	private JLabel lbUsuario;	
+	private JButton bRegistro;
+	private JButton bLogout;
+	private JButton bExplorar;
+	private JButton bMisListas;
+	private JButton bRecientes;
+	private JButton bNuevaLista;
+	private JButton bPremium;
+	private JLabel lbUsuario;
 
 	public AppVideo() {
 
@@ -98,7 +104,7 @@ public class AppVideo extends JFrame {
 		Component rigidArea1_BS = Box.createRigidArea(new Dimension(125, 40));
 		barraSuperior.add(rigidArea1_BS);
 
-		JButton bRegistro = new JButton("Registro");
+		bRegistro = new JButton("Registro");
 		bRegistro.setBackground(Color.LIGHT_GRAY);
 		barraSuperior.add(bRegistro);
 
@@ -109,14 +115,14 @@ public class AppVideo extends JFrame {
 		Component rigidArea_2_BS = Box.createRigidArea(new Dimension(40, 40));
 		barraSuperior.add(rigidArea_2_BS);
 
-		JButton bLogout = new JButton("Logout");
+		bLogout = new JButton("Logout");
 		bLogout.setBackground(Color.LIGHT_GRAY);
 		barraSuperior.add(bLogout);
 
 		Component rigidArea_3_BS = Box.createRigidArea(new Dimension(40, 40));
 		barraSuperior.add(rigidArea_3_BS);
 
-		JButton bPremium = new JButton("Premium");
+		bPremium = new JButton("Premium");
 		bPremium.setFont(new Font("Tahoma", Font.BOLD, 12));
 		bPremium.setBackground(Color.BLACK);
 		bPremium.setForeground(new Color(255, 163, 26));
@@ -136,111 +142,107 @@ public class AppVideo extends JFrame {
 
 		Component rigidArea_1 = Box.createRigidArea(new Dimension(4, 20));
 		barraExploracion.add(rigidArea_1);
+
+		bExplorar = new JButton("Explorar");
+		bExplorar.setBackground(Color.LIGHT_GRAY);
+		barraExploracion.add(bExplorar);
 		
-				JButton bExplorar = new JButton("Explorar");
-				bExplorar.setBackground(Color.LIGHT_GRAY);
-				barraExploracion.add(bExplorar);
-				
-		
-		JButton bMisListas = new JButton("Mis Listas"); 
+		bMisListas = new JButton("Mis Listas");
 		bMisListas.setBackground(Color.LIGHT_GRAY);
 		barraExploracion.add(bMisListas);
-
+		bMisListas.setEnabled(false);
 		
-
-		JButton bRecientes = new JButton("Recientes");
+		bRecientes = new JButton("Recientes");
 		bRecientes.setBackground(Color.LIGHT_GRAY);
 		barraExploracion.add(bRecientes);
-
-		JButton bNuevaLista = new JButton("Nueva Lista");
+		bRecientes.setEnabled(false);
+		
+		bNuevaLista = new JButton("Nueva Lista");
 		bNuevaLista.setBackground(Color.LIGHT_GRAY);
 		barraExploracion.add(bNuevaLista);
+		bNuevaLista.setEnabled(false);
 		
 		Component rigidArea_2 = Box.createRigidArea(new Dimension(20, 20));
 		barraExploracion.add(rigidArea_2);
 
 		Component rigidArea = Box.createRigidArea(new Dimension(4, 28));
 		barraExploracion.add(rigidArea);
-		
+
 		lbUsuario = new JLabel("");
 		lbUsuario.setEnabled(false);
 		barraExploracion.add(lbUsuario);
 		lbUsuario.setVisible(false);
-		
+
 		GridBagConstraints gbc_vDisplay = new GridBagConstraints();
 		gbc_vDisplay.fill = GridBagConstraints.BOTH;
 		gbc_vDisplay.gridx = 0;
 		gbc_vDisplay.gridy = 2;
 		contentPane.add(vDisplay, gbc_vDisplay);
-		
+
 		vDisplay.add(pPB, BRUH);
 		vDisplay.add(pIS, INICIO_SESION);
 		vDisplay.add(pE, EXPLORAR);
 		vDisplay.add(pR, REGISTRO);
 		vDisplay.add(pML, MIS_LISTAS);
-		
-		CardLayout c = (CardLayout)(vDisplay.getLayout());
+
+		CardLayout c = (CardLayout) (vDisplay.getLayout());
 		bLogin.addActionListener(ev -> c.show(vDisplay, INICIO_SESION));
 		/*
-		bLogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CardLayout c = (CardLayout)(vDisplay.getLayout());
-				c.show(vDisplay, INICIO_SESION);
-			}
-		});
-		*/
+		 * bLogin.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent e) { CardLayout c =
+		 * (CardLayout)(vDisplay.getLayout()); c.show(vDisplay, INICIO_SESION); } });
+		 */
 		bRegistro.addActionListener(ev -> c.show(vDisplay, REGISTRO));
 		/*
-		bRegistro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CardLayout c = (CardLayout)(vDisplay.getLayout());
-				c.show(vDisplay, REGISTRO);
-			}
-		});
-		*/
+		 * bRegistro.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent e) { CardLayout c =
+		 * (CardLayout)(vDisplay.getLayout()); c.show(vDisplay, REGISTRO); } });
+		 */
 		bExplorar.addActionListener(ev -> c.show(vDisplay, EXPLORAR));
 		/*
-		bExplorar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CardLayout c = (CardLayout)(vDisplay.getLayout());
-				c.show(vDisplay, EXPLORAR);
-			}
-		});
-		*/
+		 * bExplorar.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent e) { CardLayout c =
+		 * (CardLayout)(vDisplay.getLayout()); c.show(vDisplay, EXPLORAR); } });
+		 */
 		bMisListas.addActionListener(ev -> c.show(vDisplay, MIS_LISTAS));
 		/*
-		bMisListas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CardLayout c = (CardLayout)(vDisplay.getLayout());
-				c.show(vDisplay, MIS_LISTAS);
-			}
-		});
-		*/
+		 * bMisListas.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent e) { CardLayout c =
+		 * (CardLayout)(vDisplay.getLayout()); c.show(vDisplay, MIS_LISTAS); } });
+		 */
 		bLogout.addActionListener(ev -> cierreSesion());
 	}
 
 	public String getUsuario() {
-		return usuario;
+		return lbUsuario.getText();
 	}
 
-	 void setUsuario(String usuario) {
+	void setUsuario(String usuario) {
 		lbUsuario.setText(usuario);
 	}
 
 	public void inicioValido(String nombre) {
 		setUsuario(nombre);
-		CardLayout c = (CardLayout)(vDisplay.getLayout());
+		CardLayout c = (CardLayout) (vDisplay.getLayout());
 		c.show(vDisplay, EXPLORAR);
 		bLogin.setEnabled(false);
 		lbUsuario.setVisible(true);
+		bMisListas.setEnabled(true);
+		bRecientes.setEnabled(true);
+		bNuevaLista.setEnabled(true);
 	}
 
 	public void cierreSesion() {
-		setUsuario(" ");
-		CardLayout c = (CardLayout)(vDisplay.getLayout());
-		c.show(vDisplay, INICIO_SESION);
-		bLogin.setEnabled(true);
-		lbUsuario.setVisible(false);
+		if (!getUsuario().equals("")) {
+			CardLayout c = (CardLayout) (vDisplay.getLayout());
+			c.show(vDisplay, INICIO_SESION);
+			setUsuario("");
+			bLogin.setEnabled(true);
+			bMisListas.setEnabled(false);
+			bRecientes.setEnabled(false);
+			bNuevaLista.setEnabled(false);
+			lbUsuario.setVisible(false);
+		}
 	}
-	
+
 }

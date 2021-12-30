@@ -49,7 +49,7 @@ public class InicioSesion extends JPanel {
 		horizontalBox_3.setBackground(Color.WHITE);
 		verticalBox_2.add(horizontalBox_3);
 
-		Component rigidArea_1_1 = Box.createRigidArea(new Dimension(41, 20));
+		Component rigidArea_1_1 = Box.createRigidArea(new Dimension(47, 20));
 		horizontalBox_3.add(rigidArea_1_1);
 
 		JLabel lblNewLabel_2 = new JLabel("Login: ");
@@ -123,6 +123,7 @@ public class InicioSesion extends JPanel {
 		bAceptarLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String nombre = txtLogin.getText().trim();
+				txtLogin.setText("");
 				v.inicioValido(nombre);/*
 				String password = txtPassword.getText().trim();
 				if (nombre.isEmpty() || password.isEmpty())
