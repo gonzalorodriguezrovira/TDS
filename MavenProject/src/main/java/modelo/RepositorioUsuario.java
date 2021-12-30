@@ -64,5 +64,9 @@ public class RepositorioUsuario {
 		return user.findLista(name);
 	}
 
+	public boolean checkContraseña(Usuario usuario, String password) {
+		return usuario.checkContraseña(password);
+	}
+
 
 }

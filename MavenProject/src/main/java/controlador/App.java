@@ -74,5 +74,9 @@ public class App
 	public List<ListaVideos> findListaVideo(Usuario user, String name){
 		return repositorioUsuario.findListaVideo(user, name);
 	}
+
+	public boolean comprobarPassword(Usuario usuario, String password) {
+		return repositorioUsuario.checkContraseña(usuario, password);
+	}
 	
 }

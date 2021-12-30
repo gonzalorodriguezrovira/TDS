@@ -75,4 +75,8 @@ public class Usuario {
 				+ ", " + "tamHistorial= [" + tamHistorial + "], " + "usuario= [" + usuario + "]";
 	}
 
+	public boolean checkContraseña(String password) {
+		return this.password.equals(password);
+	}
+
 }

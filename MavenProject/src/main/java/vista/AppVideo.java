@@ -39,13 +39,17 @@ public class AppVideo extends JFrame {
 	// VENTANAS
 	final static JPanel vDisplay = new JPanel(new CardLayout(0, 0));
 	
-	private InicioSesion pIS = new InicioSesion();
+	private InicioSesion pIS = new InicioSesion(this);
 	private PantallaBase pPB = new PantallaBase();
 	private Registro pR = new Registro();
 	private Explorar pE = new Explorar();
 	private MisListas pML = new MisListas();
 	//TODO mirar
 	private String usuario= ""; 
+	
+	//BOTONES
+	private JButton bLogin;
+	private JLabel lbUsuario;	
 
 	public AppVideo() {
 
@@ -98,7 +102,7 @@ public class AppVideo extends JFrame {
 		bRegistro.setBackground(Color.LIGHT_GRAY);
 		barraSuperior.add(bRegistro);
 
-		JButton bLogin = new JButton("Login");
+		bLogin = new JButton("Login");
 		bLogin.setBackground(Color.LIGHT_GRAY);
 		barraSuperior.add(bLogin);
 
@@ -133,13 +137,14 @@ public class AppVideo extends JFrame {
 		Component rigidArea_1 = Box.createRigidArea(new Dimension(4, 20));
 		barraExploracion.add(rigidArea_1);
 		
+				JButton bExplorar = new JButton("Explorar");
+				bExplorar.setBackground(Color.LIGHT_GRAY);
+				barraExploracion.add(bExplorar);
+				
+		
 		JButton bMisListas = new JButton("Mis Listas"); 
 		bMisListas.setBackground(Color.LIGHT_GRAY);
 		barraExploracion.add(bMisListas);
-
-		JButton bExplorar = new JButton("Explorar");
-		bExplorar.setBackground(Color.LIGHT_GRAY);
-		barraExploracion.add(bExplorar);
 
 		
 
@@ -150,10 +155,17 @@ public class AppVideo extends JFrame {
 		JButton bNuevaLista = new JButton("Nueva Lista");
 		bNuevaLista.setBackground(Color.LIGHT_GRAY);
 		barraExploracion.add(bNuevaLista);
+		
+		Component rigidArea_2 = Box.createRigidArea(new Dimension(20, 20));
+		barraExploracion.add(rigidArea_2);
 
 		Component rigidArea = Box.createRigidArea(new Dimension(4, 28));
 		barraExploracion.add(rigidArea);
-
+		
+		lbUsuario = new JLabel("");
+		lbUsuario.setEnabled(false);
+		barraExploracion.add(lbUsuario);
+		lbUsuario.setVisible(false);
 		
 		GridBagConstraints gbc_vDisplay = new GridBagConstraints();
 		gbc_vDisplay.fill = GridBagConstraints.BOTH;
@@ -204,6 +216,7 @@ public class AppVideo extends JFrame {
 			}
 		});
 		*/
+		bLogout.addActionListener(ev -> cierreSesion());
 	}
 
 	public String getUsuario() {
@@ -211,7 +224,23 @@ public class AppVideo extends JFrame {
 	}
 
 	 void setUsuario(String usuario) {
-		this.usuario = usuario;
+		lbUsuario.setText(usuario);
 	}
 
+	public void inicioValido(String nombre) {
+		setUsuario(nombre);
+		CardLayout c = (CardLayout)(vDisplay.getLayout());
+		c.show(vDisplay, EXPLORAR);
+		bLogin.setEnabled(false);
+		lbUsuario.setVisible(true);
+	}
+
+	public void cierreSesion() {
+		setUsuario(" ");
+		CardLayout c = (CardLayout)(vDisplay.getLayout());
+		c.show(vDisplay, INICIO_SESION);
+		bLogin.setEnabled(true);
+		lbUsuario.setVisible(false);
+	}
+	
 }
