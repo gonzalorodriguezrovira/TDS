@@ -6,7 +6,7 @@ import java.util.Set;
 
 
 public class RepositorioUsuario {
-	private static final int tamDefault = 5;
+	//private static final int tamDefault = 5;
 
 	private static RepositorioUsuario unicaInstancia = new RepositorioUsuario();
 	
@@ -17,22 +17,7 @@ public class RepositorioUsuario {
 	public static RepositorioUsuario getUnicaInstancia() {
 		return unicaInstancia;
 	}
-	/*
-	public boolean addUsuario(String nombre, String email, int tamHistorial, String user, String password) {
-		Usuario bdu = bdUser.stream()
-							.filter(u -> user.equals(u.getUsuario()))
-							.findAny()
-							.orElse(null);
-		if (bdu == null) {
-			Usuario usr = new Usuario(nombre, email, tamHistorial, user, password);
-			bdUser.add(usr);
-		}
-		return bdu == null;
-	}
-
-	public boolean addUsuario(String nombre, String email, String user, String password) {
-		return this.addUsuario(nombre, email, tamDefault, user, password);
-	}*/
+	
 	
 	public Usuario findUsuario(String user) {
 		return bdUser.stream()
