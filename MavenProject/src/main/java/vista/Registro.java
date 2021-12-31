@@ -239,7 +239,7 @@ public class Registro extends JPanel {
 									txtRepContraseña.setText("");
 									txtUsuario.setText("");
 									dateFechaNa.setCalendar(null);
-									v.registrarUsuario(nombre, email, usuario, passwordRep,nacimiento);
+									v.registrarUsuario(nombre, apellidos, email, usuario, passwordRep,nacimiento);
 								}else {
 									//TODO popup consataseñas no cinciden
 								}

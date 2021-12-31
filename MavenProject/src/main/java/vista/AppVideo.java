@@ -248,8 +248,8 @@ public class AppVideo extends JFrame {
 		}
 	}
 	
-	public void registrarUsuario(String nombre, String email, String usuario, String password,Date nacimiento) {
-		if(App.getInstancia().registrarUsuario(nombre, email, usuario, password, nacimiento)) {
+	public void registrarUsuario(String nombre, String apellidos, String email, String usuario, String password,Date nacimiento) {
+		if(App.getInstancia().registrarUsuario(nombre, apellidos, email, usuario, password, nacimiento)) {
 			CardLayout c = (CardLayout) (vDisplay.getLayout());
 			c.show(vDisplay, INICIO_SESION);
 		}

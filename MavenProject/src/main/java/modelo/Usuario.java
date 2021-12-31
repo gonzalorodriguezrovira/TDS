@@ -10,6 +10,7 @@ public class Usuario {
 	private static final int tamDefault = 5;
 
 	private String nombre;
+	private String apellidos;
 	private String email;
 	private String usuario;
 	private String password;
@@ -19,8 +20,9 @@ public class Usuario {
 	private List<Video> recientes;
 	private int tamHistorial;
 
-	public Usuario(String nombre, String email, int tamHistorial, String usuario, String password,Date nacimiento) {
+	public Usuario(String nombre, String apellidos, String email, int tamHistorial, String usuario, String password,Date nacimiento) {
 		this.nombre = nombre;
+		this.apellidos = apellidos;
 		this.email = email;
 		this.premium = false;
 		this.listaVideos = new LinkedList<ListaVideos>();
@@ -31,8 +33,8 @@ public class Usuario {
 		this.nacimiento = nacimiento;
 	}
 
-	public Usuario(String nombre, String email, String usuario, String password,Date nacimiento) {
-		this(nombre, email, tamDefault, usuario, password,nacimiento);
+	public Usuario(String nombre, String apellidos, String email, String usuario, String password,Date nacimiento) {
+		this(nombre, apellidos, email, tamDefault, usuario, password,nacimiento);
 	}
 
 	public String getNombre() {
@@ -70,7 +72,7 @@ public class Usuario {
 	
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + " - nombre= [" + nombre + "], " + "email= [" + email + "], "
+		return getClass().getSimpleName() + " - nombre= [" + nombre + "], apellidos= ["+apellidos+"], "+ "email= [" + email + "], "
 				+ "premium= [" + premium + "], " + "listaVideos= " + listaVideos + ", " + "recientes= " + recientes
 				+ ", " + "tamHistorial= [" + tamHistorial + "], " + "usuario= [" + usuario + "]";
 	}

@@ -1,6 +1,7 @@
 package umu.tds;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,8 +14,8 @@ import modelo.Video;
 public class Test {
 	public static void main(String[] args) {
 		App app = App.getInstancia();
-		app.registrarUsuario("Juan", "juanemail", "Juanito", "123", LocalDate.now());
-		app.registrarUsuario("Lara", "laraemail", "larita", "123", LocalDate.now());
+		app.registrarUsuario("Juan","tusmuelas", "juanemail", "Juanito", "123", new Date());
+		app.registrarUsuario("Lara","tusmuelas", "laraemail", "larita", "123", new Date());
 		app.registrarVideo("1", "vid1", new Etiqueta("nombre"));
 		app.registrarVideo("2", "vid2", new Etiqueta("nombre"));
 		app.registrarVideo("3", "vid3", new Etiqueta("nombre"));
@@ -25,7 +26,6 @@ public class Test {
 		System.out.println(usr);
 		
 		List<Video> ll = app.findVideo("vid");
-		
 		
 		ListaVideos l = new ListaVideos("gonzalomarica", ll);
 		
