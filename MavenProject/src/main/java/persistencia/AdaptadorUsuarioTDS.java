@@ -4,20 +4,29 @@ import java.util.List;
 
 import modelo.Usuario;
 
-public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
+public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 
 	private static ServidorPersistencia servPersistencia;
-	
+
+	private static AdaptadorUsuarioTDS unicaInstancia;
+
+	public static AdaptadorUsuarioTDS getUnicaInstancia() {
+		if (unicaInstancia == null)
+			return new AdaptadorUsuarioTDS();
+		else
+			return unicaInstancia;
+	}
+
 	@Override
 	public void addUsuario(Usuario usuario) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void borrarUsuario(Usuario usuario) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -32,5 +41,5 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		return null;
 	}
 
-	private static Servici
+//	private static Servici
 }
