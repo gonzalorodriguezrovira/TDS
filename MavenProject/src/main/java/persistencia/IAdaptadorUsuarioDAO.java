@@ -6,6 +6,6 @@ import modelo.Usuario;
 public interface IAdaptadorUsuarioDAO {
 	public void addUsuario(Usuario usuario);
 	public void borrarUsuario(Usuario usuario);
-	public Usuario findUsuario(String user);
+	public Usuario recuperarUsuario(int codigo);
 	public List<Usuario> recuperarUsuarios();
 }
