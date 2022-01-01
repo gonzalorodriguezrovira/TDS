@@ -1,6 +1,6 @@
 package persistencia;
 
-import java.awt.Point;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +19,7 @@ import tds.driver.ServicioPersistencia;
 
 public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 
-	private static ServidorPersistencia servPersistencia;
+	private static ServicioPersistencia servPersistencia;
 
 	private SimpleDateFormat dateFormat; // para formatear la fecha de venta en
 											// la base de datos
@@ -42,7 +42,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	public void addUsuario(Usuario usuario) {
 		Entidad eUsuario = null;
 		try {
-			eUsuario = servPersistencia.recuperarEntidad(usuario.getUsuario());
+			eUsuario = servPersistencia.recuperarEntidad(usuario.getCodigo());
 		} catch (NullPointerException e) {
 		}
 		if (eUsuario != null)
@@ -95,9 +95,9 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 			String nombre;
 			String apellidos;
 			String email;
-			String usuario;
+			String user;
 			String password;
-			Date nacimiento;
+			Date nacimiento = new Date();
 			boolean premium;
 
 			List<ListaVideos> listaVideos = new LinkedList<ListaVideos>();
@@ -105,16 +105,20 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 			int tamHistorial;
 			
 			eUsuario = servPersistencia.recuperarEntidad(codigo);
-			nombre = servPersistencia.recuperarPropiedadEntidad(eCliente, "nombre");
-			apellidos = servPersistencia.recuperarPropiedadEntidad(eCliente, "apellidos");
-			email = servPersistencia.recuperarPropiedadEntidad(eCliente, "email");
-			usuario = servPersistencia.recuperarPropiedadEntidad(eCliente, "usuario");
-			password = servPersistencia.recuperarPropiedadEntidad(eCliente, "password");
-			nacimiento = servPersistencia.recuperarPropiedadEntidad(eCliente, "nacimiento");
-			premium = servPersistencia.recuperarPropiedadEntidad(eCliente, "premium");
-			tamHistorial = servPersistencia.recuperarPropiedadEntidad(eCliente, "tamHistorial");
+			nombre = servPersistencia.recuperarPropiedadEntidad(eUsuario, "nombre");
+			apellidos = servPersistencia.recuperarPropiedadEntidad(eUsuario, "apellidos");
+			email = servPersistencia.recuperarPropiedadEntidad(eUsuario, "email");
+			user = servPersistencia.recuperarPropiedadEntidad(eUsuario, "usuario");
+			password = servPersistencia.recuperarPropiedadEntidad(eUsuario, "password");
+			try {
+				nacimiento = dateFormat.parse(servPersistencia.recuperarPropiedadEntidad(eUsuario, "nacimiento"));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			premium = Boolean.valueOf(servPersistencia.recuperarPropiedadEntidad(eUsuario, "premium"));
+			tamHistorial = Integer.valueOf(servPersistencia.recuperarPropiedadEntidad(eUsuario, "tamHistorial"));
 
-			Usuario usuario= new Usuario(nombre, apellidos, email, usuario, password, nacimiento);
+			Usuario usuario= new Usuario(nombre, apellidos, email, user, password, nacimiento);
 			usuario.setCodigo(codigo);
 			
 			PoolDAO.getUnicaInstancia().addObjeto(codigo, usuario);
@@ -125,6 +129,12 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 			for (Video v : recientes)
 				usuario.addRecientes(v);
 
+			for (ListaVideos lv : listaVideos)
+				usuario.addListaVideo(lv);
+			
+			if(premium)
+				usuario.setPremium(true);
+			
 			return usuario;
 	}
 

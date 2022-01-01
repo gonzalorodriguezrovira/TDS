@@ -5,7 +5,7 @@ import tds.driver.FactoriaServicioPersistencia;
 import tds.driver.ServicioPersistencia;
 
 public class AdaptadorListaVideosTDS implements	IAdaptadorListaVideosDAO{
-	private static ServidorPersistencia servPersistencia;
+	private static ServicioPersistencia servPersistencia;
 
 	private static AdaptadorListaVideosTDS unicaInstancia;
 

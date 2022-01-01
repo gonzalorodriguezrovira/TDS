@@ -1,14 +1,11 @@
 package persistencia;
 
-import java.text.SimpleDateFormat;
-
 import modelo.Video;
 import tds.driver.FactoriaServicioPersistencia;
+import tds.driver.ServicioPersistencia;
 
 public class AdaptadorVideoTDS implements IAdaptadorVideoDAO{
-	private static ServidorPersistencia servPersistencia;
-
-
+	private static ServicioPersistencia servPersistencia;
 
 	private static AdaptadorVideoTDS unicaInstancia;
 

@@ -123,4 +123,8 @@ public class Usuario {
 		return codigo;
 	}
 
+	public void setPremium(boolean b) {
+		premium = b;
+	}
+
 }
