@@ -1,9 +1,7 @@
 package persistencia;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,9 +11,8 @@ import java.util.StringTokenizer;
 import beans.Entidad;
 import beans.Propiedad;
 import modelo.Etiqueta;
-import modelo.ListaVideos;
-import modelo.Usuario;
 import modelo.Video;
+
 import tds.driver.FactoriaServicioPersistencia;
 import tds.driver.ServicioPersistencia;
 
@@ -76,7 +73,26 @@ public class AdaptadorVideoTDS implements IAdaptadorVideoDAO {
 
 	@Override
 	public void modificarVideo(Video video) {
-		// TODO Auto-generated method stub
+		Entidad eVideo = servPersistencia.recuperarEntidad(video.getCodigo());
+
+		for (Propiedad prop : eVideo.getPropiedades()) {
+			if (prop.getNombre().equals("codigo")) {
+				prop.setValor(String.valueOf(video.getCodigo()));
+			} else if (prop.getNombre().equals("url")) {
+				prop.setValor(video.getUrl());
+			} else if (prop.getNombre().equals("titulo")) {
+				prop.setValor(video.getTitulo());
+			} else if (prop.getNombre().equals("numRepro")) {
+				prop.setValor(String.valueOf(video.getNumRepro()));
+	
+				
+			}else if (prop.getNombre().equals("etiquetas")) {
+				prop.setValor(obtenercodigoEtiquetas(video.getEtiquetas()));
+			}
+				
+			servPersistencia.modificarPropiedad(prop);
+		}
+
 
 	}
 
@@ -98,30 +114,27 @@ public class AdaptadorVideoTDS implements IAdaptadorVideoDAO {
 		numRepro = Integer.valueOf(servPersistencia.recuperarPropiedadEntidad(eVideo, "numRepro"));
 		etiquetas = obtenerEtiquetasDesdeCodigos(servPersistencia.recuperarPropiedadEntidad(eVideo, "etiquetas"));
 
-		Video video= new Video(url, titulo, etiquetas);
-		usuario.setCodigo(codigo);
+		Video video = new Video(url, titulo, etiquetas);
+		video.setCodigo(codigo);
+		video.setNumRepro(numRepro);
 
-		PoolDAO.getUnicaInstancia().addObjeto(codigo, usuario);
+		PoolDAO.getUnicaInstancia().addObjeto(codigo, video);
 
-		recientes = obtenerRecientesDesdeCodigos(servPersistencia.recuperarPropiedadEntidad(eVideo, "recientes"));
-		listaVideos = obtenerListaVideosDesdeCodigos(servPersistencia.recuperarPropiedadEntidad(eVideo, "listaVideos"));
+		for (Etiqueta e : etiquetas)
+			video.addEtiqueta(e);
 
-		for (Video v : recientes)
-			usuario.addRecientes(v);
-
-		for (ListaVideos lv : listaVideos)
-			usuario.addListaVideo(lv);
-
-		if (premium)
-			usuario.setPremium(true);
-
-		return usuario;
+		return video;
 	}
 
 	@Override
 	public List<Video> recuperarVideo() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Entidad> eVideos = servPersistencia.recuperarEntidades("video");
+		List<Video> video = new LinkedList<Video>();
+
+		for (Entidad eVideo : eVideos) {
+			video.add(recuperarVideo(eVideo.getId()));
+		}
+		return video;
 	}
 
 	// -------------------Funciones auxiliares-----------------------------
@@ -132,7 +145,7 @@ public class AdaptadorVideoTDS implements IAdaptadorVideoDAO {
 		}
 		return aux.trim();
 	}
-	
+
 	private Set<Etiqueta> obtenerEtiquetasDesdeCodigos(String etiquetas) {
 
 		Set<Etiqueta> Etiquetas = new HashSet<Etiqueta>();

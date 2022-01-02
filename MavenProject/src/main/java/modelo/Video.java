@@ -1,6 +1,6 @@
 package modelo;
 
-import java.util.HashSet;
+
 import java.util.Set;
 
 public class Video {
@@ -11,14 +11,17 @@ public class Video {
 	private int numRepro;
 	private Set<Etiqueta> etiquetas;
 
-	public Video(String url, String titulo, Etiqueta... etiquetas) {
+	public Video(String url, String titulo, Set<Etiqueta> etiquetas) {
 		this.url = url;
 		this.titulo = titulo;
 		this.numRepro = 0;
-		this.etiquetas = new HashSet<Etiqueta>();
-		for (Etiqueta etiq : etiquetas) {
-			this.etiquetas.add(etiq);
+		this.etiquetas = etiquetas;
+
 		}
+	
+	
+	public void addEtiqueta(Etiqueta e) {
+		etiquetas.add(e);
 	}
 
 	public int getNumRepro() {
@@ -48,6 +51,9 @@ public class Video {
 	}
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
+	}
+	public void setNumRepro(int numRepro) {
+		this.numRepro = numRepro;
 	}
 
 }

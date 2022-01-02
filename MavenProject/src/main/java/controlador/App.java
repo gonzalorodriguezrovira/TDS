@@ -3,6 +3,7 @@ package controlador;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import modelo.Etiqueta;
 import modelo.ListaVideos;
@@ -40,7 +41,7 @@ public class App
 		return repositorioUsuario.addUsuario(usr);
 	}
 	
-	public boolean registrarVideo(String url, String titulo, Etiqueta... etiquetas) {
+	public boolean registrarVideo(String url, String titulo, Set<Etiqueta> etiquetas) {
 		// No se controla que existan dnis duplicados
 		Video video= new Video(url,titulo,etiquetas);
 		//adaptadorVideo.registrarVideo(video);
