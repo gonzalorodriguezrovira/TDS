@@ -11,10 +11,23 @@ import modelo.RepositorioUsuario;
 import modelo.RepositorioVideo;
 import modelo.Usuario;
 import modelo.Video;
+import persistencia.DAOException;
+import persistencia.FactoriaDAO;
+import persistencia.IAdaptadorEtiquetaDAO;
+import persistencia.IAdaptadorListaVideosDAO;
+import persistencia.IAdaptadorUsuarioDAO;
+import persistencia.IAdaptadorVideoDAO;
 
 public class App 
 {
-	private static App aplicacion = null;
+	private static App aplicacion;
+	
+	private Usuario usuarioActual;	//usuario que estamos tratando en el momento
+	
+	private IAdaptadorUsuarioDAO adaptadorUsuario;
+	private IAdaptadorVideoDAO adaptadorVideo;
+	private IAdaptadorEtiquetaDAO adapatadorEtiqueta;
+//	private IAdaptadorListaVideosDAO adaptadorListaVideos;
 	
 	private RepositorioUsuario repositorioUsuario;
 	private RepositorioVideo repositorioVideo;
@@ -26,12 +39,24 @@ public class App
 	}
 	
 	private App() {
+		inicializarAdaptadores();
 		inicializarRepositorios();
 	}
 	
 	private void inicializarRepositorios() {
 		repositorioUsuario = RepositorioUsuario.getUnicaInstancia();
-		repositorioVideo= RepositorioVideo.getUnicaInstancia();
+		repositorioVideo = RepositorioVideo.getUnicaInstancia();
+	}
+	
+	private void inicializarAdaptadores() {
+		FactoriaDAO factoria = null;
+		try {
+			factoria = FactoriaDAO.getInstancia(FactoriaDAO.DAO_TDS);
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
+		adaptadorUsuario = factoria.getUsuarioDAO();
+		adaptadorVideo = factoria.getVideoDAO();
 	}
 	
 	public boolean registrarUsuario(String nombre, String apellidos, String email, String usuario, String password,Date nacimiento) {

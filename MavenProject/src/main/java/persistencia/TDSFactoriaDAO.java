@@ -8,7 +8,7 @@ public class TDSFactoriaDAO extends FactoriaDAO{
 	}
 
 	@Override
-	public IAdaptadorVideoDAO getLineaVentaDAO() {
+	public IAdaptadorVideoDAO getVideoDAO() {
 		return AdaptadorVideoTDS.getUnicaInstancia();
 	}
 

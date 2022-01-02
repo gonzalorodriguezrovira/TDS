@@ -98,6 +98,5 @@ public class AdaptadorEtiquetaTDS implements IAdaptadorEtiquetaDAO {
 		etiqueta.setCodigo(codigo);
 		
 		return etiqueta;
-		
 	}
 }

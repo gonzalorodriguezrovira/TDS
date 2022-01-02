@@ -33,7 +33,7 @@ public abstract class FactoriaDAO {
 // interfaces
 	public abstract IAdaptadorUsuarioDAO getUsuarioDAO();
 
-	public abstract IAdaptadorVideoDAO getLineaVentaDAO();
+	public abstract IAdaptadorVideoDAO getVideoDAO();
 
 	public abstract IAdaptadorListaVideosDAO getListaVideosDAO();
 
