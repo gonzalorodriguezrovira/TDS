@@ -55,7 +55,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		
 		AdaptadorVideoTDS adaptadorVideo = AdaptadorVideoTDS.getUnicaInstancia();
 		for (Video v : usuario.getRecientes())
-			adaptadorVideo.registrarVideo(v);
+			adaptadorVideo.addVideo(v);
 
 		// crear entidad Cliente
 		eUsuario = new Entidad();

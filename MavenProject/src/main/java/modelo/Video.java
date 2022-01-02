@@ -5,6 +5,7 @@ import java.util.Set;
 
 public class Video {
 
+	private int codigo;
 	private String url;
 	private String titulo;
 	private int numRepro;
@@ -36,6 +37,17 @@ public class Video {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return getClass().getSimpleName() + " - url= [" + url +"], titulo= ["+titulo+"], numRepro= ["+numRepro+"], etiquetas= "+etiquetas;
+	}
+	
+	public Set<Etiqueta> getEtiquetas() {
+		return etiquetas;
+	}
+	
+	public int getCodigo() {
+		return codigo;
+	}
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 
 }
