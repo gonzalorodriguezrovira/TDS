@@ -9,4 +9,5 @@ public interface IAdaptadorListaVideosDAO {
 	public void borrarListaVideo(ListaVideos lv);
 	public ListaVideos recuperarListaVideos(int codigo);
 	public List<ListaVideos> recuperarListasVideos();
+	public void modificarListaVideos(ListaVideos lv);
 }

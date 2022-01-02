@@ -147,6 +147,40 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		}
 		return usuarios;
 	}
+	
+	@Override
+	public void modificarUsuario(Usuario usuario) {
+		Entidad eUsuario = servPersistencia.recuperarEntidad(usuario.getCodigo());
+
+		for (Propiedad prop : eUsuario.getPropiedades()) {
+			
+			if (prop.getNombre().equals("codigo")) {
+				prop.setValor(String.valueOf(usuario.getCodigo()));
+			} else if (prop.getNombre().equals("nombre")) {
+				prop.setValor(usuario.getNombre());
+			} else if (prop.getNombre().equals("apellidos")) {
+				prop.setValor(usuario.getApellidos());
+			} else if (prop.getNombre().equals("email")) {
+				prop.setValor(usuario.getEmail());
+			} else if (prop.getNombre().equals("usuario")) {
+				prop.setValor(usuario.getUsuario());
+			} else if (prop.getNombre().equals("password")) {
+				prop.setValor(usuario.getPassword());
+			} else if (prop.getNombre().equals("nacimiento")) {
+				prop.setValor(dateFormat.format(usuario.getNacimiento()));
+			} else if (prop.getNombre().equals("premium")) {
+				prop.setValor(String.valueOf(usuario.isPremium()));
+			} else if (prop.getNombre().equals("listaVideos")) {
+				prop.setValor(obtenerCodigosListaVideos(usuario.getListaVideos()));
+			} else if (prop.getNombre().equals("recientes")) {
+				prop.setValor(obtenerCodigosVideos(usuario.getRecientes()));
+			} else if (prop.getNombre().equals("tamHistorial")) {
+				prop.setValor(String.valueOf(usuario.getTamHistorial()));
+			}
+			
+			servPersistencia.modificarPropiedad(prop);
+		}
+	}
 
 	// -------------------Funciones auxiliares-----------------------------
 	private String obtenerCodigosVideos(List<Video> listaVideo) {
