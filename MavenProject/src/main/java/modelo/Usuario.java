@@ -126,5 +126,4 @@ public class Usuario {
 	public void setPremium(boolean b) {
 		premium = b;
 	}
-
 }

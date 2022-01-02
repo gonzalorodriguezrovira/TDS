@@ -95,6 +95,24 @@ public class AdaptadorListaVideosTDS implements IAdaptadorListaVideosDAO {
 		return lv;
 	}
 
+	@Override
+	public void modificarListaVideos(ListaVideos lv) {
+		Entidad eListaVideo = servPersistencia.recuperarEntidad(lv.getCodigo());
+
+		for (Propiedad prop : eListaVideo.getPropiedades()) {
+			
+			if (prop.getNombre().equals("codigo")) {
+				prop.setValor(String.valueOf(lv.getCodigo()));
+			} else if (prop.getNombre().equals("name")) {
+				prop.setValor(lv.getName());
+			} else if (prop.getNombre().equals("videos")) {
+				prop.setValor(obtenerCodigosVideos(lv.getVideos()));
+			}
+			
+			servPersistencia.modificarPropiedad(prop);
+		}	
+	}
+	
 	// -------------------Funciones auxiliares-----------------------------
 	private String obtenerCodigosVideos(List<Video> listaVideo) {
 		String aux = "";
