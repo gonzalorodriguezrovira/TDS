@@ -4,26 +4,22 @@ public class TDSFactoriaDAO extends FactoriaDAO{
 
 	@Override
 	public IAdaptadorUsuarioDAO getUsuarioDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return AdaptadorUsuarioTDS.getUnicaInstancia();
 	}
 
 	@Override
 	public IAdaptadorVideoDAO getLineaVentaDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return AdaptadorVideoTDS.getUnicaInstancia();
 	}
 
 	@Override
 	public IAdaptadorListaVideosDAO getListaVideosDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return AdaptadorListaVideosTDS.getUnicaInstancia();
 	}
 
 	@Override
 	public IAdaptadorEtiquetaDAO getEtiquetaDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return AdaptadorEtiquetaTDS.getUnicaInstancia();
 	}
 
 }

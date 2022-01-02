@@ -69,7 +69,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 				new Propiedad("premium", String.valueOf(usuario.isPremium())),
 				new Propiedad("nacimiento", dateFormat.format(usuario.getNacimiento())))));
 
-		// registrar entidad cliente
+		// registrar entidad usuario
 		eUsuario = servPersistencia.registrarEntidad(eUsuario);
 		// asignar identificador unico
 		// Se aprovecha el que genera el servicio de persistencia

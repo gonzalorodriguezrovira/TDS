@@ -45,7 +45,7 @@ public class AdaptadorVideoTDS implements IAdaptadorVideoDAO {
 		// registrar primero los atributos que son objetos
 		AdaptadorEtiquetaTDS adaptadorEtiqueta = AdaptadorEtiquetaTDS.getUnicaInstancia();
 		for (Etiqueta e : video.getEtiquetas())
-			adaptadorEtiqueta.addListaVideos(e);
+			adaptadorEtiqueta.addEtiqueta(e);
 
 		// crear entidad Cliente
 		eVideo = new Entidad();
