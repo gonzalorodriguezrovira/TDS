@@ -51,7 +51,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		// registrar primero los atributos que son objetos
 		AdaptadorListaVideosTDS adaptadorListaVideos = AdaptadorListaVideosTDS.getUnicaInstancia();
 		for (ListaVideos lv : usuario.getListaVideos())
-			adaptadorListaVideos.registrarListaVideos(lv);
+			adaptadorListaVideos.addListaVideos(lv);
 		
 		AdaptadorVideoTDS adaptadorVideo = AdaptadorVideoTDS.getUnicaInstancia();
 		for (Video v : usuario.getRecientes())
@@ -79,15 +79,14 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 
 	@Override
 	public void borrarUsuario(Usuario usuario) {
-		// No se comprueban restricciones de integridad con Venta
-				Entidad eUsuario = servPersistencia.recuperarEntidad(usuario.getCodigo());
-
-				servPersistencia.borrarEntidad(eUsuario);
+		// No se comprueban restricciones de integridad
+		Entidad eUsuario = servPersistencia.recuperarEntidad(usuario.getCodigo());
+		servPersistencia.borrarEntidad(eUsuario);
 	}
 
 	@Override
 	public Usuario recuperarUsuario(int codigo) {
-			// Si la entidad estï¿½ en el pool la devuelve directamente
+			// Si la entidad está en el pool la devuelve directamente
 			if (PoolDAO.getUnicaInstancia().contiene(codigo))
 				return (Usuario) PoolDAO.getUnicaInstancia().getObjeto(codigo);
 			
@@ -118,7 +117,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 			premium = Boolean.valueOf(servPersistencia.recuperarPropiedadEntidad(eUsuario, "premium"));
 			tamHistorial = Integer.valueOf(servPersistencia.recuperarPropiedadEntidad(eUsuario, "tamHistorial"));
 
-			Usuario usuario= new Usuario(nombre, apellidos, email, user, password, nacimiento);
+			Usuario usuario= new Usuario(nombre, apellidos, email, tamHistorial, user, password, nacimiento);
 			usuario.setCodigo(codigo);
 			
 			PoolDAO.getUnicaInstancia().addObjeto(codigo, usuario);

@@ -30,4 +30,9 @@ public class AdaptadorVideoTDS implements IAdaptadorVideoDAO{
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void addVideo(Video v) {
+		// TODO Auto-generated method stub
+		
+	}
 }

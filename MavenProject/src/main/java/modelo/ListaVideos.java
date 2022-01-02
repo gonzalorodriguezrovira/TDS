@@ -4,7 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ListaVideos {
-
+	
+	private int codigo;
 	private String name;
 	private List<Video> videos;
 	
@@ -26,6 +27,22 @@ public class ListaVideos {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return getClass().getSimpleName() + " - name=["+name+"], videos="+videos.toString()+"";
+	}
+
+	public int getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
+	
+	public List<Video> getVideos() {
+		return videos;
+	}
+	
+	private void addVideo(Video v) {
+		videos.add(0,v);
 	}
 	
 }
