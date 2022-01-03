@@ -83,7 +83,7 @@ public class MisListas extends JPanel {
 		panel_2.add(lblNewLabel_1);
 		
 		CardLayout c = (CardLayout)(AppVideo.vDisplay.getLayout());
-		bCancelarML.addActionListener(ev -> c.show(AppVideo.vDisplay, AppVideo.BRUH));
+		//bCancelarML.addActionListener(ev -> c.show(AppVideo.vDisplay, AppVideo.INICIO_SESION));
 		/*
 		bCancelarML.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

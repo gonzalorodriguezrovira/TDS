@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.BadLocationException;
 
 import controlador.App;
 import modelo.Usuario;
@@ -36,7 +37,6 @@ public class AppVideo extends JFrame {
 	private JPanel contentPane;
 	// IDENTIFICADORES DE LAS DISTINTAS VENTANAS
 	final static String INICIO_SESION = "Inicio de sesion";
-	final static String BRUH = "borrame cuando tengas ventana de inicio";
 	final static String REGISTRO = "Registro de usuario";
 	final static String EXPLORAR = "Explorar videos";
 	final static String MIS_LISTAS = "Buscar en las listas de usuario";
@@ -44,11 +44,10 @@ public class AppVideo extends JFrame {
 	final static JPanel vDisplay = new JPanel(new CardLayout(0, 0));
 
 	private InicioSesion pIS = new InicioSesion(this);
-	private PantallaBase pPB = new PantallaBase();
 	private Registro pR = new Registro(this);
 	private Explorar pE = new Explorar(this);
 	private MisListas pML = new MisListas();
-	
+
 	// BOTONES
 	private JButton bLogin;
 	private JButton bRegistro;
@@ -110,7 +109,7 @@ public class AppVideo extends JFrame {
 		bRegistro = new JButton("Registro");
 		bRegistro.setBackground(Color.LIGHT_GRAY);
 		barraSuperior.add(bRegistro);
-		
+
 		bLogin = new JButton("Login");
 		bLogin.setBackground(Color.LIGHT_GRAY);
 		barraSuperior.add(bLogin);
@@ -119,6 +118,8 @@ public class AppVideo extends JFrame {
 		barraSuperior.add(rigidArea_2_BS);
 
 		bLogout = new JButton("Logout");
+		bLogout.setEnabled(false);
+
 		bLogout.setBackground(Color.LIGHT_GRAY);
 		barraSuperior.add(bLogout);
 
@@ -126,6 +127,7 @@ public class AppVideo extends JFrame {
 		barraSuperior.add(rigidArea_3_BS);
 
 		bPremium = new JButton("Premium");
+		bPremium.setEnabled(false);
 		bPremium.setFont(new Font("Tahoma", Font.BOLD, 12));
 		bPremium.setBackground(Color.BLACK);
 		bPremium.setForeground(new Color(255, 163, 26));
@@ -147,24 +149,25 @@ public class AppVideo extends JFrame {
 		barraExploracion.add(rigidArea_1);
 
 		bExplorar = new JButton("Explorar");
+		bExplorar.setEnabled(false);
 		bExplorar.setBackground(Color.LIGHT_GRAY);
 		barraExploracion.add(bExplorar);
-		
+
 		bMisListas = new JButton("Mis Listas");
 		bMisListas.setBackground(Color.LIGHT_GRAY);
 		barraExploracion.add(bMisListas);
 		bMisListas.setEnabled(false);
-		
+
 		bRecientes = new JButton("Recientes");
 		bRecientes.setBackground(Color.LIGHT_GRAY);
 		barraExploracion.add(bRecientes);
 		bRecientes.setEnabled(false);
-		
+
 		bNuevaLista = new JButton("Nueva Lista");
 		bNuevaLista.setBackground(Color.LIGHT_GRAY);
 		barraExploracion.add(bNuevaLista);
 		bNuevaLista.setEnabled(false);
-		
+
 		Component rigidArea_2 = Box.createRigidArea(new Dimension(20, 20));
 		barraExploracion.add(rigidArea_2);
 
@@ -182,7 +185,7 @@ public class AppVideo extends JFrame {
 		gbc_vDisplay.gridy = 2;
 		contentPane.add(vDisplay, gbc_vDisplay);
 
-		vDisplay.add(pPB, BRUH);
+	
 		vDisplay.add(pIS, INICIO_SESION);
 		vDisplay.add(pE, EXPLORAR);
 		vDisplay.add(pR, REGISTRO);
@@ -228,11 +231,16 @@ public class AppVideo extends JFrame {
 		setUsuario(nombre);
 		CardLayout c = (CardLayout) (vDisplay.getLayout());
 		c.show(vDisplay, EXPLORAR);
+		bRegistro.setEnabled(false);
 		bLogin.setEnabled(false);
 		lbUsuario.setVisible(true);
 		bMisListas.setEnabled(true);
 		bRecientes.setEnabled(true);
 		bNuevaLista.setEnabled(true);
+		bExplorar.setEnabled(true);
+		bPremium.setEnabled(true);
+		bLogout.setEnabled(true);
+
 	}
 
 	public void cierreSesion() {
@@ -241,16 +249,21 @@ public class AppVideo extends JFrame {
 			c.show(vDisplay, INICIO_SESION);
 			setUsuario("");
 			App.getInstancia().setUsuarioActual(null);
+			bRegistro.setEnabled(true);
 			bLogin.setEnabled(true);
 			bMisListas.setEnabled(false);
 			bRecientes.setEnabled(false);
 			bNuevaLista.setEnabled(false);
 			lbUsuario.setVisible(false);
+			bExplorar.setEnabled(false);
+			bPremium.setEnabled(false);
+			bLogout.setEnabled(false);
 		}
 	}
-	
-	public void registrarUsuario(String nombre, String apellidos, String email, String usuario, String password,Date nacimiento) {
-		if(App.getInstancia().registrarUsuario(nombre, apellidos, email, usuario, password, nacimiento)) {
+
+	public void registrarUsuario(String nombre, String apellidos, String email, String usuario, String password,
+			Date nacimiento) {
+		if (App.getInstancia().registrarUsuario(nombre, apellidos, email, usuario, password, nacimiento)) {
 			CardLayout c = (CardLayout) (vDisplay.getLayout());
 			c.show(vDisplay, INICIO_SESION);
 		}
