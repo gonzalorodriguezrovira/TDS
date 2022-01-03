@@ -83,10 +83,10 @@ public class InicioSesion extends JPanel {
 
 		Component rigidArea_1_1_5 = Box.createRigidArea(new Dimension(20, 20));
 		horizontalBox_1_1.add(rigidArea_1_1_5);
-		
+
 		Box horizontalBox = Box.createHorizontalBox();
 		verticalBox_2.add(horizontalBox);
-		
+
 		JLabel camposVacios = new JLabel("");
 		horizontalBox.add(camposVacios);
 		Component rigidArea_5_IS_1 = Box.createRigidArea(new Dimension(20, 80));
@@ -115,41 +115,39 @@ public class InicioSesion extends JPanel {
 		verticalBox_2.add(rigidArea_1);
 
 		CardLayout c = (CardLayout) (AppVideo.vDisplay.getLayout());
-		bCancelarLogin.addActionListener(ev -> c.show(AppVideo.vDisplay, AppVideo.BRUH));
-		
-		/*
-		 * bCancelarLogin_1.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) { CardLayout c =
-		 * (CardLayout)(AppVideo.vDisplay.getLayout()); c.show(AppVideo.vDisplay,
-		 * AppVideo.BRUH); } });
-		 */
+		bCancelarLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				txtLogin.setText("");
+				txtPassword.setText("");
+				c.show(AppVideo.vDisplay, AppVideo.BRUH);
+			}
+		});
 
 		bAceptarLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String nombre = txtLogin.getText().trim();			
+				String nombre = txtLogin.getText().trim();
 				String password = txtPassword.getText().trim();
-			
-				
+
 				if (nombre.isEmpty() || password.isEmpty()) {
 					camposVacios.setText("Campos vacios");
-					camposVacios.setVisible(true);					
-				}
-				else {
+					camposVacios.setVisible(true);
+				} else {
 					Usuario aux = App.getInstancia().findUsuario(nombre);
 					camposVacios.setVisible(false);
 					if (aux != null) {
 						if (App.getInstancia().comprobarPassword(aux, password)) {
+							App.getInstancia().setUsuarioActual(aux); // Se ha iniciado sesión y el controlador tratará
+																		// a este usuario
 							v.inicioValido(nombre);
 							txtLogin.setText("");
 							txtPassword.setText("");
-						}else {
+						} else {
 							camposVacios.setText("Contraseña incorrecta");
-							camposVacios.setVisible(true);	
+							camposVacios.setVisible(true);
 						}
-					}else {
+					} else {
 						camposVacios.setText("Usuario no existe");
-						camposVacios.setVisible(true);	
-
+						camposVacios.setVisible(true);
 					}
 				}
 			}

@@ -28,10 +28,14 @@ public class App
 		return usuarioActual;
 	}
 	
+	public void setUsuarioActual(Usuario usuarioActual) {
+		this.usuarioActual = usuarioActual;
+	}
+	
 	private IAdaptadorUsuarioDAO adaptadorUsuario;
 	private IAdaptadorVideoDAO adaptadorVideo;
 	private IAdaptadorEtiquetaDAO adapatadorEtiqueta;
-//	private IAdaptadorListaVideosDAO adaptadorListaVideos;
+	private IAdaptadorListaVideosDAO adaptadorListaVideos;
 	
 	private RepositorioUsuario repositorioUsuario;
 	private RepositorioVideo repositorioVideo;
@@ -63,32 +67,32 @@ public class App
 		adaptadorVideo = factoria.getVideoDAO();
 	}
 	
+	//nice
 	public boolean registrarUsuario(String nombre, String apellidos, String email, String usuario, String password,Date nacimiento) {
-		// No se controla que existan dnis duplicados
 		Usuario usr= new Usuario(nombre,apellidos,email,usuario,password,nacimiento);
-		//adaptadorCliente.registrarCliente(usr);
+		adaptadorUsuario.addUsuario(usr);
 		return repositorioUsuario.addUsuario(usr);
 	}
 	
 	public boolean registrarVideo(String url, String titulo, Set<Etiqueta> etiquetas) {
-		// No se controla que existan dnis duplicados
 		Video video= new Video(url,titulo,etiquetas);
-		//adaptadorVideo.registrarVideo(video);
+		adaptadorVideo.addVideo(video);
 		return repositorioVideo.addVideo(video);
 	}
 	
 	public boolean removeUsuario(Usuario usr) {
-		//adaptadorUsuario.removeUsuario(usr);
+		adaptadorUsuario.borrarUsuario(usr);
 		return repositorioUsuario.removeUsuario(usr);
 	}
 	
 	public boolean removeVideo(Video video) {
-		//adaptadorVideo.removeVideo(Video);
+		adaptadorVideo.borrarVideo(video);
 		return repositorioVideo.removeVideo(video);
 	}
+	
 	// TODO Buscamos por el objeto usuario o por el nombre de este(usr)
 	public Usuario findUsuario(String user) {
-		//adaptadorUsuario.findUsuario(user);
+	//	adaptadorUsuario.recuperarUsuario(user.get);
 		return repositorioUsuario.findUsuario(user);
 	}
 
