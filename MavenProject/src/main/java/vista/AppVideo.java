@@ -46,7 +46,7 @@ public class AppVideo extends JFrame {
 	private InicioSesion pIS = new InicioSesion(this);
 	private PantallaBase pPB = new PantallaBase();
 	private Registro pR = new Registro(this);
-	private Explorar pE = new Explorar();
+	private Explorar pE = new Explorar(this);
 	private MisListas pML = new MisListas();
 	
 	// BOTONES
@@ -110,7 +110,7 @@ public class AppVideo extends JFrame {
 		bRegistro = new JButton("Registro");
 		bRegistro.setBackground(Color.LIGHT_GRAY);
 		barraSuperior.add(bRegistro);
-
+		
 		bLogin = new JButton("Login");
 		bLogin.setBackground(Color.LIGHT_GRAY);
 		barraSuperior.add(bLogin);
@@ -240,6 +240,7 @@ public class AppVideo extends JFrame {
 			CardLayout c = (CardLayout) (vDisplay.getLayout());
 			c.show(vDisplay, INICIO_SESION);
 			setUsuario("");
+			App.getInstancia().setUsuarioActual(null);
 			bLogin.setEnabled(true);
 			bMisListas.setEnabled(false);
 			bRecientes.setEnabled(false);
