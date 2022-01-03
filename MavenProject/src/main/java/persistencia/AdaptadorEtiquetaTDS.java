@@ -56,7 +56,7 @@ public class AdaptadorEtiquetaTDS implements IAdaptadorEtiquetaDAO {
 		Entidad eEtiqueta = servPersistencia.recuperarEntidad(etiqueta.getCodigo());
 		servPersistencia.borrarEntidad(eEtiqueta);
 	}
-
+/*
 	@Override
 	public void modificarEtiqueta(Etiqueta etiqueta) {
 		Entidad eEtiqueta = servPersistencia.recuperarEntidad(etiqueta.getCodigo());
@@ -71,7 +71,7 @@ public class AdaptadorEtiquetaTDS implements IAdaptadorEtiquetaDAO {
 			servPersistencia.modificarPropiedad(prop);
 		}
 	}
-
+*/
 	@Override
 	public List<Etiqueta> recuperarEtiquetas() {
 		List<Entidad> eEtiquetas = servPersistencia.recuperarEntidades("etiqueta");
