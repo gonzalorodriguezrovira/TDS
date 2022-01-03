@@ -45,7 +45,7 @@ public class AppVideo extends JFrame {
 
 	private InicioSesion pIS = new InicioSesion(this);
 	private Registro pR = new Registro(this);
-	private Explorar pE = new Explorar();
+	private Explorar pE = new Explorar(this);
 	private MisListas pML = new MisListas();
 
 	// BOTONES
