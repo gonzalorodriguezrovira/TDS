@@ -1,4 +1,4 @@
-package persistencia;
+	package persistencia;
 
 public abstract class FactoriaDAO {
 	private static FactoriaDAO unicaInstancia;
@@ -33,7 +33,7 @@ public abstract class FactoriaDAO {
 // interfaces
 	public abstract IAdaptadorUsuarioDAO getUsuarioDAO();
 
-	public abstract IAdaptadorVideoDAO getVideoDAO();
+	public abstract IAdaptadorVideoDAO getLineaVentaDAO();
 
 	public abstract IAdaptadorListaVideosDAO getListaVideosDAO();
 

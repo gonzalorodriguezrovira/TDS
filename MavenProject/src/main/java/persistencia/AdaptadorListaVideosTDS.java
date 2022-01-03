@@ -78,8 +78,7 @@ public class AdaptadorListaVideosTDS implements IAdaptadorListaVideosDAO {
 	@Override
 	public ListaVideos recuperarListaVideos(int codigo) {
 		// Si la entidad está en el pool la devuelve directamente
-		if (PoolDAO.getUnicaInstancia().contiene(codigo))
-			return (ListaVideos) PoolDAO.getUnicaInstancia().getObjeto(codigo);
+	
 		
 		Entidad ListaVideos;
 		String name;
@@ -117,7 +116,7 @@ public class AdaptadorListaVideosTDS implements IAdaptadorListaVideosDAO {
 	private String obtenerCodigosVideos(List<Video> listaVideo) {
 		String aux = "";
 		for (Video v : listaVideo) {
-			aux += v.getUrl() + " ";
+			aux += v.getCodigo() + " ";
 		}
 		return aux.trim();
 	}

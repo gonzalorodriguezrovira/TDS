@@ -87,8 +87,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	@Override
 	public Usuario recuperarUsuario(int codigo) {
 			// Si la entidad está en el pool la devuelve directamente
-			if (PoolDAO.getUnicaInstancia().contiene(codigo))
-				return (Usuario) PoolDAO.getUnicaInstancia().getObjeto(codigo);
+			
 			
 			Entidad eUsuario;
 			String nombre;
@@ -120,7 +119,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 			Usuario usuario= new Usuario(nombre, apellidos, email, tamHistorial, user, password, nacimiento);
 			usuario.setCodigo(codigo);
 			
-			PoolDAO.getUnicaInstancia().addObjeto(codigo, usuario);
+		
 			
 			recientes = obtenerRecientesDesdeCodigos(servPersistencia.recuperarPropiedadEntidad(eUsuario, "recientes"));
 			listaVideos = obtenerListaVideosDesdeCodigos(servPersistencia.recuperarPropiedadEntidad(eUsuario, "listaVideos")) ;
@@ -183,19 +182,20 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	}
 
 	// -------------------Funciones auxiliares-----------------------------
+	// TODO pasa a codigo
 	private String obtenerCodigosVideos(List<Video> listaVideo) {
 		String aux = "";
 		for (Video v : listaVideo) {
-			aux += v.getUrl() + " ";
+			aux += v.getCodigo() + " ";
 		}
 		return aux.trim();
 	}
 
-	// TODO Repasar
+	// TODO pasa a codigo
 	private String obtenerCodigosListaVideos(List<ListaVideos> listaVideos) {
 		String aux = "";
 		for (ListaVideos lv : listaVideos) {
-			aux += lv.getName() + " ";
+			aux += lv.getCodigo() + " ";
 		}
 		return aux.trim();
 	}

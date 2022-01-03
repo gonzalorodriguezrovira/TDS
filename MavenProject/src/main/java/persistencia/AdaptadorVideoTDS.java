@@ -99,8 +99,7 @@ public class AdaptadorVideoTDS implements IAdaptadorVideoDAO {
 	@Override
 	public Video recuperarVideo(int codigo) {
 		// Si la entidad está en el pool la devuelve directamente
-		if (PoolDAO.getUnicaInstancia().contiene(codigo))
-			return (Video) PoolDAO.getUnicaInstancia().getObjeto(codigo);
+		
 
 		Entidad eVideo;
 		String url;
@@ -118,7 +117,7 @@ public class AdaptadorVideoTDS implements IAdaptadorVideoDAO {
 		video.setCodigo(codigo);
 		video.setNumRepro(numRepro);
 
-		PoolDAO.getUnicaInstancia().addObjeto(codigo, video);
+		
 
 		for (Etiqueta e : etiquetas)
 			video.addEtiqueta(e);
@@ -141,7 +140,7 @@ public class AdaptadorVideoTDS implements IAdaptadorVideoDAO {
 	private String obtenercodigoEtiquetas(Set<Etiqueta> etiquetas) {
 		String aux = "";
 		for (Etiqueta e : etiquetas) {
-			aux += e.getNombre() + " ";
+			aux += e.getCodigo() + " ";
 		}
 		return aux.trim();
 	}

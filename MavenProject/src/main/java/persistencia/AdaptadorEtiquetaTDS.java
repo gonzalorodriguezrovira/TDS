@@ -85,8 +85,7 @@ public class AdaptadorEtiquetaTDS implements IAdaptadorEtiquetaDAO {
 
 	@Override
 	public Etiqueta recuperarEtiqueta(int codigo) {
-		if (PoolDAO.getUnicaInstancia().contiene(codigo))
-			return (Etiqueta) PoolDAO.getUnicaInstancia().getObjeto(codigo);
+		
 
 		Entidad eEtiqueta;
 		String nombre;
