@@ -19,10 +19,14 @@ import persistencia.IAdaptadorUsuarioDAO;
 import persistencia.IAdaptadorVideoDAO;
 
 public class App 
-{
+{	
 	private static App aplicacion;
 	
 	private Usuario usuarioActual;	//usuario que estamos tratando en el momento
+	
+	public Usuario getUsuarioActual() {
+		return usuarioActual;
+	}
 	
 	private IAdaptadorUsuarioDAO adaptadorUsuario;
 	private IAdaptadorVideoDAO adaptadorVideo;
