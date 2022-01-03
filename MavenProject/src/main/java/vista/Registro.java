@@ -235,7 +235,7 @@ public class Registro extends JPanel {
 				dateFechaNa.setCalendar(null);
 				lblAlerta.setVisible(false);
 				lblAlerta.setText("");
-				c.show(AppVideo.vDisplay, AppVideo.BRUH);
+				c.show(AppVideo.vDisplay, AppVideo.INICIO_SESION);
 			}
 		});
 

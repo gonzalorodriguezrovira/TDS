@@ -119,7 +119,7 @@ public class InicioSesion extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				txtLogin.setText("");
 				txtPassword.setText("");
-				c.show(AppVideo.vDisplay, AppVideo.BRUH);
+				c.show(AppVideo.vDisplay, AppVideo.INICIO_SESION);
 			}
 		});
 
