@@ -43,6 +43,7 @@ public class Registro extends JPanel {
 	private JTextField txtContraseña;
 	private JTextField txtRepContraseña;
 	private JDateChooser dateFechaNa = null;
+	private JLabel lblAlerta;
 
 	public Registro(AppVideo v) {
 		setBackground(Color.GRAY);
@@ -95,7 +96,7 @@ public class Registro extends JPanel {
 		lblNewLabel_1_1.setForeground(Color.WHITE);
 		horizontalBox_1_1.add(lblNewLabel_1_1);
 
-		 dateFechaNa = new JDateChooser();
+		dateFechaNa = new JDateChooser();
 		horizontalBox_1_1.add(dateFechaNa);
 
 		Component rigidArea_2_4_1 = Box.createRigidArea(new Dimension(50, 20));
@@ -178,8 +179,15 @@ public class Registro extends JPanel {
 		Component rigidArea_2_4_2_1_1 = Box.createRigidArea(new Dimension(55, 20));
 		horizontalBox_1_1_3.add(rigidArea_2_4_2_1_1);
 
+		Box horizontalBox_4 = Box.createHorizontalBox();
+		verticalBox.add(horizontalBox_4);
+
 		Component rigidArea_3_1 = Box.createRigidArea(new Dimension(20, 22));
-		verticalBox.add(rigidArea_3_1);
+		horizontalBox_4.add(rigidArea_3_1);
+
+		lblAlerta = new JLabel("New label");
+		horizontalBox_4.add(lblAlerta);
+		lblAlerta.setVisible(false);
 
 		Box horizontalBox_2 = Box.createHorizontalBox();
 		verticalBox.add(horizontalBox_2);
@@ -215,7 +223,21 @@ public class Registro extends JPanel {
 		pRegistro.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		CardLayout c = (CardLayout) (AppVideo.vDisplay.getLayout());
-		bCancelar.addActionListener(ev -> c.show(AppVideo.vDisplay, AppVideo.BRUH));
+
+		bCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				txtApellidos.setText("");
+				txtContraseña.setText("");
+				txtEmail.setText("");
+				txtNombre.setText("");
+				txtRepContraseña.setText("");
+				txtUsuario.setText("");
+				dateFechaNa.setCalendar(null);
+				lblAlerta.setVisible(false);
+				lblAlerta.setText("");
+				c.show(AppVideo.vDisplay, AppVideo.BRUH);
+			}
+		});
 
 		bRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -224,14 +246,14 @@ public class Registro extends JPanel {
 				String passwordRep = txtRepContraseña.getText().trim();
 				String email = txtEmail.getText().trim();
 				String apellidos = txtApellidos.getText();
-				String usuario= txtUsuario.getText().trim();
-				Date nacimiento= dateFechaNa.getDate();
+				String usuario = txtUsuario.getText().trim();
+				Date nacimiento = dateFechaNa.getDate();
 
-				if(!nombre.isEmpty()) {
-					if(nacimiento != null) {
-						if(!usuario.isEmpty()&& App.getInstancia().findUsuario(usuario)==null) {
-							if(!password.isEmpty()) {
-								if(passwordRep.equals(password)) {
+				if (!nombre.isEmpty()) {
+					if (nacimiento != null) {
+						if (!usuario.isEmpty() && App.getInstancia().findUsuario(usuario) == null) {
+							if (!password.isEmpty()) {
+								if (passwordRep.equals(password)) {
 									txtApellidos.setText("");
 									txtContraseña.setText("");
 									txtEmail.setText("");
@@ -239,24 +261,29 @@ public class Registro extends JPanel {
 									txtRepContraseña.setText("");
 									txtUsuario.setText("");
 									dateFechaNa.setCalendar(null);
-									v.registrarUsuario(nombre, apellidos, email, usuario, passwordRep,nacimiento);
-								}else {
-									//TODO popup consataseñas no cinciden
+									lblAlerta.setVisible(false);
+									lblAlerta.setText("");
+									v.registrarUsuario(nombre, apellidos, email, usuario, passwordRep, nacimiento);
+								} else {
+									lblAlerta.setText("Las contraseñas deben coincidir");
+									lblAlerta.setVisible(true);
 								}
-							}else {
-								//popup contraseña vacio
+							} else {
+								lblAlerta.setText("Contraseña vacia");
+								lblAlerta.setVisible(true);
 							}
-						}else {
-							//popup usuario no valido
+						} else {
+							lblAlerta.setText("Usuario no valido");
+							lblAlerta.setVisible(true);
 						}
-					}else {
-						//popup fecha vacia
+					} else {
+						lblAlerta.setText("Fecha vacía");
+						lblAlerta.setVisible(true);
 					}
-				}else {
-					//popup nombre vacio
+				} else {
+					lblAlerta.setText("Nombre vacío");
+					lblAlerta.setVisible(true);
 				}
-
-
 			}
 		});
 	}

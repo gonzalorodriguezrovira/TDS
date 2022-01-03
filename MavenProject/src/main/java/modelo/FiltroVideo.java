@@ -1,5 +1,5 @@
 package modelo;
 
 public interface FiltroVideo {
-	public boolean esVideoOK();
+	public boolean esVideoOK(Video v);
 }
