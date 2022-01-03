@@ -13,5 +13,5 @@ public interface IAdaptadorVideoDAO {
 
 	public Video recuperarVideo(int codigo);
 
-	public List<Video> recuperarVideo();
+	public List<Video> recuperarVideos();
 }

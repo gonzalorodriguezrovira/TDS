@@ -13,6 +13,6 @@ public class FiltroMisListas implements FiltroVideo{
 		for (ListaVideos lv : llv) {
 			l.addAll(lv.getVideos());
 		}
-		return l.contains(v);
+		return !l.contains(v);
 	}
 }

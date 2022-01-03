@@ -39,7 +39,7 @@ public class AdaptadorEtiquetaTDS implements IAdaptadorEtiquetaDAO {
 			return;
 
 		eEtiqueta = new Entidad();
-		eEtiqueta.setNombre("etiqueta");
+		eEtiqueta.setNombre(etiqueta.getNombre());
 		eEtiqueta
 				.setPropiedades(new ArrayList<Propiedad>(Arrays.asList(new Propiedad("nombre", etiqueta.getNombre()))));
 

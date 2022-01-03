@@ -152,6 +152,11 @@ public class Explorar extends JPanel {
 		scrollPane.setBackground(Color.GRAY);
 		scrollPane.setBounds(0, 107, 500, 397);
 		add(scrollPane);
-
 	}
+	
+	public void buscar() {
+		App.getInstancia().videosFiltrados((String)filtros.getSelectedItem());
+	}
+	
+	
 }

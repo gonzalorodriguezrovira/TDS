@@ -126,7 +126,7 @@ public class AdaptadorVideoTDS implements IAdaptadorVideoDAO {
 	}
 
 	@Override
-	public List<Video> recuperarVideo() {
+	public List<Video> recuperarVideos() {
 		List<Entidad> eVideos = servPersistencia.recuperarEntidades("video");
 		List<Video> video = new LinkedList<Video>();
 
