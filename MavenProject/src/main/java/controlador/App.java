@@ -118,6 +118,12 @@ public class App {
 	public boolean comprobarPassword(Usuario usuario, String password) {
 		return repositorioUsuario.checkContraseña(usuario, password);
 	}
+	
+	public boolean usuarioSetPremium() {
+		usuarioActual.setPremium(!usuarioActual.isPremium());
+		adaptadorUsuario.modificarUsuario(usuarioActual);
+		return usuarioActual.isPremium();
+	}
 
 	public List<Video> videosFiltrados(String filtro) {
 		List<Video> videos = adaptadorVideo.recuperarVideos();

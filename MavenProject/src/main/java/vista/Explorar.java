@@ -158,5 +158,8 @@ public class Explorar extends JPanel {
 		App.getInstancia().videosFiltrados((String)filtros.getSelectedItem());
 	}
 	
+	public void habilitarFiltros(boolean ispremium) {
+		filtros.setEnabled(ispremium);
+	}
 	
 }

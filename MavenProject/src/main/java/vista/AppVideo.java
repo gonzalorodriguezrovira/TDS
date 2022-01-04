@@ -59,8 +59,9 @@ public class AppVideo extends JFrame {
 	private JButton bPremium;
 	private JLabel lbUsuario;
 
-	public AppVideo() {
+	private boolean premium;
 
+	public AppVideo() {
 		JFrame ventana = new JFrame();
 		ventana.setResizable(false);
 		ventana.setVisible(true);
@@ -175,7 +176,7 @@ public class AppVideo extends JFrame {
 		barraExploracion.add(rigidArea);
 
 		lbUsuario = new JLabel("");
-		lbUsuario.setEnabled(false);
+		lbUsuario.setForeground(Color.ORANGE);
 		barraExploracion.add(lbUsuario);
 		lbUsuario.setVisible(false);
 
@@ -185,7 +186,6 @@ public class AppVideo extends JFrame {
 		gbc_vDisplay.gridy = 2;
 		contentPane.add(vDisplay, gbc_vDisplay);
 
-	
 		vDisplay.add(pIS, INICIO_SESION);
 		vDisplay.add(pE, EXPLORAR);
 		vDisplay.add(pR, REGISTRO);
@@ -217,8 +217,24 @@ public class AppVideo extends JFrame {
 		 * (CardLayout)(vDisplay.getLayout()); c.show(vDisplay, MIS_LISTAS); } });
 		 */
 		bLogout.addActionListener(ev -> cierreSesion());
-	}
 
+		bPremium.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				premium = App.getInstancia().usuarioSetPremium();
+				cambiarPremium();
+			}
+		});
+	}
+	
+	public void cambiarPremium() {
+		premium = App.getInstancia().getUsuarioActual().isPremium();
+		if(premium)
+			bPremium.setText("NoPremium");
+		else
+			bPremium.setText("Premium");
+		pE.habilitarFiltros(premium);
+	}
+	
 	public String getUsuario() {
 		return lbUsuario.getText();
 	}
@@ -240,7 +256,7 @@ public class AppVideo extends JFrame {
 		bExplorar.setEnabled(true);
 		bPremium.setEnabled(true);
 		bLogout.setEnabled(true);
-
+		cambiarPremium();
 	}
 
 	public void cierreSesion() {
@@ -258,6 +274,7 @@ public class AppVideo extends JFrame {
 			bExplorar.setEnabled(false);
 			bPremium.setEnabled(false);
 			bLogout.setEnabled(false);
+			bPremium.setText("Premium");
 		}
 	}
 
