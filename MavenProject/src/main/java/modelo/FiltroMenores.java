@@ -2,7 +2,7 @@ package modelo;
 
 import java.util.HashSet;
 
-public class FiltroAdultos implements FiltroVideo {
+public class FiltroMenores implements FiltroVideo {
 	@Override
 	public boolean esVideoOK(Video v) {
 		HashSet<Etiqueta> etiquetas = (HashSet<Etiqueta>) v.getEtiquetas();
