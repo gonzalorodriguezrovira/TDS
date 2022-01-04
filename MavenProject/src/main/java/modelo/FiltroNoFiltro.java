@@ -1,6 +1,6 @@
 package modelo;
 
-public class FiltroApagado implements FiltroVideo {
+public class FiltroNoFiltro implements FiltroVideo {
 	@Override
 	public boolean esVideoOK(Video v) {
 		return true;
