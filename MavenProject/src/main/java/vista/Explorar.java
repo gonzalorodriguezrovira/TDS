@@ -3,6 +3,7 @@ package vista;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -12,6 +13,7 @@ import javax.swing.BoxLayout;
 import com.toedter.calendar.JDateChooser;
 
 import controlador.App;
+import modelo.Etiqueta;
 
 import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
@@ -38,13 +40,17 @@ public class Explorar extends JPanel {
 
 	private JComboBox filtros;
 
+	private String etiquetas = "";
+	
 	public Explorar(AppVideo v) {
+		cargarEtiquetas();
+		
 		setBackground(Color.GRAY);
 		setLayout(null);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.GRAY);
-		panel.setBounds(0, 0, 500, 107);
+		panel.setBounds(0, 0, 480, 107);
 		add(panel);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
@@ -90,7 +96,7 @@ public class Explorar extends JPanel {
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
-		panel_2.setBounds(519, 0, 136, 504);
+		panel_2.setBounds(499, 0, 170, 504);
 		add(panel_2);
 
 		Box verticalBox_1 = Box.createVerticalBox();
@@ -109,15 +115,16 @@ public class Explorar extends JPanel {
 		Component rigidArea_4_1 = Box.createRigidArea(new Dimension(20, 20));
 		verticalBox_1.add(rigidArea_4_1);
 
+		
 		JTextArea area = new JTextArea();
 		area.setEditable(false);
 		area.setWrapStyleWord(true);
 		area.setLineWrap(true);
-		area.setText("a\r\na\r\na\r\na\r\na\r\na\r\na\r\n");
+		area.setText(etiquetas);
 		area.setRows(8);
-		area.setColumns(15);
+		
 		verticalBox_1.add(area);
-
+		
 		JScrollPane scroll = new JScrollPane(area);
 		verticalBox_1.add(scroll);
 
@@ -145,13 +152,17 @@ public class Explorar extends JPanel {
 		JScrollPane scroll1 = new JScrollPane(area1);
 		verticalBox_1.add(scroll1);
 
-		Component rigidArea_6 = Box.createRigidArea(new Dimension(20, 20));
-		panel_2.add(rigidArea_6);
-
 		ScrollPane scrollPane = new ScrollPane();
 		scrollPane.setBackground(Color.GRAY);
-		scrollPane.setBounds(0, 107, 500, 397);
+		scrollPane.setBounds(0, 107, 480, 397);
 		add(scrollPane);
+	}
+	
+	public void cargarEtiquetas() {
+		for(Etiqueta e : App.getInstancia().recuperarEtiquetas()) {
+			System.out.println(e);
+			etiquetas += e.getNombre() +"\r\n";
+		}
 	}
 	
 	public void buscar() {

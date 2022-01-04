@@ -11,12 +11,13 @@ import modelo.Video;
 public class Pruebalistas {
 
 	public static void main(String[] args) {
-		HashSet<Etiqueta> hola = new HashSet<Etiqueta>() ;
-		hola.add(new Etiqueta("Adultos"));
-		System.out.println(hola);
-//		Video v1 = new Video("a","n1", hola);
+		HashSet<Etiqueta> hoola = new HashSet<Etiqueta>() ;
+		hoola.add(new Etiqueta("porfafunciona"));
+		
+		App.getInstancia().addEtiqueta(new Etiqueta("Ayuda"));
+//		Video v1 = new Video("aaaa","nn1", hola);
 //		Video v2 = new Video("aa","n2", new HashSet<Etiqueta>());
-//		App.getInstancia().registrarVideo("aaaa","n12", hola);
+		System.out.println(App.getInstancia().registrarVideo("aaabaa","nnb12", hoola));
 //		App.getInstancia().registrarVideo("aa","n2", new HashSet<Etiqueta>());
 //		List<Video> l1 = new LinkedList<Video>();
 //		l1.add(v1);
@@ -26,8 +27,6 @@ public class Pruebalistas {
 //		l2.addAll(l2);
 //		System.out.println(l2.size());
 //		System.out.println(l2.get(1));
-		
-		System.out.println(App.getInstancia().videosFiltrados("MisListas"));
 		
 		
 		

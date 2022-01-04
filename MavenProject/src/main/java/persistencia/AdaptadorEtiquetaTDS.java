@@ -39,7 +39,7 @@ public class AdaptadorEtiquetaTDS implements IAdaptadorEtiquetaDAO {
 			return;
 
 		eEtiqueta = new Entidad();
-		eEtiqueta.setNombre(etiqueta.getNombre());
+		eEtiqueta.setNombre("etiqueta");
 		eEtiqueta
 				.setPropiedades(new ArrayList<Propiedad>(Arrays.asList(new Propiedad("nombre", etiqueta.getNombre()))));
 
@@ -56,22 +56,18 @@ public class AdaptadorEtiquetaTDS implements IAdaptadorEtiquetaDAO {
 		Entidad eEtiqueta = servPersistencia.recuperarEntidad(etiqueta.getCodigo());
 		servPersistencia.borrarEntidad(eEtiqueta);
 	}
-/*
-	@Override
-	public void modificarEtiqueta(Etiqueta etiqueta) {
-		Entidad eEtiqueta = servPersistencia.recuperarEntidad(etiqueta.getCodigo());
-		for (Propiedad prop : eEtiqueta.getPropiedades()) {
 
-			if (prop.getNombre().equals("codigo")) {
-				prop.setValor(String.valueOf(etiqueta.getCodigo()));
-			} else if (prop.getNombre().equals("nombre")) {
-				prop.setValor(etiqueta.getNombre());
-			}
-
-			servPersistencia.modificarPropiedad(prop);
-		}
-	}
-*/
+	/*
+	 * @Override public void modificarEtiqueta(Etiqueta etiqueta) { Entidad
+	 * eEtiqueta = servPersistencia.recuperarEntidad(etiqueta.getCodigo()); for
+	 * (Propiedad prop : eEtiqueta.getPropiedades()) {
+	 * 
+	 * if (prop.getNombre().equals("codigo")) {
+	 * prop.setValor(String.valueOf(etiqueta.getCodigo())); } else if
+	 * (prop.getNombre().equals("nombre")) { prop.setValor(etiqueta.getNombre()); }
+	 * 
+	 * servPersistencia.modificarPropiedad(prop); } }
+	 */
 	@Override
 	public List<Etiqueta> recuperarEtiquetas() {
 		List<Entidad> eEtiquetas = servPersistencia.recuperarEntidades("etiqueta");
@@ -85,17 +81,15 @@ public class AdaptadorEtiquetaTDS implements IAdaptadorEtiquetaDAO {
 
 	@Override
 	public Etiqueta recuperarEtiqueta(int codigo) {
-		
-
 		Entidad eEtiqueta;
 		String nombre;
-		
+
 		eEtiqueta = servPersistencia.recuperarEntidad(codigo);
-		nombre = eEtiqueta.getNombre();
-		
+		nombre = servPersistencia.recuperarPropiedadEntidad(eEtiqueta, "nombre");
+
 		Etiqueta etiqueta = new Etiqueta(nombre);
 		etiqueta.setCodigo(codigo);
-		
+
 		return etiqueta;
 	}
 }

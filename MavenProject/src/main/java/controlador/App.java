@@ -70,6 +70,7 @@ public class App {
 		}
 		adaptadorUsuario = factoria.getUsuarioDAO();
 		adaptadorVideo = factoria.getVideoDAO();
+		adapatadorEtiqueta = factoria.getEtiquetaDAO();
 	}
 
 	// nice
@@ -119,12 +120,21 @@ public class App {
 		return repositorioUsuario.checkContraseña(usuario, password);
 	}
 	
+	public List<Etiqueta> recuperarEtiquetas(){
+		return adapatadorEtiqueta.recuperarEtiquetas();
+	}
+	
 	public boolean usuarioSetPremium() {
 		usuarioActual.setPremium(!usuarioActual.isPremium());
 		adaptadorUsuario.modificarUsuario(usuarioActual);
 		return usuarioActual.isPremium();
 	}
-
+	
+	//borrar mas adelante
+	public void addEtiqueta(Etiqueta e) {
+		adapatadorEtiqueta.addEtiqueta(e);
+	}
+	
 	public List<Video> videosFiltrados(String filtro) {
 		List<Video> videos = adaptadorVideo.recuperarVideos();
 		try {
