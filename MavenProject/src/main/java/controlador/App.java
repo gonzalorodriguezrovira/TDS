@@ -3,6 +3,7 @@ package controlador;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collector;
@@ -135,8 +136,26 @@ public class App {
 		adapatadorEtiqueta.addEtiqueta(e);
 	}
 	
-	public List<Video> videosFiltrados(String filtro) {
-		List<Video> videos = adaptadorVideo.recuperarVideos();
+	public List<Video> cargarVideos() {
+		return adaptadorVideo.recuperarVideos();
+
+	}
+	
+	public List<Video> busquedaDeVideos(String nombre, String filtro, List<String> etiquetas){
+		List<Video> l = repositorioVideo.recuperarVideos();
+		l = videosPorNombre(nombre, l);
+		l = videosPorEtiquetas(l, etiquetas);
+		return videosFiltrados(filtro, l);
+	}
+	
+	public List<Video> videosPorNombre(String nombre, List<Video> videos){
+		if(nombre.isEmpty()) return videos;
+		return videos.stream()
+			.filter(v -> v.getTitulo().contains(nombre))
+			.collect(Collectors.toList());
+	}
+	
+	public List<Video> videosFiltrados(String filtro, List<Video> videos) {
 		try {
 			f = (FiltroVideo) Class.forName("modelo.Filtro" + filtro).getDeclaredConstructor().newInstance();
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
@@ -148,4 +167,18 @@ public class App {
 				.collect(Collectors.toList());
 	}
 
+	public List<Video> videosPorEtiquetas(List<Video> videos, List<String> etiquetas){
+		if(etiquetas.isEmpty()) return videos;
+		List<Video> l = new LinkedList<Video>();
+		for(Video v : videos) {
+			Set<Etiqueta> conjuntoE = v.getEtiquetas();
+			for (Etiqueta e : conjuntoE) {
+				if(etiquetas.contains(e.getNombre())) {
+					l.add(v);
+				}
+			}
+		}
+		return l;
+	}
+	
 }

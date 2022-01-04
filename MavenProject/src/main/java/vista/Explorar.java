@@ -1,6 +1,10 @@
 package vista;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Flow.Subscription;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -14,6 +18,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;
 import java.awt.ScrollPane;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
@@ -22,7 +28,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 
 public class Explorar extends JPanel {
-	private JTextField textField;
+	private JTextField txtNombre;
 
 	private JComboBox filtros;
 
@@ -53,15 +59,15 @@ public class Explorar extends JPanel {
 		lblNewLabel.setForeground(Color.WHITE);
 		horizontalBox.add(lblNewLabel);
 
-		textField = new JTextField();
-		horizontalBox.add(textField);
-		textField.setColumns(10);
+		txtNombre = new JTextField();
+		horizontalBox.add(txtNombre);
+		txtNombre.setColumns(10);
 
 		Component rigidArea = Box.createRigidArea(new Dimension(20, 20));
 		horizontalBox.add(rigidArea);
 
-		JButton btnNewButton = new JButton("Buscar");
-		horizontalBox.add(btnNewButton);
+		JButton bBuscar = new JButton("Buscar");
+		horizontalBox.add(bBuscar);
 
 		Component rigidArea_2 = Box.createRigidArea(new Dimension(20, 20));
 		verticalBox.add(rigidArea_2);
@@ -77,8 +83,8 @@ public class Explorar extends JPanel {
 		Component rigidArea_3 = Box.createRigidArea(new Dimension(200, 20));
 		horizontalBox_1.add(rigidArea_3);
 
-		JButton btnNewButton_1 = new JButton("Nueva búsqueda");
-		horizontalBox_1.add(btnNewButton_1);
+		JButton bNuevaBusqueda = new JButton("Nueva búsqueda");
+		horizontalBox_1.add(bNuevaBusqueda);
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
@@ -101,18 +107,16 @@ public class Explorar extends JPanel {
 		Component rigidArea_4_1 = Box.createRigidArea(new Dimension(20, 20));
 		verticalBox_1.add(rigidArea_4_1);
 
-		JList<String> lista = new JList<String>();
+		JList<String> listaEtiquetas = new JList<String>();
 		DefaultListModel<String> model = new DefaultListModel<String>();
 		for (String valor : etiquetas) {
 			model.addElement(valor);
 		}
-		lista.setModel(model);
-		lista.setSelectedIndex(0);
+		listaEtiquetas.setModel(model);
+		listaEtiquetas.setSelectedIndex(0);
 
-		JScrollPane scrollLista = new JScrollPane(lista);
+		JScrollPane scrollLista = new JScrollPane(listaEtiquetas);
 		verticalBox_1.add(scrollLista);
-		
-		
 
 		Component rigidArea_5 = Box.createRigidArea(new Dimension(20, 75));
 		verticalBox_1.add(rigidArea_5);
@@ -126,49 +130,48 @@ public class Explorar extends JPanel {
 
 		Component rigidArea_4_1_1 = Box.createRigidArea(new Dimension(20, 20));
 		verticalBox_1.add(rigidArea_4_1_1);
-		JList<String> lista1 = new JList<String>();
+		JList<String> listaSeleccionados = new JList<String>();
 
 		DefaultListModel<String> model1 = new DefaultListModel<String>();
-			model1.addElement("\r");
-		
+		model1.addElement("\r");
 
-		lista1.setModel(model1);
-		lista1.setSelectedIndex(0);
-		lista.addMouseListener(new MouseAdapter() {
+		listaSeleccionados.setModel(model1);
+		listaSeleccionados.setSelectedIndex(0);
+		listaEtiquetas.addMouseListener(new MouseAdapter() {
 			String aux;
 			public void mouseClicked(MouseEvent e) {
-				
-				if(e.getClickCount() == 1&&!model.contains("\r")) {
-					aux = model.remove(lista.getSelectedIndex());
-					if(model1.contains("\r"))
+
+				if (e.getClickCount() == 1 && !model.contains("\r")) {
+					aux = model.remove(listaEtiquetas.getSelectedIndex());
+					if (model1.contains("\r"))
 						model1.remove(0);
-					if(model.isEmpty())
+					if (model.isEmpty())
 						model.add(0, "\r");
-					lista.setModel(model);
+					listaEtiquetas.setModel(model);
 					model1.addElement(aux);
-					lista1.setModel(model1);
+					listaSeleccionados.setModel(model1);
 				}
-			}	
-		});
-		
-		lista1.addMouseListener(new MouseAdapter() {
-			String aux;
-			public void mouseClicked(MouseEvent e) {
-				
-				if(e.getClickCount() == 1&&!model1.contains("\r")) {
-					aux = model1.remove(lista1.getSelectedIndex());
-					if(model.contains("\r"))
-						model.remove(0);
-					if(model1.isEmpty())
-						model1.add(0, "\r");
-					lista1.setModel(model1);
-					model.addElement(aux);
-					lista.setModel(model);
-				}
-			}	
+			}
 		});
 
-		JScrollPane scrollLista1 = new JScrollPane(lista1);
+		listaSeleccionados.addMouseListener(new MouseAdapter() {
+			String aux;
+			public void mouseClicked(MouseEvent e) {
+
+				if (e.getClickCount() == 1 && !model1.contains("\r")) {
+					aux = model1.remove(listaSeleccionados.getSelectedIndex());
+					if (model.contains("\r"))
+						model.remove(0);
+					if (model1.isEmpty())
+						model1.add(0, "\r");
+					listaSeleccionados.setModel(model1);
+					model.addElement(aux);
+					listaEtiquetas.setModel(model);
+				}
+			}
+		});
+
+		JScrollPane scrollLista1 = new JScrollPane(listaSeleccionados);
 
 		verticalBox_1.add(scrollLista1);
 
@@ -176,6 +179,16 @@ public class Explorar extends JPanel {
 		scrollPane.setBackground(Color.GRAY);
 		scrollPane.setBounds(0, 107, 480, 397);
 		add(scrollPane);
+		
+		bBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				List<String> ll = new LinkedList<String>();
+				for(Object o : model.toArray()) {
+					ll.add((String)o);
+				}
+				System.out.println(App.getInstancia().busquedaDeVideos(txtNombre.getText(), (String) filtros.getSelectedItem(), ll));
+			}
+		});	
 	}
 
 	public void cargarEtiquetas() {
@@ -187,10 +200,6 @@ public class Explorar extends JPanel {
 			etiquetas[i] = e.getNombre();
 			i++;
 		}
-	}
-
-	public void buscar() {
-		App.getInstancia().videosFiltrados((String) filtros.getSelectedItem());
 	}
 
 	public void habilitarFiltros(boolean ispremium) {

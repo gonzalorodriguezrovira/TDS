@@ -1,18 +1,23 @@
 package modelo;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import controlador.App;
 
 public class RepositorioVideo {
 	
 	private static RepositorioVideo unicaInstancia = new RepositorioVideo();
 	
 	//Base de datos local
-	private Set<Video> bdVideos = new HashSet<Video>();
+	private List<Video> bdVideos = new LinkedList<Video>();
 
-	// CONSTRUCTOR POR DEFECTO
+	public RepositorioVideo() {
+		bdVideos = App.getInstancia().cargarVideos();
+	}
 	
 	public static RepositorioVideo getUnicaInstancia() {
 		return unicaInstancia;
@@ -50,5 +55,9 @@ public class RepositorioVideo {
 				.filter(v -> v.getTitulo().contains(palabra))
 				.collect(Collectors.toList());
 			
+	}
+	
+	public List<Video> recuperarVideos(){
+		return bdVideos;
 	}
 }
