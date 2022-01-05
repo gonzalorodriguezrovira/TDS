@@ -27,6 +27,7 @@ public class InicioSesion extends JPanel {
 	private JTextField txtPassword;
 
 	public InicioSesion(AppVideo v) {
+		//**************************************************INICIALIZACIÓN***************************************************
 		setBackground(Color.GRAY);
 		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
@@ -113,7 +114,9 @@ public class InicioSesion extends JPanel {
 
 		Component rigidArea_1 = Box.createRigidArea(new Dimension(20, 20));
 		verticalBox_2.add(rigidArea_1);
-
+		//*******************************************************************************************************************
+		
+		//*************************************************ACCIONES BOTONES**************************************************
 		CardLayout c = (CardLayout) (AppVideo.vDisplay.getLayout());
 		bCancelarLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -152,5 +155,6 @@ public class InicioSesion extends JPanel {
 				}
 			}
 		});
+		//*******************************************************************************************************************
 	}
 }

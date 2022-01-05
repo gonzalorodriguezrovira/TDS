@@ -11,13 +11,13 @@ import modelo.Video;
 public class Pruebalistas {
 
 	public static void main(String[] args) {
-		HashSet<Etiqueta> hoola = new HashSet<Etiqueta>() ;
-		hoola.add(new Etiqueta("porfafunciona"));
+		HashSet<Etiqueta> hola = new HashSet<Etiqueta>() ;
+		hola.add(new Etiqueta("Música"));
 		
-		App.getInstancia().addEtiqueta(new Etiqueta("Ayuda"));
+//		App.getInstancia().addEtiqueta(new Etiqueta("Ayuda"));
 //		Video v1 = new Video("aaaa","nn1", hola);
 //		Video v2 = new Video("aa","n2", new HashSet<Etiqueta>());
-		System.out.println(App.getInstancia().registrarVideo("aaabaa","nnb12", hoola));
+//		System.out.println(App.getInstancia().registrarVideo("url4","video4", hola));
 //		App.getInstancia().registrarVideo("aa","n2", new HashSet<Etiqueta>());
 //		List<Video> l1 = new LinkedList<Video>();
 //		l1.add(v1);

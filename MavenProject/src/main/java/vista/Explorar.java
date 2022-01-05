@@ -28,26 +28,119 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 
 public class Explorar extends JPanel {
+	//PANELES
+	private JPanel panelBusqueda;
+	private JPanel panelEtiquetas;
+	
+	//LISTAS
+	JList<String> listaSeleccionados;
+	JList<String> listaEtiquetas;
+	
+	//MODELOS
+	DefaultListModel<String> modeloEtiquetas;
+	DefaultListModel<String> modeloEtiqSeleccionadas;
+	
+	//NOMBRE DEL VIDEO A BUSCAR
 	private JTextField txtNombre;
-
+	
+	//FILTROS
 	private JComboBox filtros;
-
+	
+	//ETIQUETAS
 	private String[] etiquetas;
-
+	
+	//BOTONES
+	private JButton bBuscar;
+	private JButton bNuevaBusqueda;
+	
 	public Explorar(AppVideo v) {
-		cargarEtiquetas();
-
+		//COLOR DE FONDO
 		setBackground(Color.GRAY);
 		setLayout(null);
+		
+		//ASIGNACIÓN VALORES PANEL BUSCAR
+		inicializarPanelBuscar();
+		
+		//ASIGNACIÓN VALORES PANEL ETIQUETAS
+		inicializarPanelEtiquetas();
+		
+		//ASIGNACIÓN VALORES SCROLLPANEL DE VIDEOS
+		inicializarScrollPanelVideos();
+		
+		//*************************************************ACCIONES BOTONES**************************************************
+		listaEtiquetas.addMouseListener(new MouseAdapter() {
+			String aux;
+			public void mouseClicked(MouseEvent e) {
 
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.GRAY);
-		panel.setBounds(0, 0, 480, 107);
-		add(panel);
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+				if (e.getClickCount() == 1 && !modeloEtiquetas.contains("\r")) {
+					aux = modeloEtiquetas.remove(listaEtiquetas.getSelectedIndex());
+					if (modeloEtiqSeleccionadas.contains("\r"))
+						modeloEtiqSeleccionadas.remove(0);
+					if (modeloEtiquetas.isEmpty())
+						modeloEtiquetas.add(0, "\r");
+					listaEtiquetas.setModel(modeloEtiquetas);
+					modeloEtiqSeleccionadas.addElement(aux);
+					listaSeleccionados.setModel(modeloEtiqSeleccionadas);
+				}
+			}
+		});
+
+		listaSeleccionados.addMouseListener(new MouseAdapter() {
+			String aux;
+			public void mouseClicked(MouseEvent e) {
+
+				if (e.getClickCount() == 1 && !modeloEtiqSeleccionadas.contains("\r")) {
+					aux = modeloEtiqSeleccionadas.remove(listaSeleccionados.getSelectedIndex());
+					if (modeloEtiquetas.contains("\r"))
+						modeloEtiquetas.remove(0);
+					if (modeloEtiqSeleccionadas.isEmpty())
+						modeloEtiqSeleccionadas.add(0, "\r");
+					listaSeleccionados.setModel(modeloEtiqSeleccionadas);
+					modeloEtiquetas.addElement(aux);
+					listaEtiquetas.setModel(modeloEtiquetas);
+				}
+			}
+		});
+
+		bBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				List<String> ll = new LinkedList<String>();
+				for(Object o : modeloEtiqSeleccionadas.toArray()) {
+					if(!o.equals("\r"))
+						ll.add((String)o);
+				}
+				System.out.println(App.getInstancia().busquedaDeVideos(txtNombre.getText(), (String) filtros.getSelectedItem(), ll));
+			}
+		});
+		//*******************************************************************************************************************
+	}
+	
+	//******************************************************MÉTODOS******************************************************
+	public void cargarEtiquetas() {
+		int i = 0;
+		List<Etiqueta> listaEtiquetas = App.getInstancia().recuperarEtiquetas();
+		etiquetas = new String[listaEtiquetas.size()];
+		for (Etiqueta e : listaEtiquetas) {
+			etiquetas[i] = e.getNombre();
+			i++;
+		}
+	}
+
+	public void habilitarFiltros(boolean ispremium) {
+		filtros.setEnabled(ispremium);
+	}
+	//*******************************************************************************************************************
+	
+	//**************************************************INICIALIZADORES**************************************************
+	private void inicializarPanelBuscar() {
+		panelBusqueda = new JPanel();
+		panelBusqueda.setBackground(Color.GRAY);
+		panelBusqueda.setBounds(0, 0, 480, 107);
+		add(panelBusqueda);
+		panelBusqueda.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		Box verticalBox = Box.createVerticalBox();
-		panel.add(verticalBox);
+		panelBusqueda.add(verticalBox);
 
 		Component rigidArea_1 = Box.createRigidArea(new Dimension(420, 20));
 		verticalBox.add(rigidArea_1);
@@ -66,7 +159,7 @@ public class Explorar extends JPanel {
 		Component rigidArea = Box.createRigidArea(new Dimension(20, 20));
 		horizontalBox.add(rigidArea);
 
-		JButton bBuscar = new JButton("Buscar");
+		bBuscar = new JButton("Buscar");
 		horizontalBox.add(bBuscar);
 
 		Component rigidArea_2 = Box.createRigidArea(new Dimension(20, 20));
@@ -83,16 +176,19 @@ public class Explorar extends JPanel {
 		Component rigidArea_3 = Box.createRigidArea(new Dimension(200, 20));
 		horizontalBox_1.add(rigidArea_3);
 
-		JButton bNuevaBusqueda = new JButton("Nueva búsqueda");
+		bNuevaBusqueda = new JButton("Nueva búsqueda");
 		horizontalBox_1.add(bNuevaBusqueda);
-
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(Color.GRAY);
-		panel_2.setBounds(499, 0, 170, 504);
-		add(panel_2);
+	}
+	
+	private void inicializarPanelEtiquetas() {
+		cargarEtiquetas();						//Inicializamos el array de etiquetas
+		panelEtiquetas = new JPanel();
+		panelEtiquetas.setBackground(Color.GRAY);
+		panelEtiquetas.setBounds(499, 0, 170, 504);
+		add(panelEtiquetas);
 
 		Box verticalBox_1 = Box.createVerticalBox();
-		panel_2.add(verticalBox_1);
+		panelEtiquetas.add(verticalBox_1);
 
 		Component rigidArea_4 = Box.createRigidArea(new Dimension(20, 20));
 		verticalBox_1.add(rigidArea_4);
@@ -107,12 +203,12 @@ public class Explorar extends JPanel {
 		Component rigidArea_4_1 = Box.createRigidArea(new Dimension(20, 20));
 		verticalBox_1.add(rigidArea_4_1);
 
-		JList<String> listaEtiquetas = new JList<String>();
-		DefaultListModel<String> model = new DefaultListModel<String>();
+		listaEtiquetas = new JList<String>();
+		modeloEtiquetas = new DefaultListModel<String>();
 		for (String valor : etiquetas) {
-			model.addElement(valor);
+			modeloEtiquetas.addElement(valor);
 		}
-		listaEtiquetas.setModel(model);
+		listaEtiquetas.setModel(modeloEtiquetas);
 		listaEtiquetas.setSelectedIndex(0);
 
 		JScrollPane scrollLista = new JScrollPane(listaEtiquetas);
@@ -130,80 +226,24 @@ public class Explorar extends JPanel {
 
 		Component rigidArea_4_1_1 = Box.createRigidArea(new Dimension(20, 20));
 		verticalBox_1.add(rigidArea_4_1_1);
-		JList<String> listaSeleccionados = new JList<String>();
+		listaSeleccionados = new JList<String>();
+		
+		modeloEtiqSeleccionadas = new DefaultListModel<String>();
+		modeloEtiqSeleccionadas.addElement("\r");
 
-		DefaultListModel<String> model1 = new DefaultListModel<String>();
-		model1.addElement("\r");
-
-		listaSeleccionados.setModel(model1);
+		listaSeleccionados.setModel(modeloEtiqSeleccionadas);
 		listaSeleccionados.setSelectedIndex(0);
-		listaEtiquetas.addMouseListener(new MouseAdapter() {
-			String aux;
-			public void mouseClicked(MouseEvent e) {
-
-				if (e.getClickCount() == 1 && !model.contains("\r")) {
-					aux = model.remove(listaEtiquetas.getSelectedIndex());
-					if (model1.contains("\r"))
-						model1.remove(0);
-					if (model.isEmpty())
-						model.add(0, "\r");
-					listaEtiquetas.setModel(model);
-					model1.addElement(aux);
-					listaSeleccionados.setModel(model1);
-				}
-			}
-		});
-
-		listaSeleccionados.addMouseListener(new MouseAdapter() {
-			String aux;
-			public void mouseClicked(MouseEvent e) {
-
-				if (e.getClickCount() == 1 && !model1.contains("\r")) {
-					aux = model1.remove(listaSeleccionados.getSelectedIndex());
-					if (model.contains("\r"))
-						model.remove(0);
-					if (model1.isEmpty())
-						model1.add(0, "\r");
-					listaSeleccionados.setModel(model1);
-					model.addElement(aux);
-					listaEtiquetas.setModel(model);
-				}
-			}
-		});
 
 		JScrollPane scrollLista1 = new JScrollPane(listaSeleccionados);
 
 		verticalBox_1.add(scrollLista1);
-
-		ScrollPane scrollPane = new ScrollPane();
-		scrollPane.setBackground(Color.GRAY);
-		scrollPane.setBounds(0, 107, 480, 397);
-		add(scrollPane);
-		
-		bBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				List<String> ll = new LinkedList<String>();
-				for(Object o : model.toArray()) {
-					ll.add((String)o);
-				}
-				System.out.println(App.getInstancia().busquedaDeVideos(txtNombre.getText(), (String) filtros.getSelectedItem(), ll));
-			}
-		});	
 	}
-
-	public void cargarEtiquetas() {
-		int i = 0;
-		List<Etiqueta> listaEtiquetas = App.getInstancia().recuperarEtiquetas();
-		etiquetas = new String[listaEtiquetas.size()];
-		for (Etiqueta e : listaEtiquetas) {
-			System.out.println(e);
-			etiquetas[i] = e.getNombre();
-			i++;
-		}
+	
+	private void inicializarScrollPanelVideos() {
+		ScrollPane scrollPaneVideos = new ScrollPane();
+		scrollPaneVideos.setBackground(Color.GRAY);
+		scrollPaneVideos.setBounds(0, 107, 480, 397);
+		add(scrollPaneVideos);
 	}
-
-	public void habilitarFiltros(boolean ispremium) {
-		filtros.setEnabled(ispremium);
-	}
-
+	//*******************************************************************************************************************
 }

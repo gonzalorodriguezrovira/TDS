@@ -182,7 +182,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	}
 
 	// -------------------Funciones auxiliares-----------------------------
-	// TODO pasa a codigo
+	// TODO pasa a codigo. YA ESTÁ HECHO?
 	private String obtenerCodigosVideos(List<Video> listaVideo) {
 		String aux = "";
 		for (Video v : listaVideo) {
@@ -191,7 +191,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		return aux.trim();
 	}
 
-	// TODO pasa a codigo
+	// TODO pasa a codigo. YA ESTÁ HECHO?
 	private String obtenerCodigosListaVideos(List<ListaVideos> listaVideos) {
 		String aux = "";
 		for (ListaVideos lv : listaVideos) {

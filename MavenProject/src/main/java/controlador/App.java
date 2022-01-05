@@ -1,12 +1,10 @@
 package controlador;
 
 import java.lang.reflect.InvocationTargetException;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import modelo.Etiqueta;
@@ -24,19 +22,10 @@ import persistencia.IAdaptadorUsuarioDAO;
 import persistencia.IAdaptadorVideoDAO;
 
 public class App {
-	private static App aplicacion;
-
-	private Usuario usuarioActual; // usuario que estamos tratando en el momento
-
-	private FiltroVideo f;
-	
-	public Usuario getUsuarioActual() {
-		return usuarioActual;
-	}
-
-	public void setUsuarioActual(Usuario usuarioActual) {
-		this.usuarioActual = usuarioActual;
-	}
+	//ATRIBUTOS
+	private static App aplicacion; 		// Única instancia de App
+	private Usuario usuarioActual; 		// Último usuario que ha iniciado sesión
+	private FiltroVideo f; 				// Último filtro que ha aplicado el usuario
 
 	private IAdaptadorUsuarioDAO adaptadorUsuario;
 	private IAdaptadorVideoDAO adaptadorVideo;
@@ -45,18 +34,21 @@ public class App {
 
 	private RepositorioUsuario repositorioUsuario;
 	private RepositorioVideo repositorioVideo;
-
+	
+	//Para que otras clases puedan acceder a App y sus métodos
 	public static App getInstancia() {
 		if (aplicacion == null)
 			aplicacion = new App();
 		return aplicacion;
 	}
-
+	
+	//CONSTRUCTOR
 	private App() {
 		inicializarAdaptadores();
 		inicializarRepositorios();
 	}
-
+	
+	//MÉTODOS PARA EL CONSTRUCTOR
 	private void inicializarRepositorios() {
 		repositorioUsuario = RepositorioUsuario.getUnicaInstancia();
 		repositorioVideo = RepositorioVideo.getUnicaInstancia();
@@ -74,87 +66,117 @@ public class App {
 		adapatadorEtiqueta = factoria.getEtiquetaDAO();
 	}
 
-	// nice
+	//MÉTODOS PARA EL USUARIO ACTUAL
+	public Usuario getUsuarioActual() {
+		return usuarioActual;
+	}
+	public void setUsuarioActual(Usuario usuarioActual) {
+		this.usuarioActual = usuarioActual;
+	}
+
+	public boolean usuarioSetPremium() {
+		usuarioActual.setPremium(!usuarioActual.isPremium());
+		adaptadorUsuario.modificarUsuario(usuarioActual);
+		return usuarioActual.isPremium();
+	}
+
+	//MÉTODOS USUARIO
 	public boolean registrarUsuario(String nombre, String apellidos, String email, String usuario, String password,
 			Date nacimiento) {
 		Usuario usr = new Usuario(nombre, apellidos, email, usuario, password, nacimiento);
-		adaptadorUsuario.addUsuario(usr);
-		return repositorioUsuario.addUsuario(usr);
+		if(repositorioUsuario.addUsuario(usr)) {//Intentamos registrarlo en la base local
+			adaptadorUsuario.addUsuario(usr);//Si hemos podido, entonces también lo introducimos en la bd.
+			return true;
+		}
+		return false;	//Si no se ha podido añadir en la local tampoco se debería poder añadir en la bd.
 	}
-
-	public boolean registrarVideo(String url, String titulo, Set<Etiqueta> etiquetas) {
-		Video video = new Video(url, titulo, etiquetas);
-		adaptadorVideo.addVideo(video);
-		return repositorioVideo.addVideo(video);
-	}
-
+	
+	//TODO comprobar utilidad en el proyecto fnal. si no, borrar o dejar comentado
 	public boolean removeUsuario(Usuario usr) {
 		adaptadorUsuario.borrarUsuario(usr);
 		return repositorioUsuario.removeUsuario(usr);
+	}
+	
+	public Usuario findUsuario(String user) {
+		//Basta con mirar en la en el repositorio ya que se han cargado los usuarios de la bd.
+		return repositorioUsuario.findUsuario(user);
+	}
+
+	public boolean comprobarPassword(Usuario usuario, String password) {
+		return repositorioUsuario.checkContraseña(usuario, password);
+	}
+
+	//MÉTODOS VIDEO
+	//TODO comprobar utilidad en el proyecto fnal. si no, borrar o dejar comentado
+	public boolean registrarVideo(String url, String titulo, Set<Etiqueta> etiquetas) {
+		Video video = new Video(url, titulo, etiquetas);
+		if(repositorioVideo.addVideo(video)) {		//Intentamos registrarlo en la base local
+			adaptadorVideo.addVideo(video);			//Si hemos podido, entonces también lo introducimos en la bd.
+			return true;			
+		}
+		return false;			//Si no se ha podido añadir en la local tampoco se debería poder añadir en la bd.
 	}
 
 	public boolean removeVideo(Video video) {
 		adaptadorVideo.borrarVideo(video);
 		return repositorioVideo.removeVideo(video);
 	}
-
-	// TODO Buscamos por el objeto usuario o por el nombre de este(usr)
-	public Usuario findUsuario(String user) {
-		// adaptadorUsuario.recuperarUsuario(user.get);
-		return repositorioUsuario.findUsuario(user);
-	}
-
-	public List<Video> findVideo(String palabra) {
-		// adaptadorVideo.findVideo(video);
-		return repositorioVideo.findVideo(palabra);
-	}
-
-	public void addListaVideo(Usuario user, ListaVideos lista) {
-		repositorioUsuario.addListaVideo(user, lista);
-	}
-
-	public List<ListaVideos> findListaVideo(Usuario user, String name) {
-		return repositorioUsuario.findListaVideo(user, name);
-	}
-
-	public boolean comprobarPassword(Usuario usuario, String password) {
-		return repositorioUsuario.checkContraseña(usuario, password);
+	
+	//TODO. comprobar si se usa. si no, borrar
+	public Video findVideo(Video video) {
+		//Basta con mirar en la en el repositorio ya que se han cargado los videos de la bd.
+		return repositorioVideo.findVideo(video);
 	}
 	
-	public List<Etiqueta> recuperarEtiquetas(){
-		return adapatadorEtiqueta.recuperarEtiquetas();
+	//MÉTODOS LISTA VIDEO
+	public void addListaVideo(ListaVideos lista) {
+		repositorioUsuario.addListaVideo(usuarioActual, lista);
+		//Tras añadirle la lista modificamos las bases de datos
+		//La local ya se modifica debido al aliasing
+		adaptadorUsuario.modificarUsuario(usuarioActual);	//Modificamos la base de datos
+	}
+
+	public List<ListaVideos> findListaVideo(String name) {
+		//Basta con buscarlo en la base de datos
+		return repositorioUsuario.findListaVideo(usuarioActual, name);
 	}
 	
-	public boolean usuarioSetPremium() {
-		usuarioActual.setPremium(!usuarioActual.isPremium());
+	public void addVideoALista(ListaVideos lista, Video video) {
+		//Añadimos el video a la lista del usuario actual
+		repositorioUsuario.addVideoALista(usuarioActual, lista, video);
+		//Actualizamos el usuario en la base de datos
 		adaptadorUsuario.modificarUsuario(usuarioActual);
-		return usuarioActual.isPremium();
 	}
-	
-	//borrar mas adelante
+
+	//MÉTODOS ETIQUETA
+	//TODO. comprobar uso. borrar si no se usa.
 	public void addEtiqueta(Etiqueta e) {
 		adapatadorEtiqueta.addEtiqueta(e);
 	}
-	
-	public List<Video> cargarVideos() {
-		return adaptadorVideo.recuperarVideos();
 
+	public List<Etiqueta> recuperarEtiquetas() {
+		return adapatadorEtiqueta.recuperarEtiquetas();
 	}
 	
-	public List<Video> busquedaDeVideos(String nombre, String filtro, List<String> etiquetas){
+	public void addEtiquetaAVideo(Video video, Etiqueta etiqueta) {
+		video.addEtiqueta(etiqueta);
+		adaptadorVideo.modificarVideo(video);
+	}
+	
+	//MÉTODOS PARA VENTANA EXPLORAR
+	public List<Video> busquedaDeVideos(String nombre, String filtro, List<String> etiquetas) {
 		List<Video> l = repositorioVideo.recuperarVideos();
 		l = videosPorNombre(nombre, l);
 		l = videosPorEtiquetas(l, etiquetas);
 		return videosFiltrados(filtro, l);
 	}
-	
-	public List<Video> videosPorNombre(String nombre, List<Video> videos){
-		if(nombre.isEmpty()) return videos;
-		return videos.stream()
-			.filter(v -> v.getTitulo().contains(nombre))
-			.collect(Collectors.toList());
+
+	public List<Video> videosPorNombre(String nombre, List<Video> videos) {
+		if (nombre.isEmpty())
+			return videos;
+		return videos.stream().filter(v -> v.getTitulo().contains(nombre)).collect(Collectors.toList());
 	}
-	
+
 	public List<Video> videosFiltrados(String filtro, List<Video> videos) {
 		try {
 			f = (FiltroVideo) Class.forName("modelo.Filtro" + filtro).getDeclaredConstructor().newInstance();
@@ -162,23 +184,21 @@ public class App {
 				| NoSuchMethodException | SecurityException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		return videos.stream()
-				.filter(v -> f.esVideoOK(v))
-				.collect(Collectors.toList());
+		return videos.stream().filter(v -> f.esVideoOK(v)).collect(Collectors.toList());
 	}
 
-	public List<Video> videosPorEtiquetas(List<Video> videos, List<String> etiquetas){
-		if(etiquetas.isEmpty()) return videos;
+	public List<Video> videosPorEtiquetas(List<Video> videos, List<String> etiquetas) {
+		if (etiquetas.isEmpty())
+			return videos;
 		List<Video> l = new LinkedList<Video>();
-		for(Video v : videos) {
+		for (Video v : videos) {
 			Set<Etiqueta> conjuntoE = v.getEtiquetas();
 			for (Etiqueta e : conjuntoE) {
-				if(etiquetas.contains(e.getNombre())) {
+				if (etiquetas.contains(e.getNombre())) {
 					l.add(v);
 				}
 			}
 		}
 		return l;
 	}
-	
 }

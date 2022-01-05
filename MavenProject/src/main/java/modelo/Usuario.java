@@ -6,8 +6,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Usuario {
-
+	//ATRIBUTOS
 	private static final int tamDefault = 5;
+
 	private int codigo;
 	private String nombre;
 	private String apellidos;
@@ -16,11 +17,11 @@ public class Usuario {
 	private String password;
 	private Date nacimiento;
 	private boolean premium;
-
 	private List<ListaVideos> listaVideos;
 	private List<Video> recientes;
 	private int tamHistorial;
-
+	
+	//CONSTRUCTOR
 	public Usuario(String nombre, String apellidos, String email, int tamHistorial, String usuario, String password,
 			Date nacimiento) {
 		this.codigo =0;
@@ -36,41 +37,12 @@ public class Usuario {
 		this.nacimiento = nacimiento;
 	}
 
+	//CONSTRUCTOR
 	public Usuario(String nombre, String apellidos, String email, String usuario, String password, Date nacimiento) {
 		this(nombre, apellidos, email, tamDefault, usuario, password, nacimiento);
 	}
-
-	// TODO mirar si es correcto
-	public void addListaVideo(ListaVideos lista) {
-		listaVideos.add(lista);
-	}
-
-	public List<ListaVideos> findLista(String name) {
-		return listaVideos.stream().filter(l -> l.getName().contains(name)).collect(Collectors.toList());
-	}
-
-	public void addRecientes(Video video) {
-		Video aux = recientes.stream().filter(v -> v.getUrl().equals(video.getUrl())).findAny().orElse(null);
-		if (aux == null) {
-			recientes.add(0, video);
-			if (recientes.size() > tamHistorial)
-				recientes.remove(tamHistorial);
-		}
-	}
-
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + " - nombre= [" + nombre + "], apellidos= [" + apellidos + "], " + "email= ["
-				+ email + "], " + "premium= [" + premium + "], " + "listaVideos= " + listaVideos + ", " + "recientes= "
-				+ recientes + ", " + "tamHistorial= [" + tamHistorial + "], " + "usuario= [" + usuario + "]";
-	}
-
-	public boolean checkContraseña(String password) {
-		return this.password.equals(password);
-	}
-
 	
-
+	//GETTERS Y SETTERS
 	public String getApellidos() {
 		return apellidos;
 	}
@@ -86,11 +58,12 @@ public class Usuario {
 	public boolean isPremium() {
 		return premium;
 	}
-
+	
 	public List<ListaVideos> getListaVideos() {
 		return listaVideos;
 	}
 
+	//TODO CLONE??
 	public List<Video> getRecientes() {
 		return recientes;
 	}
@@ -110,7 +83,11 @@ public class Usuario {
 	public String getEmail() {
 		return email;
 	}
-
+	
+	public int getCodigo() {
+		return codigo;
+	}
+	
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
@@ -119,11 +96,41 @@ public class Usuario {
 		this.codigo = codigo;
 	}
 
-	public int getCodigo() {
-		return codigo;
-	}
-
 	public void setPremium(boolean b) {
 		premium = b;
+	}
+	
+	//MÉTODOS
+	public void addListaVideo(ListaVideos lista) {
+		listaVideos.add(lista);
+	}
+	
+	public List<ListaVideos> findLista(String name) {
+		return listaVideos.stream().filter(l -> l.getName().contains(name)).collect(Collectors.toList());
+	}
+	
+	public void addVideoALista(ListaVideos lista, Video video) {
+		lista.addVideo(video);
+	}
+	
+	//TODO LLAMAR EN EL REPOSITORIO CUANDO SE VEA UN VIDEO. TRAS ESO ACTUALIZAR USUARIO EN LA BD
+	public void addRecientes(Video video) {
+		Video aux = recientes.stream().filter(v -> v.getUrl().equals(video.getUrl())).findAny().orElse(null);
+		if (aux == null) {
+			recientes.add(0, video);
+			if (recientes.size() > tamHistorial)
+				recientes.remove(tamHistorial);
+		}
+	}
+
+	public boolean checkContraseña(String password) {
+		return this.password.equals(password);
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + " - nombre= [" + nombre + "], apellidos= [" + apellidos + "], " + "email= ["
+				+ email + "], " + "premium= [" + premium + "], " + "listaVideos= " + listaVideos + ", " + "recientes= "
+				+ recientes + ", " + "tamHistorial= [" + tamHistorial + "], " + "usuario= [" + usuario + "]";
 	}
 }
