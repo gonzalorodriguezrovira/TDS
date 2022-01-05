@@ -14,14 +14,14 @@ public class Pruebalistas {
 	public static void main(String[] args) {
 		HashSet<Etiqueta> hola = new HashSet<Etiqueta>() ;
 		hola.add(new Etiqueta("Música"));
-//		Video v1 = new Video("url1","video1", hola);
+		Video v1 = new Video("url1","video1", hola);
 //		App.getInstancia().addReciente(App.getInstancia().findUsuario("a"),App.getInstancia().findVideo(v1));
 //		System.out.println(App.getInstancia().findUsuario("a").getRecientes());
 //		App.getInstancia().addEtiqueta(new Etiqueta("Ayuda"));
 //		Video v1 = new Video("aaaa","nn1", hola);
 //		Video v2 = new Video("aa","n2", new HashSet<Etiqueta>());
 //		System.out.println(App.getInstancia().registrarVideo("url4","video4", hola));
-//		App.getInstancia().registrarVideo("aa","n2", new HashSet<Etiqueta>());
+//  App.getInstancia().registrarVideo("aa","n2", hola);
 //		List<Video> l1 = new LinkedList<Video>();
 //		l1.add(v1);
 //		l1.add(v2);

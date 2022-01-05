@@ -117,6 +117,10 @@ public class App {
 
 	//MÉTODOS VIDEO
 	//TODO comprobar utilidad en el proyecto fnal. si no, borrar o dejar comentado
+	public List<Video> recuperarVideos(){
+		return repositorioVideo.recuperarVideos();
+	}
+	
 	public boolean registrarVideo(String url, String titulo, Set<Etiqueta> etiquetas) {
 		Video video = new Video(url, titulo, etiquetas);
 		if(repositorioVideo.addVideo(video)) {		//Intentamos registrarlo en la base local
