@@ -42,12 +42,14 @@ public class AppVideo extends JFrame {
 	final static String REGISTRO = "Registro de usuario";
 	final static String EXPLORAR = "Explorar videos";
 	final static String MIS_LISTAS = "Buscar en las listas de usuario";
+	final static String NUEVA_LISTA = "Crear nuevas listas";
 	// VENTANAS
 	final static JPanel vDisplay = new JPanel(new CardLayout(0, 0));
 	private InicioSesion pIS = new InicioSesion(this);
 	private Registro pR = new Registro(this);
 	private Explorar pE = new Explorar(this);
 	private MisListas pML = new MisListas();
+	private NuevaLista pNL = new NuevaLista();
 
 	// BOTONES
 	private JButton bLogin;
@@ -97,6 +99,9 @@ public class AppVideo extends JFrame {
 				cambiarPremium();
 			}
 		});
+		
+		bNuevaLista.addActionListener(ev-> c.show(vDisplay, NUEVA_LISTA));
+		
 		//*******************************************************************************************************************
 	}
 	
@@ -303,6 +308,7 @@ public class AppVideo extends JFrame {
 		vDisplay.add(pE, EXPLORAR);
 		vDisplay.add(pR, REGISTRO);
 		vDisplay.add(pML, MIS_LISTAS);
+		vDisplay.add(pNL, NUEVA_LISTA);
 	}
 	//*******************************************************************************************************************
 }
