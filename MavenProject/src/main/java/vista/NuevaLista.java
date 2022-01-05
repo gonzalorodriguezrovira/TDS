@@ -14,6 +14,8 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Color;
@@ -66,9 +68,20 @@ public class NuevaLista extends JPanel {
 		bBuscarLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListaVideos listaVideos = App.getInstancia().findListaVideo(txtBuscarLista.getText());
-				if(listaVideos==null) {
-					JPopupMenu popup = new JPopupMenu("hoal");
-					popup.setVisible(true);
+				if(listaVideos==null&&!txtBuscarLista.getText().isEmpty()) {
+					JFrame jFrame = new JFrame();
+			        int result = JOptionPane.showConfirmDialog(jFrame, "Desea crear la lista "+txtBuscarLista.getText());
+
+			        if (result == 0) {
+			           ListaVideos listaNueva = new ListaVideos(txtBuscarLista.getName());
+			           App.getInstancia().addListaVideo(listaNueva);
+			           listaVideosN = (JList<Video>) listaNueva.getVideos();
+			        }
+			        else {}
+			             
+
+				}else if(!txtBuscarLista.getText().isEmpty()){
+					listaVideosN = (JList<Video>) listaVideos.getVideos();
 				}
 			}
 		});
