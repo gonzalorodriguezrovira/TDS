@@ -21,10 +21,11 @@ import javax.swing.border.LineBorder;
 
 import controlador.App;
 import modelo.Usuario;
+import javax.swing.JPasswordField;
 
 public class InicioSesion extends JPanel {
 	private JTextField txtLogin;
-	private JTextField txtPassword;
+	private JPasswordField txtPassword;
 
 	public InicioSesion(AppVideo v) {
 		//**************************************************INICIALIZACIÓN***************************************************
@@ -77,7 +78,7 @@ public class InicioSesion extends JPanel {
 		lblNewLabel_1_1.setForeground(Color.WHITE);
 		horizontalBox_1_1.add(lblNewLabel_1_1);
 
-		txtPassword = new JTextField();
+		txtPassword = new JPasswordField();
 		txtPassword.setToolTipText("");
 		txtPassword.setColumns(10);
 		horizontalBox_1_1.add(txtPassword);

@@ -79,7 +79,11 @@ public class App {
 		adaptadorUsuario.modificarUsuario(usuarioActual);
 		return usuarioActual.isPremium();
 	}
-
+	
+	public List<Video> obtenerRecientes(){
+		return usuarioActual.getRecientes();
+	}
+	
 	//MÉTODOS USUARIO
 	public boolean registrarUsuario(String nombre, String apellidos, String email, String usuario, String password,
 			Date nacimiento) {
