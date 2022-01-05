@@ -65,7 +65,7 @@ public class RepositorioUsuario {
 		user.addListaVideo(lista);
 	}
 	
-	public List<ListaVideos> findListaVideo(Usuario user, String name) {
+	public ListaVideos findListaVideo(Usuario user, String name) {
 		return user.findLista(name);
 	}
 	

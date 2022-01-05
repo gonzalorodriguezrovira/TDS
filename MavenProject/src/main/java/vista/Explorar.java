@@ -3,7 +3,6 @@ package vista;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.Flow.Subscription;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;

@@ -105,8 +105,8 @@ public class Usuario {
 		listaVideos.add(lista);
 	}
 	
-	public List<ListaVideos> findLista(String name) {
-		return listaVideos.stream().filter(l -> l.getName().contains(name)).collect(Collectors.toList());
+	public ListaVideos findLista(String name) {
+		return listaVideos.stream().filter(l -> l.getName().contains(name)).findAny().orElse(null);
 	}
 	
 	public void addVideoALista(ListaVideos lista, Video video) {

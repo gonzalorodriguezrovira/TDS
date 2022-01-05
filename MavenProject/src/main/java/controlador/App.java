@@ -140,7 +140,7 @@ public class App {
 		adaptadorUsuario.modificarUsuario(usuarioActual);	//Modificamos la base de datos
 	}
 
-	public List<ListaVideos> findListaVideo(String name) {
+	public ListaVideos findListaVideo(String name) {
 		//Basta con buscarlo en la base de datos
 		return repositorioUsuario.findListaVideo(usuarioActual, name);
 	}
