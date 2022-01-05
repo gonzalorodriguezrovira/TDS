@@ -80,6 +80,11 @@ public class App {
 		return usuarioActual.isPremium();
 	}
 	
+	public void addReciente(Video video) {
+		usuarioActual.addRecientes(video);
+		adaptadorUsuario.modificarUsuario(usuarioActual);
+	}
+	
 	public List<Video> obtenerRecientes(){
 		return usuarioActual.getRecientes();
 	}

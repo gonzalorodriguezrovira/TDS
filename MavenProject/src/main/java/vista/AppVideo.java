@@ -43,6 +43,8 @@ public class AppVideo extends JFrame {
 	final static String EXPLORAR = "Explorar videos";
 	final static String MIS_LISTAS = "Buscar en las listas de usuario";
 	final static String NUEVA_LISTA = "Crear nuevas listas";
+	final static String RECIENTES = "Lista de videos recientes";
+
 	// VENTANAS
 	final static JPanel vDisplay = new JPanel(new CardLayout(0, 0));
 	private InicioSesion pIS = new InicioSesion(this);
@@ -50,7 +52,8 @@ public class AppVideo extends JFrame {
 	private Explorar pE = new Explorar(this);
 	private MisListas pML = new MisListas();
 	private NuevaLista pNL = new NuevaLista();
-
+	private Recientes pRE = new Recientes();
+	
 	// BOTONES
 	private JButton bLogin;
 	private JButton bRegistro;
@@ -100,7 +103,9 @@ public class AppVideo extends JFrame {
 			}
 		});
 		
-		bNuevaLista.addActionListener(ev-> c.show(vDisplay, NUEVA_LISTA));
+		bNuevaLista.addActionListener(ev -> c.show(vDisplay, NUEVA_LISTA));
+		
+		bRecientes.addActionListener(ev -> c.show(vDisplay, RECIENTES));
 		
 		//*******************************************************************************************************************
 	}
@@ -145,6 +150,7 @@ public class AppVideo extends JFrame {
 		bPremium.setEnabled(true);
 		bLogout.setEnabled(true);
 		cambiarPremium();
+		pRE.inicializarRecientes();
 	}
 
 	public void cierreSesion() {
@@ -309,6 +315,7 @@ public class AppVideo extends JFrame {
 		vDisplay.add(pR, REGISTRO);
 		vDisplay.add(pML, MIS_LISTAS);
 		vDisplay.add(pNL, NUEVA_LISTA);
+		vDisplay.add(pRE, RECIENTES);
 	}
 	//*******************************************************************************************************************
 }

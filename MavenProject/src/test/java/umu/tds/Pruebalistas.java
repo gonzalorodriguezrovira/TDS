@@ -15,7 +15,8 @@ public class Pruebalistas {
 		HashSet<Etiqueta> hola = new HashSet<Etiqueta>() ;
 		hola.add(new Etiqueta("Música"));
 //		Video v1 = new Video("url1","video1", hola);
-//		App.getInstancia().findUsuario("a").addRecientes(App.getInstancia().findVideo(v1));
+//		App.getInstancia().addReciente(App.getInstancia().findUsuario("a"),App.getInstancia().findVideo(v1));
+//		System.out.println(App.getInstancia().findUsuario("a").getRecientes());
 //		App.getInstancia().addEtiqueta(new Etiqueta("Ayuda"));
 //		Video v1 = new Video("aaaa","nn1", hola);
 //		Video v2 = new Video("aa","n2", new HashSet<Etiqueta>());
