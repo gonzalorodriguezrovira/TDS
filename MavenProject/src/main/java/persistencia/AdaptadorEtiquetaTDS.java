@@ -35,8 +35,13 @@ public class AdaptadorEtiquetaTDS implements IAdaptadorEtiquetaDAO {
 			eEtiqueta = servPersistencia.recuperarEntidad(etiqueta.getCodigo());
 		} catch (NullPointerException e) {
 		}
-		if (eEtiqueta != null)
+		if (eEtiqueta != null) {
 			return;
+		}
+		for(Entidad e : servPersistencia.recuperarEntidades("etiqueta")) {
+			if(etiqueta.getNombre().equals(servPersistencia.recuperarPropiedadEntidad(e, "nombre")))
+				return;
+		}
 
 		eEtiqueta = new Entidad();
 		eEtiqueta.setNombre("etiqueta");

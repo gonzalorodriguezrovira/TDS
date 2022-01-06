@@ -109,7 +109,7 @@ public class AdaptadorListaVideosTDS implements IAdaptadorListaVideosDAO {
 			}
 			
 			servPersistencia.modificarPropiedad(prop);
-		}	
+		}
 	}
 	
 	// -------------------Funciones auxiliares-----------------------------

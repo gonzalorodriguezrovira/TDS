@@ -113,17 +113,15 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
+			
 			premium = Boolean.valueOf(servPersistencia.recuperarPropiedadEntidad(eUsuario, "premium"));
 			tamHistorial = Integer.valueOf(servPersistencia.recuperarPropiedadEntidad(eUsuario, "tamHistorial"));
 
 			Usuario usuario= new Usuario(nombre, apellidos, email, tamHistorial, user, password, nacimiento);
 			usuario.setCodigo(codigo);
 			
-		
-			
 			recientes = obtenerRecientesDesdeCodigos(servPersistencia.recuperarPropiedadEntidad(eUsuario, "recientes"));
 			listaVideos = obtenerListaVideosDesdeCodigos(servPersistencia.recuperarPropiedadEntidad(eUsuario, "listaVideos")) ;
-			
 			for (Video v : recientes)
 				usuario.addRecientes(v);
 
@@ -170,9 +168,13 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 			} else if (prop.getNombre().equals("premium")) {
 				prop.setValor(String.valueOf(usuario.isPremium()));
 			} else if (prop.getNombre().equals("listaVideos")) {
-				prop.setValor(obtenerCodigosListaVideos(usuario.getListaVideos()));
+				String str = obtenerCodigosListaVideos(usuario.getListaVideos());
+				if(str != null)
+					prop.setValor(str);
 			} else if (prop.getNombre().equals("recientes")) {
-				prop.setValor(obtenerCodigosVideos(usuario.getRecientes()));
+				String str = obtenerCodigosVideos(usuario.getRecientes());
+				if(str != null)
+					prop.setValor(str);
 			} else if (prop.getNombre().equals("tamHistorial")) {
 				prop.setValor(String.valueOf(usuario.getTamHistorial()));
 			}

@@ -64,6 +64,7 @@ public class App {
 		adaptadorUsuario = factoria.getUsuarioDAO();
 		adaptadorVideo = factoria.getVideoDAO();
 		adapatadorEtiqueta = factoria.getEtiquetaDAO();
+		adaptadorListaVideos = factoria.getListaVideosDAO();
 	}
 
 	//MÉTODOS PARA EL USUARIO ACTUAL
@@ -144,6 +145,7 @@ public class App {
 	//MÉTODOS LISTA VIDEO
 	public void addListaVideo(ListaVideos lista) {
 		repositorioUsuario.addListaVideo(usuarioActual, lista);
+		adaptadorListaVideos.addListaVideos(lista);
 		//Tras añadirle la lista modificamos las bases de datos
 		//La local ya se modifica debido al aliasing
 		adaptadorUsuario.modificarUsuario(usuarioActual);	//Modificamos la base de datos
@@ -154,10 +156,18 @@ public class App {
 		return repositorioUsuario.findListaVideo(usuarioActual, name);
 	}
 	
+	//TODO COMPROBAR USO
 	public void addVideoALista(ListaVideos lista, Video video) {
 		//Añadimos el video a la lista del usuario actual
 		repositorioUsuario.addVideoALista(usuarioActual, lista, video);
 		//Actualizamos el usuario en la base de datos
+		adaptadorUsuario.modificarUsuario(usuarioActual);
+	}
+	
+	public void setVideosALista(ListaVideos lista) {
+		ListaVideos l = findListaVideo(lista.getName());
+		l.setVideos(l.getVideos());
+		adaptadorListaVideos.modificarListaVideos(l);
 		adaptadorUsuario.modificarUsuario(usuarioActual);
 	}
 

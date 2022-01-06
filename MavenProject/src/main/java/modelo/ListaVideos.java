@@ -12,7 +12,7 @@ public class ListaVideos {
 	//CONSTRUCTOR
 	public ListaVideos(String name, List<Video> videos) {
 		this.name = name;
-		this.videos = new LinkedList<Video>(videos);
+		this.videos = videos;
 	}
 	
 	//CONSTRUCTOR
@@ -37,13 +37,24 @@ public class ListaVideos {
 		this.codigo = codigo;
 	}
 
+	public void setVideos(List<Video> lista) {
+		videos = lista;
+		
+	}	
+
 	//MÉTODOS
 	public void addVideo(Video v) {
-		videos.add(0,v);
+		if (!videos.contains(v))
+			videos.add(0,v);
+	}
+	
+	public void removeVideo(Video v) {
+		videos.remove(v);
 	}
 	
 	@Override
 	public String toString() {
 		return getClass().getSimpleName() + " - name=["+name+"], videos="+videos.toString()+"";
-	}	
+	}
+
 }

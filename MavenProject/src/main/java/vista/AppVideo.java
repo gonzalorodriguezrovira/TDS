@@ -155,6 +155,7 @@ public class AppVideo extends JFrame {
 
 	public void cierreSesion() {
 		if (!getUsuario().equals("")) {
+			pNL.vaciar();
 			CardLayout c = (CardLayout) (vDisplay.getLayout());
 			c.show(vDisplay, INICIO_SESION);
 			setUsuario("");
