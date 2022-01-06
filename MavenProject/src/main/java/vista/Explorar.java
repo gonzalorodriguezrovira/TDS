@@ -16,6 +16,8 @@ import javax.swing.Box;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;
+import javax.swing.plaf.DimensionUIResource;
+
 import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -70,7 +72,6 @@ public class Explorar extends JPanel {
 		listaEtiquetas.addMouseListener(new MouseAdapter() {
 			String aux;
 			public void mouseClicked(MouseEvent e) {
-
 				if (e.getClickCount() == 1 && !modeloEtiquetas.contains("\r")) {
 					aux = modeloEtiquetas.remove(listaEtiquetas.getSelectedIndex());
 					if (modeloEtiqSeleccionadas.contains("\r"))
@@ -87,7 +88,7 @@ public class Explorar extends JPanel {
 		listaSeleccionados.addMouseListener(new MouseAdapter() {
 			String aux;
 			public void mouseClicked(MouseEvent e) {
-
+				if(listaSeleccionados.getSelectedIndex() == -1) return;
 				if (e.getClickCount() == 1 && !modeloEtiqSeleccionadas.contains("\r")) {
 					aux = modeloEtiqSeleccionadas.remove(listaSeleccionados.getSelectedIndex());
 					if (modeloEtiquetas.contains("\r"))
@@ -222,6 +223,7 @@ public class Explorar extends JPanel {
 		listaEtiquetas.setSelectedIndex(0);
 
 		JScrollPane scrollLista = new JScrollPane(listaEtiquetas);
+		scrollLista.setPreferredSize(new DimensionUIResource(150, 150));
 		verticalBox_1.add(scrollLista);
 
 		Component rigidArea_5 = Box.createRigidArea(new Dimension(20, 75));
@@ -245,7 +247,7 @@ public class Explorar extends JPanel {
 		listaSeleccionados.setSelectedIndex(0);
 
 		JScrollPane scrollLista1 = new JScrollPane(listaSeleccionados);
-
+		scrollLista1.setPreferredSize(new DimensionUIResource(150, 150));
 		verticalBox_1.add(scrollLista1);
 	}
 	
