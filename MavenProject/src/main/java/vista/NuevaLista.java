@@ -37,6 +37,8 @@ public class NuevaLista extends JPanel {
 	private DefaultListModel<Video> modeloVideosN;
 	private DefaultListModel<Video> modeloVideosB = new DefaultListModel<Video>();
 
+	private ListaVideos listaVideos;
+
 	public NuevaLista() {
 		setLayout(null);
 
@@ -64,8 +66,9 @@ public class NuevaLista extends JPanel {
 		JButton bBuscarLista = new JButton("Buscar");
 		bBuscarLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListaVideos listaVideos = App.getInstancia().findListaVideo(txtBuscarLista.getText());
+				listaVideos = App.getInstancia().findListaVideo(txtBuscarLista.getText());
 				if (listaVideos == null && !txtBuscarLista.getText().isEmpty()) {
+					listaVideos = new ListaVideos(txtBuscarLista.getText());
 					JFrame jFrame = new JFrame();
 					int result = JOptionPane.showConfirmDialog(jFrame,
 							"Desea crear la lista " + txtBuscarLista.getText());
@@ -74,7 +77,7 @@ public class NuevaLista extends JPanel {
 						// App.getInstancia().addListaVideo(listaNueva);
 						modeloVideosN = new DefaultListModel<Video>();
 						listaVideosN = new JList<Video>();
-						listaVideosN.setModel(modeloVideosN);
+					
 					}
 				} else if (!txtBuscarLista.getText().isEmpty()) {
 					for (Video v : listaVideos.getVideos()) {
@@ -146,8 +149,8 @@ public class NuevaLista extends JPanel {
 
 		JScrollPane scrollLista = new JScrollPane(listaVideosN);
 		verticalBox_2.add(scrollLista);
-		//TODO
-		scrollLista.setPreferredSize(new DimensionUIResource(100,100));
+		// TODO
+		scrollLista.setPreferredSize(new DimensionUIResource(100, 100));
 
 		Component rigidArea_5 = Box.createRigidArea(new Dimension(20, 15));
 		verticalBox_2.add(rigidArea_5);
@@ -184,12 +187,22 @@ public class NuevaLista extends JPanel {
 		listaVideosB.setModel(modeloVideosB);
 		listaVideosB.setSelectedIndex(0);
 
+		txtBuscarLista.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(txtBuscarLista.getText().isEmpty()) {
+					listaVideos= null;
+				}
+			}
+		});
+
 		bAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Video aux = modeloVideosB.get(listaVideosB.getSelectedIndex());
-				if (aux != null) {
-					modeloVideosN.addElement(aux);
-					listaVideosN.setModel(modeloVideosN);
+				if (listaVideos != null) {
+					Video aux = modeloVideosB.get(listaVideosB.getSelectedIndex());
+					if (aux != null) {
+						modeloVideosN.addElement(aux);
+						listaVideosN.setModel(modeloVideosN);//TODO xq no se actualiza
+					}
 				}
 			}
 		});

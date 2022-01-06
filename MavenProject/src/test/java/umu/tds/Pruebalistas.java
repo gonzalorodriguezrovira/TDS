@@ -21,7 +21,7 @@ public class Pruebalistas {
 //		Video v1 = new Video("aaaa","nn1", hola);
 //		Video v2 = new Video("aa","n2", new HashSet<Etiqueta>());
 //		System.out.println(App.getInstancia().registrarVideo("url4","video4", hola));
-//  App.getInstancia().registrarVideo("aa","n2", hola);
+  App.getInstancia().registrarVideo("aa","n2", hola);
 //		List<Video> l1 = new LinkedList<Video>();
 //		l1.add(v1);
 //		l1.add(v2);
