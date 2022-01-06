@@ -51,7 +51,7 @@ public class AppVideo extends JFrame {
 	private Registro pR = new Registro(this);
 	private Explorar pE = new Explorar(this);
 	private MisListas pML = new MisListas();
-	private NuevaLista pNL = new NuevaLista();
+	private NuevaLista pNL = new NuevaLista(this);
 	private Recientes pRE = new Recientes();
 	
 	// BOTONES
@@ -138,6 +138,7 @@ public class AppVideo extends JFrame {
 
 	public void inicioValido(String nombre) {
 		setUsuario(nombre);
+		pML.inicializarLista();
 		CardLayout c = (CardLayout) (vDisplay.getLayout());
 		c.show(vDisplay, EXPLORAR);
 		bRegistro.setEnabled(false);
@@ -317,6 +318,10 @@ public class AppVideo extends JFrame {
 		vDisplay.add(pML, MIS_LISTAS);
 		vDisplay.add(pNL, NUEVA_LISTA);
 		vDisplay.add(pRE, RECIENTES);
+	}
+	
+	public void actualizarListavideos() {
+		pML.inicializarLista();
 	}
 	//*******************************************************************************************************************
 }

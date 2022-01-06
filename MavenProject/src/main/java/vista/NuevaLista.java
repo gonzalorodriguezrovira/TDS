@@ -40,7 +40,7 @@ public class NuevaLista extends JPanel {
 
 	private ListaVideos listaVideos = new ListaVideos("");
 
-	public NuevaLista() {
+	public NuevaLista(AppVideo v) {
 		setLayout(null);
 		// **************************PANEL PARA BUSCAR LISTAS***************************
 		JPanel pNombreLista = new JPanel();
@@ -269,15 +269,11 @@ public class NuevaLista extends JPanel {
 
 		bAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*
-				 * MEJOR EN EL bAdd y bQuitar para evitar meter videos repetidos en la lista for
-				 * (Object v : modeloVideosN.toArray()) { listaVideos.addVideo((Video) v); }
-				 */
-				// HE AÑADIDO ESTO
 				if (App.getInstancia().findListaVideo(listaVideos.getName()) != null) {
 					App.getInstancia().setVideosALista(listaVideos);
 				}
 				App.getInstancia().addListaVideo(listaVideos);
+				v.actualizarListavideos();
 			}
 		});
 

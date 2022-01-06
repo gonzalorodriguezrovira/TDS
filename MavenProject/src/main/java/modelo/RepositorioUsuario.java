@@ -76,5 +76,9 @@ public class RepositorioUsuario {
 	public boolean checkContraseña(Usuario usuario, String password) {
 		return usuario.checkContraseña(password);
 	}
+	
+	public List<ListaVideos> recuperarListaVideos(Usuario user){
+		return user.getListaVideos();
+	}
 
 }

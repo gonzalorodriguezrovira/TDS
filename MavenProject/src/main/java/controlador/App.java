@@ -115,6 +115,14 @@ public class App {
 	public boolean comprobarPassword(Usuario usuario, String password) {
 		return repositorioUsuario.checkContraseña(usuario, password);
 	}
+	
+	public List<ListaVideos> recuperarListasVideos(){
+		return repositorioUsuario.recuperarListaVideos(usuarioActual);
+	}
+	
+	public List<String> recuperarNombesListaVideos(){
+		return recuperarListasVideos().stream().map((l)->l.getName()).collect(Collectors.toList()) ;
+	}
 
 	//MÉTODOS VIDEO
 	//TODO comprobar utilidad en el proyecto fnal. si no, borrar o dejar comentado
