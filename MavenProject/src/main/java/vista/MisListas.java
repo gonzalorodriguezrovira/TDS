@@ -6,6 +6,8 @@ import javax.swing.BoxLayout;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JLabel;
@@ -37,7 +39,7 @@ public class MisListas extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.GRAY);
 		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel.setBounds(0, 11, 184, 394);
+		panel.setBounds(0, 11, 184, 420);
 		add(panel);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
@@ -56,11 +58,17 @@ public class MisListas extends JPanel {
 
 		boxListaVideos.setMaximumRowCount(19);
 
-		boxListaVideos.setModel(new DefaultComboBoxModel());
+		boxListaVideos.setModel(modeloBoxListaVideos);
+
+		boxListaVideos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				mostrarListaVideos();
+			}
+		});
 
 		verticalBox.add(boxListaVideos);
 
-		Component rigidArea = Box.createRigidArea(new Dimension(20, 20));
+		Component rigidArea = Box.createRigidArea(new Dimension(20, 10));
 		verticalBox.add(rigidArea);
 
 		Box horizontalBox_1 = Box.createHorizontalBox();
@@ -69,19 +77,18 @@ public class MisListas extends JPanel {
 		JButton bReproducir = new JButton("Reproducir\r\n");
 		horizontalBox_1.add(bReproducir);
 
-		Component rigidArea_1 = Box.createRigidArea(new Dimension(20, 20));
+		Component rigidArea_1 = Box.createRigidArea(new Dimension(20, 10));
 		verticalBox.add(rigidArea_1);
 
 		listaVideos.setModel(modeloVideos);
-		JScrollPane scroll = new JScrollPane();
-		scroll.add(listaVideos);
-		scroll.setPreferredSize(new Dimension(172, 280));
+		JScrollPane scroll = new JScrollPane(listaVideos);
+		scroll.setPreferredSize(new Dimension(172, 320));
 		verticalBox.add(scroll);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.GRAY);
 		panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel_1.setBounds(0, 403, 184, 90);
+		panel_1.setBounds(0, 430, 184, 65);
 		add(panel_1);
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.X_AXIS));
 
@@ -103,10 +110,6 @@ public class MisListas extends JPanel {
 		panel_2.setBackground(Color.GRAY);
 		panel_2.setBounds(184, 11, 497, 482);
 		add(panel_2);
-
-		JLabel lblNewLabel_1 = new JLabel(
-				"seguramente haya que hacer otro cardlayout y cuando se haga click en uno de los videos ponerlo en pantalla. Posible reutilización de los videos en explorar");
-		panel_2.add(lblNewLabel_1);
 
 		// CardLayout c = (CardLayout) (AppVideo.vDisplay.getLayout());
 		// bCancelarML.addActionListener(ev -> c.show(AppVideo.vDisplay,
@@ -131,12 +134,14 @@ public class MisListas extends JPanel {
 
 	public void mostrarListaVideos() {
 		modeloVideos.clear();
-		List<Video> aux2 = App.getInstancia()
-				.findListaVideo(modeloBoxListaVideos.getElementAt(boxListaVideos.getSelectedIndex())).getVideos();
-		for (Video v : aux2) {
-			modeloVideos.addElement(v);
+		int index = boxListaVideos.getSelectedIndex();
+		if (index != -1) {
+			List<Video> aux2 = App.getInstancia().findListaVideo(modeloBoxListaVideos.getElementAt(index)).getVideos();
+			for (Video v : aux2) {
+				modeloVideos.addElement(v);
+			}
+			listaVideos.setSelectedIndex(0);
+			listaVideos.revalidate();
 		}
-		System.out.println(modeloVideos);
-		listaVideos.revalidate();
 	}
 }
