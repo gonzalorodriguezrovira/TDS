@@ -69,4 +69,8 @@ public class RepositorioVideo {
 		//Devolvemos la base de datos entera
 		return bdVideos;
 	}
+
+	public void incrementarVisualizaciones(Video v) {
+		v.setNumRepro(v.getNumRepro()+1);
+	}
 }

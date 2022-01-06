@@ -81,4 +81,8 @@ public class RepositorioUsuario {
 		return user.getListaVideos();
 	}
 
+	public void addHistorial(Usuario u, Video v) {
+		u.addRecientes(v);
+	}
+
 }

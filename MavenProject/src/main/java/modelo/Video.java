@@ -50,8 +50,13 @@ public class Video {
 	}
 
 	// MÉTODOS
-	public void addEtiqueta(Etiqueta e) {
-		etiquetas.add(e);
+	public boolean addEtiqueta(Etiqueta e) {
+		Etiqueta p = etiquetas.stream().filter(et -> et.getNombre().equals(e.getNombre())).findAny().orElse(null);
+		if(p == null) {
+			etiquetas.add(e);
+			return true;
+		}
+		return false;
 	}
 
 	@Override

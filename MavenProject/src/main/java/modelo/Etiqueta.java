@@ -32,7 +32,8 @@ public class Etiqueta {
 		if (getClass() != obj.getClass())
 			return false;
 		Etiqueta otro = (Etiqueta) obj;
-		return otro.getNombre() == nombre && otro.getCodigo() == codigo;
+		
+		return otro.getNombre() == nombre;
 	}
 
 	@Override

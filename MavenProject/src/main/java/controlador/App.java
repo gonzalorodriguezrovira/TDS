@@ -22,10 +22,10 @@ import persistencia.IAdaptadorUsuarioDAO;
 import persistencia.IAdaptadorVideoDAO;
 
 public class App {
-	//ATRIBUTOS
-	private static App aplicacion; 		// Única instancia de App
-	private Usuario usuarioActual; 		// Último usuario que ha iniciado sesión
-	private FiltroVideo f; 				// Último filtro que ha aplicado el usuario
+	// ATRIBUTOS
+	private static App aplicacion; // Única instancia de App
+	private Usuario usuarioActual; // Último usuario que ha iniciado sesión
+	private FiltroVideo f; // Último filtro que ha aplicado el usuario
 
 	private IAdaptadorUsuarioDAO adaptadorUsuario;
 	private IAdaptadorVideoDAO adaptadorVideo;
@@ -34,21 +34,21 @@ public class App {
 
 	private RepositorioUsuario repositorioUsuario;
 	private RepositorioVideo repositorioVideo;
-	
-	//Para que otras clases puedan acceder a App y sus métodos
+
+	// Para que otras clases puedan acceder a App y sus métodos
 	public static App getInstancia() {
 		if (aplicacion == null)
 			aplicacion = new App();
 		return aplicacion;
 	}
-	
-	//CONSTRUCTOR
+
+	// CONSTRUCTOR
 	private App() {
 		inicializarAdaptadores();
 		inicializarRepositorios();
 	}
-	
-	//MÉTODOS PARA EL CONSTRUCTOR
+
+	// MÉTODOS PARA EL CONSTRUCTOR
 	private void inicializarRepositorios() {
 		repositorioUsuario = RepositorioUsuario.getUnicaInstancia();
 		repositorioVideo = RepositorioVideo.getUnicaInstancia();
@@ -67,10 +67,11 @@ public class App {
 		adaptadorListaVideos = factoria.getListaVideosDAO();
 	}
 
-	//MÉTODOS PARA EL USUARIO ACTUAL
+	// MÉTODOS PARA EL USUARIO ACTUAL
 	public Usuario getUsuarioActual() {
 		return usuarioActual;
 	}
+
 	public void setUsuarioActual(Usuario usuarioActual) {
 		this.usuarioActual = usuarioActual;
 	}
@@ -80,98 +81,102 @@ public class App {
 		adaptadorUsuario.modificarUsuario(usuarioActual);
 		return usuarioActual.isPremium();
 	}
-	
+
 	public void addReciente(Video video) {
 		usuarioActual.addRecientes(video);
 		adaptadorUsuario.modificarUsuario(usuarioActual);
 	}
-	
-	public List<Video> obtenerRecientes(){
+
+	public List<Video> obtenerRecientes() {
 		return usuarioActual.getRecientes();
 	}
-	
-	//MÉTODOS USUARIO
+
+	// MÉTODOS USUARIO
 	public boolean registrarUsuario(String nombre, String apellidos, String email, String usuario, String password,
 			Date nacimiento) {
 		Usuario usr = new Usuario(nombre, apellidos, email, usuario, password, nacimiento);
-		if(repositorioUsuario.addUsuario(usr)) {//Intentamos registrarlo en la base local
-			adaptadorUsuario.addUsuario(usr);//Si hemos podido, entonces también lo introducimos en la bd.
+		if (repositorioUsuario.addUsuario(usr)) {// Intentamos registrarlo en la base local
+			adaptadorUsuario.addUsuario(usr);// Si hemos podido, entonces también lo introducimos en la bd.
 			return true;
 		}
-		return false;	//Si no se ha podido añadir en la local tampoco se debería poder añadir en la bd.
+		return false; // Si no se ha podido añadir en la local tampoco se debería poder añadir en la
+						// bd.
 	}
-	
-	//TODO comprobar utilidad en el proyecto fnal. si no, borrar o dejar comentado
+
+	// TODO comprobar utilidad en el proyecto fnal. si no, borrar o dejar comentado
 	public boolean removeUsuario(Usuario usr) {
 		adaptadorUsuario.borrarUsuario(usr);
 		return repositorioUsuario.removeUsuario(usr);
 	}
-	
+
 	public Usuario findUsuario(String user) {
-		//Basta con mirar en la en el repositorio ya que se han cargado los usuarios de la bd.
+		// Basta con mirar en la en el repositorio ya que se han cargado los usuarios de
+		// la bd.
 		return repositorioUsuario.findUsuario(user);
 	}
 
 	public boolean comprobarPassword(Usuario usuario, String password) {
 		return repositorioUsuario.checkContraseña(usuario, password);
 	}
-	
-	public List<ListaVideos> recuperarListasVideos(){
+
+	public List<ListaVideos> recuperarListasVideos() {
 		return repositorioUsuario.recuperarListaVideos(usuarioActual);
 	}
-	
-	public List<String> recuperarNombesListaVideos(){
-		return recuperarListasVideos().stream().map((l)->l.getName()).collect(Collectors.toList()) ;
+
+	public List<String> recuperarNombesListaVideos() {
+		return recuperarListasVideos().stream().map((l) -> l.getName()).collect(Collectors.toList());
 	}
 
-	//MÉTODOS VIDEO
-	//TODO comprobar utilidad en el proyecto fnal. si no, borrar o dejar comentado
-	public List<Video> recuperarVideos(){
+	// MÉTODOS VIDEO
+	// TODO comprobar utilidad en el proyecto fnal. si no, borrar o dejar comentado
+	public List<Video> recuperarVideos() {
 		return repositorioVideo.recuperarVideos();
 	}
-	
+
 	public boolean registrarVideo(String url, String titulo, Set<Etiqueta> etiquetas) {
 		Video video = new Video(url, titulo, etiquetas);
-		if(repositorioVideo.addVideo(video)) {		//Intentamos registrarlo en la base local
-			adaptadorVideo.addVideo(video);			//Si hemos podido, entonces también lo introducimos en la bd.
-			return true;			
+		if (repositorioVideo.addVideo(video)) { // Intentamos registrarlo en la base local
+			adaptadorVideo.addVideo(video); // Si hemos podido, entonces también lo introducimos en la bd.
+			return true;
 		}
-		return false;			//Si no se ha podido añadir en la local tampoco se debería poder añadir en la bd.
+		return false; // Si no se ha podido añadir en la local tampoco se debería poder añadir en la
+						// bd.
 	}
 
 	public boolean removeVideo(Video video) {
 		adaptadorVideo.borrarVideo(video);
 		return repositorioVideo.removeVideo(video);
 	}
-	
-	//TODO. comprobar si se usa. si no, borrar
+
+	// TODO. comprobar si se usa. si no, borrar
 	public Video findVideo(Video video) {
-		//Basta con mirar en la en el repositorio ya que se han cargado los videos de la bd.
+		// Basta con mirar en la en el repositorio ya que se han cargado los videos de
+		// la bd.
 		return repositorioVideo.findVideo(video);
 	}
-	
-	//MÉTODOS LISTA VIDEO
+
+	// MÉTODOS LISTA VIDEO
 	public void addListaVideo(ListaVideos lista) {
 		repositorioUsuario.addListaVideo(usuarioActual, lista);
 		adaptadorListaVideos.addListaVideos(lista);
-		//Tras añadirle la lista modificamos las bases de datos
-		//La local ya se modifica debido al aliasing
-		adaptadorUsuario.modificarUsuario(usuarioActual);	//Modificamos la base de datos
+		// Tras añadirle la lista modificamos las bases de datos
+		// La local ya se modifica debido al aliasing
+		adaptadorUsuario.modificarUsuario(usuarioActual); // Modificamos la base de datos
 	}
 
 	public ListaVideos findListaVideo(String name) {
-		//Basta con buscarlo en la base de datos
+		// Basta con buscarlo en la base de datos
 		return repositorioUsuario.findListaVideo(usuarioActual, name);
 	}
-	
-	//TODO COMPROBAR USO
+
+	// TODO COMPROBAR USO
 	public void addVideoALista(ListaVideos lista, Video video) {
-		//Añadimos el video a la lista del usuario actual
+		// Añadimos el video a la lista del usuario actual
 		repositorioUsuario.addVideoALista(usuarioActual, lista, video);
-		//Actualizamos el usuario en la base de datos
+		// Actualizamos el usuario en la base de datos
 		adaptadorUsuario.modificarUsuario(usuarioActual);
 	}
-	
+
 	public void setVideosALista(ListaVideos lista) {
 		ListaVideos l = findListaVideo(lista.getName());
 		l.setVideos(l.getVideos());
@@ -179,8 +184,8 @@ public class App {
 		adaptadorUsuario.modificarUsuario(usuarioActual);
 	}
 
-	//MÉTODOS ETIQUETA
-	//TODO. comprobar uso. borrar si no se usa.
+	// MÉTODOS ETIQUETA
+	// TODO. comprobar uso. borrar si no se usa.
 	public void addEtiqueta(Etiqueta e) {
 		adapatadorEtiqueta.addEtiqueta(e);
 	}
@@ -188,13 +193,24 @@ public class App {
 	public List<Etiqueta> recuperarEtiquetas() {
 		return adapatadorEtiqueta.recuperarEtiquetas();
 	}
-	
-	public void addEtiquetaAVideo(Video video, Etiqueta etiqueta) {
-		video.addEtiqueta(etiqueta);
-		adaptadorVideo.modificarVideo(video);
+
+	public boolean addEtiquetaAVideo(Video video, Etiqueta etiqueta) {
+		if (!etiqueta.getNombre().isEmpty()) {
+			video = findVideo(video);
+			for(Etiqueta e : recuperarEtiquetas()) {
+				if(etiqueta.getNombre().equals(e.getNombre())) {
+					return video.addEtiqueta(e);
+				}
+			}
+			adapatadorEtiqueta.addEtiqueta(etiqueta);
+			video.addEtiqueta(etiqueta);
+			adaptadorVideo.modificarVideo(video);
+			return true;
+		}
+		return false;
 	}
-	
-	//MÉTODOS PARA VENTANA EXPLORAR
+
+	// MÉTODOS PARA VENTANA EXPLORAR
 	public List<Video> busquedaDeVideos(String nombre, String filtro, List<String> etiquetas) {
 		List<Video> l = repositorioVideo.recuperarVideos();
 		l = videosPorNombre(nombre, l);
@@ -231,5 +247,17 @@ public class App {
 			}
 		}
 		return l;
+	}
+
+	public Video incrementarVisualizaciones(Video v) {
+		v = findVideo(v);
+		repositorioVideo.incrementarVisualizaciones(v);
+		adaptadorVideo.modificarVideo(v);
+		return v;
+	}
+
+	public void addHistorial(Video v) {
+		repositorioUsuario.addHistorial(usuarioActual, findVideo(v));
+		adaptadorUsuario.modificarUsuario(usuarioActual);
 	}
 }

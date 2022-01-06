@@ -21,8 +21,12 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.border.EtchedBorder;
+
 import controlador.App;
+import modelo.Etiqueta;
 import modelo.Video;
+import java.awt.Font;
+import javax.swing.JTextField;
 
 public class MisListas extends JPanel {
 
@@ -31,6 +35,7 @@ public class MisListas extends JPanel {
 	private List<String> aux = new LinkedList<String>();
 	private JComboBox<String> boxListaVideos = new JComboBox<String>();
 	private DefaultComboBoxModel<String> modeloBoxListaVideos = new DefaultComboBoxModel<String>();
+	private JTextField txtFEtiquetas;
 
 	public MisListas() {
 		setBackground(Color.GRAY);
@@ -75,6 +80,7 @@ public class MisListas extends JPanel {
 		verticalBox.add(horizontalBox_1);
 
 		JButton bReproducir = new JButton("Reproducir\r\n");
+
 		horizontalBox_1.add(bReproducir);
 
 		Component rigidArea_1 = Box.createRigidArea(new Dimension(20, 10));
@@ -108,8 +114,78 @@ public class MisListas extends JPanel {
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
-		panel_2.setBounds(184, 11, 497, 482);
+		panel_2.setBounds(189, 11, 492, 482);
 		add(panel_2);
+		panel_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		Box verticalBox_1 = Box.createVerticalBox();
+		panel_2.add(verticalBox_1);
+
+		Component rigidArea_3 = Box.createRigidArea(new Dimension(20, 20));
+		verticalBox_1.add(rigidArea_3);
+
+		Box horizontalBox_6 = Box.createHorizontalBox();
+		verticalBox_1.add(horizontalBox_6);
+
+		JLabel txtTitulo = new JLabel("Titulo");
+		txtTitulo.setVisible(false);
+		txtTitulo.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		horizontalBox_6.add(txtTitulo);
+
+		Component rigidArea_4 = Box.createRigidArea(new Dimension(20, 20));
+		verticalBox_1.add(rigidArea_4);
+
+		Box horizontalBox_7 = Box.createHorizontalBox();
+		verticalBox_1.add(horizontalBox_7);
+
+		JLabel txtVisualizaciones = new JLabel("Reproducciones");
+		txtVisualizaciones.setVisible(false);
+		txtVisualizaciones.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		horizontalBox_7.add(txtVisualizaciones);
+
+		JPanel pVideo = new JPanel();
+		pVideo.setVisible(false);
+		verticalBox_1.add(pVideo);
+
+		Box horizontalBox_8 = Box.createHorizontalBox();
+		verticalBox_1.add(horizontalBox_8);
+
+		JLabel txtEtiquetas = new JLabel("cambiar por etiquetas");
+		txtEtiquetas.setVisible(false);
+		horizontalBox_8.add(txtEtiquetas);
+
+		Component rigidArea_10 = Box.createRigidArea(new Dimension(450, 20));
+		verticalBox_1.add(rigidArea_10);
+
+		Box horizontalBox_9 = Box.createHorizontalBox();
+		verticalBox_1.add(horizontalBox_9);
+
+		Component rigidArea_9 = Box.createRigidArea(new Dimension(50, 20));
+		horizontalBox_9.add(rigidArea_9);
+
+		JLabel txtnuevaetiquetainfo = new JLabel("Nueva etiqueta:");
+		txtnuevaetiquetainfo.setVisible(false);
+		horizontalBox_9.add(txtnuevaetiquetainfo);
+
+		Component rigidArea_6 = Box.createRigidArea(new Dimension(10, 20));
+		horizontalBox_9.add(rigidArea_6);
+
+		txtFEtiquetas = new JTextField();
+		txtFEtiquetas.setEnabled(false);
+		txtFEtiquetas.setVisible(false);
+		txtFEtiquetas.setColumns(10);
+		horizontalBox_9.add(txtFEtiquetas);
+
+		Component rigidArea_7 = Box.createRigidArea(new Dimension(20, 20));
+		horizontalBox_9.add(rigidArea_7);
+
+		JButton bEtiquetasNuevas = new JButton("Añadir");
+		bEtiquetasNuevas.setVisible(false);
+		bEtiquetasNuevas.setEnabled(false);
+		horizontalBox_9.add(bEtiquetasNuevas);
+
+		Component rigidArea_8 = Box.createRigidArea(new Dimension(50, 20));
+		horizontalBox_9.add(rigidArea_8);
 
 		// CardLayout c = (CardLayout) (AppVideo.vDisplay.getLayout());
 		// bCancelarML.addActionListener(ev -> c.show(AppVideo.vDisplay,
@@ -120,6 +196,55 @@ public class MisListas extends JPanel {
 		 * (CardLayout)(AppVideo.vDisplay.getLayout()); c.show(AppVideo.vDisplay,
 		 * AppVideo.BRUH); } });
 		 */
+
+		bReproducir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int index = listaVideos.getSelectedIndex();
+				if (index != -1) {
+					Video v = modeloVideos.get(index);
+					txtTitulo.setText(v.getTitulo());
+					v = App.getInstancia().incrementarVisualizaciones(v);
+					txtVisualizaciones.setText(String.valueOf(v.getNumRepro()));
+					txtEtiquetas.setText("");
+					for (Etiqueta e : v.getEtiquetas())
+						txtEtiquetas.setText(txtEtiquetas.getText() + " - " + e.getNombre());
+					txtTitulo.setVisible(true);
+					txtVisualizaciones.setVisible(true);
+					txtEtiquetas.setVisible(true);
+					txtnuevaetiquetainfo.setVisible(true);
+					txtFEtiquetas.setVisible(true);
+					txtFEtiquetas.setEnabled(true);
+					bEtiquetasNuevas.setVisible(true);
+					bEtiquetasNuevas.setEnabled(true);
+					pVideo.setVisible(true);
+					App.getInstancia().addReciente(v); // TODO AÑADIR RECIENTE CHECK
+				}
+			}
+		});
+
+		bCancelarML.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				txtTitulo.setVisible(false);
+				txtVisualizaciones.setVisible(false);
+				txtEtiquetas.setVisible(false);
+				txtnuevaetiquetainfo.setVisible(false);
+				txtFEtiquetas.setVisible(false);
+				txtFEtiquetas.setEnabled(false);
+				bEtiquetasNuevas.setVisible(false);
+				bEtiquetasNuevas.setEnabled(false);
+				pVideo.setVisible(false);
+			}
+		});
+
+		bEtiquetasNuevas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String nombreE = txtFEtiquetas.getText();
+				Etiqueta etiqueta = new Etiqueta(nombreE);
+				if (App.getInstancia().addEtiquetaAVideo(modeloVideos.get(listaVideos.getSelectedIndex()), etiqueta))
+					txtEtiquetas.setText(txtEtiquetas.getText() + " - " + nombreE);
+			}
+		});
+
 	}
 
 	public void inicializarLista() {
