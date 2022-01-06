@@ -37,7 +37,7 @@ public class MisListas extends JPanel {
 	private DefaultComboBoxModel<String> modeloBoxListaVideos = new DefaultComboBoxModel<String>();
 	private JTextField txtFEtiquetas;
 
-	public MisListas() {
+	public MisListas(AppVideo v) {
 		setBackground(Color.GRAY);
 		setLayout(null);
 
@@ -240,8 +240,10 @@ public class MisListas extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				String nombreE = txtFEtiquetas.getText();
 				Etiqueta etiqueta = new Etiqueta(nombreE);
-				if (App.getInstancia().addEtiquetaAVideo(modeloVideos.get(listaVideos.getSelectedIndex()), etiqueta))
+				if (App.getInstancia().addEtiquetaAVideo(modeloVideos.get(listaVideos.getSelectedIndex()), etiqueta)) {
 					txtEtiquetas.setText(txtEtiquetas.getText() + " - " + nombreE);
+					v.actualizarEtiquetasExplorar();
+				}
 			}
 		});
 

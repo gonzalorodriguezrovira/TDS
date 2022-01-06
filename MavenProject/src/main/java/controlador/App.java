@@ -199,7 +199,11 @@ public class App {
 			video = findVideo(video);
 			for(Etiqueta e : recuperarEtiquetas()) {
 				if(etiqueta.getNombre().equals(e.getNombre())) {
-					return video.addEtiqueta(e);
+					if(video.addEtiqueta(e)) {						
+						adaptadorVideo.modificarVideo(video);
+						return true;
+					}
+					return false;
 				}
 			}
 			adapatadorEtiqueta.addEtiqueta(etiqueta);

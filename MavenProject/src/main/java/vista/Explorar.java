@@ -77,9 +77,9 @@ public class Explorar extends JPanel {
 						modeloEtiqSeleccionadas.remove(0);
 					if (modeloEtiquetas.isEmpty())
 						modeloEtiquetas.add(0, "\r");
-					listaEtiquetas.setModel(modeloEtiquetas);
+					listaEtiquetas.revalidate();
 					modeloEtiqSeleccionadas.addElement(aux);
-					listaSeleccionados.setModel(modeloEtiqSeleccionadas);
+					listaSeleccionados.revalidate();;
 				}
 			}
 		});
@@ -94,9 +94,9 @@ public class Explorar extends JPanel {
 						modeloEtiquetas.remove(0);
 					if (modeloEtiqSeleccionadas.isEmpty())
 						modeloEtiqSeleccionadas.add(0, "\r");
-					listaSeleccionados.setModel(modeloEtiqSeleccionadas);
+					listaSeleccionados.revalidate();;
 					modeloEtiquetas.addElement(aux);
-					listaEtiquetas.setModel(modeloEtiquetas);
+					listaEtiquetas.revalidate();
 				}
 			}
 		});
@@ -123,6 +123,17 @@ public class Explorar extends JPanel {
 			etiquetas[i] = e.getNombre();
 			i++;
 		}
+	}
+	
+	public void actualizarEtiquetas() {
+		modeloEtiqSeleccionadas.clear();
+		modeloEtiquetas.clear();
+		for (String valor : etiquetas) {
+			modeloEtiquetas.addElement(valor);
+		}
+		System.out.println(modeloEtiquetas);
+		listaEtiquetas.revalidate();
+		listaSeleccionados.revalidate();
 	}
 
 	public void habilitarFiltros(boolean ispremium) {
