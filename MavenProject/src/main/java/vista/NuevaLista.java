@@ -25,6 +25,8 @@ import javax.swing.plaf.DimensionUIResource;
 import controlador.App;
 import modelo.ListaVideos;
 import modelo.Video;
+import tds.video.VideoWeb;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -32,11 +34,11 @@ public class NuevaLista extends JPanel {
 	private JTextField txtBuscarLista;
 	private JTextField txtBuscarVideos;
 
-	private JList<Video> listaVideosN;
-	private JList<Video> listaVideosB;
+	private JList<JLabel> listaVideosN;
+	private JList<JLabel> listaVideosB;
 
-	private DefaultListModel<Video> modeloVideosN;
-	private DefaultListModel<Video> modeloVideosB;
+	private DefaultListModel<JLabel> modeloVideosN;
+	private DefaultListModel<JLabel> modeloVideosB;
 
 	private ListaVideos listaVideos = new ListaVideos("");
 
@@ -108,7 +110,10 @@ public class NuevaLista extends JPanel {
 					} else {
 						modeloVideosN.clear();
 						for (Video v : listaVideos.getVideos()) {
-							modeloVideosN.addElement(v);
+							JLabel l = new JLabel();
+							l.setIcon(App.getInstancia().getVideoWeb().getSmallThumb(v.getUrl()));
+							l.setText(v.getTitulo());
+							modeloVideosN.addElement(l);
 						}
 						listaVideosN.revalidate();
 						listaVideosN.setSelectedIndex(0);
@@ -173,10 +178,10 @@ public class NuevaLista extends JPanel {
 		pLista.add(verticalBox_2);
 
 		// INICIALIZAMOS LA LISTA DE LA IZQUIERDA
-		listaVideosN = new JList<Video>();
+		listaVideosN = new JList<JLabel>();
 		// TODO ESTE VALOR HAY QUE CAMBIARLO CUANDO PODAMOS ENSEÑAR MINIATURAS
 		listaVideosN.setVisibleRowCount(17);
-		modeloVideosN = new DefaultListModel<Video>();
+		modeloVideosN = new DefaultListModel<JLabel>();
 		listaVideosN.setModel(modeloVideosN);
 		listaVideosN.setSelectedIndex(0);
 
@@ -214,9 +219,9 @@ public class NuevaLista extends JPanel {
 		JPanel pVideos = new JPanel();
 		// SI INICIALIZAS AQUÍ LA LISTA NO HACE FALTA QUE LA INICIALICES ARRIBA, CUANDO
 		// LA DECLARAS
-		listaVideosB = new JList<Video>();
+		listaVideosB = new JList<JLabel>();
 		listaVideosB.setVisibleRowCount(24);
-		modeloVideosB = new DefaultListModel<Video>();
+		modeloVideosB = new DefaultListModel<JLabel>();
 
 		listaVideosB.setModel(modeloVideosB);
 		listaVideosB.setSelectedIndex(0);
@@ -241,7 +246,7 @@ public class NuevaLista extends JPanel {
 		bAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (listaVideos != null) {
-					Video aux = modeloVideosB.get(listaVideosB.getSelectedIndex());
+					JLabel aux = modeloVideosB.get(listaVideosB.getSelectedIndex());
 					if (aux != null) {
 						for (int i = 0; i < modeloVideosN.getSize(); i++) {
 							if (modeloVideosN.get(i).equals(aux))
@@ -284,7 +289,6 @@ public class NuevaLista extends JPanel {
 				for (Video v : aux) {
 					modeloVideosB.addElement(v);
 				}
-				listaVideosB.revalidate();
 			}
 		});
 

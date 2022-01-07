@@ -20,6 +20,7 @@ import persistencia.IAdaptadorEtiquetaDAO;
 import persistencia.IAdaptadorListaVideosDAO;
 import persistencia.IAdaptadorUsuarioDAO;
 import persistencia.IAdaptadorVideoDAO;
+import tds.video.VideoWeb;
 
 public class App {
 	// ATRIBUTOS
@@ -34,12 +35,20 @@ public class App {
 
 	private RepositorioUsuario repositorioUsuario;
 	private RepositorioVideo repositorioVideo;
+	
+	private static VideoWeb videoWeb;
 
 	// Para que otras clases puedan acceder a App y sus métodos
 	public static App getInstancia() {
 		if (aplicacion == null)
 			aplicacion = new App();
 		return aplicacion;
+	}
+	
+	public static VideoWeb getVideoWeb() {
+		if (videoWeb == null)
+			videoWeb = new VideoWeb();
+		return videoWeb;
 	}
 
 	// CONSTRUCTOR
