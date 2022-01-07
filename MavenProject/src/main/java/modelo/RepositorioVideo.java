@@ -50,6 +50,14 @@ public class RepositorioVideo {
 				.orElse(null);
 	}
 	
+	public Video findVideoURL(String url) {
+		//Hacemos una busqueda local 
+		return bdVideos.stream()
+				.filter(v -> v.getUrl().contains(url))
+				.findAny()
+				.orElse(null);
+	}
+	
 	public boolean addVideo(Video video) {
 		Video bdu = findVideo(video);			//Comprobamos que el video no está ya añadido
 		if (bdu == null) {

@@ -163,6 +163,12 @@ public class App {
 		// la bd.
 		return repositorioVideo.findVideo(video);
 	}
+	
+	public Video findVideoURL(String url) {
+		// Basta con mirar en la en el repositorio ya que se han cargado los videos de
+		// la bd.
+		return repositorioVideo.findVideoURL(url);
+	}
 
 	// MÉTODOS LISTA VIDEO
 	public void addListaVideo(ListaVideos lista) {

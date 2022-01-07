@@ -40,7 +40,7 @@ public class NuevaLista extends JPanel {
 	private DefaultListModel<JLabel> modeloVideosN;
 	private DefaultListModel<JLabel> modeloVideosB;
 
-	private ListaVideos listaVideos = new ListaVideos("");
+	private ListaVideos listaVideos = null;
 
 	public NuevaLista(AppVideo v) {
 		setLayout(null);
@@ -111,7 +111,7 @@ public class NuevaLista extends JPanel {
 						modeloVideosN.clear();
 						for (Video v : listaVideos.getVideos()) {
 							JLabel l = new JLabel();
-							l.setIcon(App.getInstancia().getVideoWeb().getSmallThumb(v.getUrl()));
+							l.setIcon(App.getVideoWeb().getSmallThumb(v.getUrl()));
 							l.setText(v.getTitulo());
 							modeloVideosN.addElement(l);
 						}
@@ -252,7 +252,7 @@ public class NuevaLista extends JPanel {
 							if (modeloVideosN.get(i).equals(aux))
 								return;
 						}
-						listaVideos.addVideo(aux);
+						listaVideos.addVideo(App.getInstancia().findVideoURL(aux.getIcon().toString()));
 						modeloVideosN.addElement(aux);
 						listaVideosN.revalidate();
 					}
@@ -264,8 +264,8 @@ public class NuevaLista extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				int index = listaVideosN.getSelectedIndex();
 				if (index != -1) {
-					Video aux = modeloVideosN.get(index);
-					listaVideos.removeVideo(aux);
+					JLabel aux = modeloVideosN.get(index);
+					listaVideos.removeVideo(App.getInstancia().findVideoURL(aux.getIcon().toString()));
 					modeloVideosN.remove(index);
 					listaVideosN.revalidate();
 				}
@@ -274,11 +274,13 @@ public class NuevaLista extends JPanel {
 
 		bAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(listaVideos!=null) {
 				if (App.getInstancia().findListaVideo(listaVideos.getName()) != null) {
 					App.getInstancia().setVideosALista(listaVideos);
 				}
 				App.getInstancia().addListaVideo(listaVideos);
 				v.actualizarListavideos();
+			}
 			}
 		});
 
@@ -287,7 +289,11 @@ public class NuevaLista extends JPanel {
 				List<Video> aux = App.getInstancia().videosPorNombre(txtBuscarVideos.getText(),
 						App.getInstancia().recuperarVideos());
 				for (Video v : aux) {
-					modeloVideosB.addElement(v);
+					JLabel l = new JLabel();
+					l.setIcon(App.getVideoWeb().getSmallThumb(v.getUrl()));
+					l.setText(v.getTitulo());
+					modeloVideosB.addElement(l);
+
 				}
 			}
 		});
@@ -308,7 +314,7 @@ public class NuevaLista extends JPanel {
 			}
 		});
 	}
-	
+
 	public void vaciar() {
 		txtBuscarLista.setText("");
 		txtBuscarVideos.setText("");
@@ -317,5 +323,5 @@ public class NuevaLista extends JPanel {
 		listaVideosN.revalidate();
 		listaVideosB.revalidate();
 	}
-	
+
 }
