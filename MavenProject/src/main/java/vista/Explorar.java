@@ -80,7 +80,7 @@ public class Explorar extends JPanel {
 						modeloEtiquetas.add(0, "\r");
 					listaEtiquetas.revalidate();
 					modeloEtiqSeleccionadas.addElement(aux);
-					listaSeleccionados.revalidate();;
+					listaSeleccionados.revalidate();
 				}
 			}
 		});
