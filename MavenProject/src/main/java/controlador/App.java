@@ -91,14 +91,10 @@ public class App {
 		return usuarioActual.isPremium();
 	}
 
-	public void addReciente(Video video) {
-		usuarioActual.addRecientes(video);
-		adaptadorUsuario.modificarUsuario(usuarioActual);
-	}
-
 	public List<Video> obtenerRecientes() {
 		return usuarioActual.getRecientes();
 	}
+
 
 	// MÉTODOS USUARIO
 	public boolean registrarUsuario(String nombre, String apellidos, String email, String usuario, String password,
@@ -138,6 +134,20 @@ public class App {
 
 	// MÉTODOS VIDEO
 	// TODO comprobar utilidad en el proyecto fnal. si no, borrar o dejar comentado
+	public List<Video> recuperarMasVistos(){
+        List<Video> l = recuperarVideos();
+        List<Video> lista = new LinkedList<Video>();
+        l.sort((v1,v2) -> ((Integer)v1.getNumRepro()).compareTo((Integer)v2.getNumRepro()));
+        if(l.size()>5) {
+        for(int i = 0 ; i < 5 ; i++) lista.add(l.get(i));
+        }else {
+        	return l;
+        }
+       
+        return lista;
+    }
+	
+	
 	public List<Video> recuperarVideos() {
 		return repositorioVideo.recuperarVideos();
 	}
@@ -270,6 +280,7 @@ public class App {
 
 	public Video incrementarVisualizaciones(Video v) {
 		v = findVideo(v);
+		addHistorial(v);
 		repositorioVideo.incrementarVisualizaciones(v);
 		adaptadorVideo.modificarVideo(v);
 		return v;

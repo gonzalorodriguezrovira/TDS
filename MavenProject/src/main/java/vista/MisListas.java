@@ -217,7 +217,6 @@ public class MisListas extends JPanel {
 					bEtiquetasNuevas.setVisible(true);
 					bEtiquetasNuevas.setEnabled(true);
 					pVideo.setVisible(true);
-					App.getInstancia().addReciente(v); // TODO AÑADIR RECIENTE CHECK
 				}
 			}
 		});

@@ -52,13 +52,13 @@ public class AppVideo extends JFrame {
 	private Explorar pE = new Explorar(this);
 	private MisListas pML = new MisListas(this);
 	private NuevaLista pNL = new NuevaLista(this);
-	private Recientes pRE = new Recientes();
+	private Recientes pRE = new Recientes(this);
 	
 	// BOTONES
 	private JButton bLogin;
 	private JButton bRegistro;
 	private JButton bLogout;
-	private JButton bExplorar;
+	private JButton bExplorar;  
 	private JButton bMisListas;
 	private JButton bRecientes;
 	private JButton bNuevaLista;
@@ -126,6 +126,7 @@ public class AppVideo extends JFrame {
 		else
 			bPremium.setText("Premium");
 		pE.habilitarFiltros(premium);
+		pRE.habilitar();
 	}
 	
 	public void registrarUsuario(String nombre, String apellidos, String email, String usuario, String password,
@@ -139,6 +140,7 @@ public class AppVideo extends JFrame {
 	public void inicioValido(String nombre) {
 		setUsuario(nombre);
 		pML.inicializarLista();
+		pRE.inicializarLista();
 		CardLayout c = (CardLayout) (vDisplay.getLayout());
 		c.show(vDisplay, EXPLORAR);
 		bRegistro.setEnabled(false);
@@ -151,7 +153,7 @@ public class AppVideo extends JFrame {
 		bPremium.setEnabled(true);
 		bLogout.setEnabled(true);
 		cambiarPremium();
-		pRE.inicializarRecientes();
+		//pRE.inicializarRecientes();
 	}
 
 	public void cierreSesion() {
