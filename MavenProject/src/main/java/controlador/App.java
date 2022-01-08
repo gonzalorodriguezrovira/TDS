@@ -137,7 +137,7 @@ public class App {
 	public List<Video> recuperarMasVistos(){
         List<Video> l = recuperarVideos();
         List<Video> lista = new LinkedList<Video>();
-        l.sort((v1,v2) -> ((Integer)v1.getNumRepro()).compareTo((Integer)v2.getNumRepro()));
+        l.sort((v1,v2) -> ((Integer)v2.getNumRepro()).compareTo((Integer)v1.getNumRepro()));
         if(l.size()>5) {
         for(int i = 0 ; i < 5 ; i++) lista.add(l.get(i));
         }else {

@@ -274,13 +274,14 @@ public class NuevaLista extends JPanel {
 
 		bAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(listaVideos!=null) {
-				if (App.getInstancia().findListaVideo(listaVideos.getName()) != null) {
-					App.getInstancia().setVideosALista(listaVideos);
+				if (listaVideos != null) {
+					if (App.getInstancia().findListaVideo(listaVideos.getName()) != null) {
+						App.getInstancia().setVideosALista(listaVideos);
+					}else {
+						App.getInstancia().addListaVideo(listaVideos);						
+						v.actualizarListavideos();
+					}
 				}
-				App.getInstancia().addListaVideo(listaVideos);
-				v.actualizarListavideos();
-			}
 			}
 		});
 

@@ -204,6 +204,7 @@ public class Recientes extends JPanel {
 					Video v = modeloVideos.get(index);
 					txtTitulo.setText(v.getTitulo());
 					v = App.getInstancia().incrementarVisualizaciones(v);
+					mostrarListaVideos();
 					txtVisualizaciones.setText(String.valueOf(v.getNumRepro()));
 					txtEtiquetas.setText("");
 					for (Etiqueta e : v.getEtiquetas())

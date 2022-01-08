@@ -120,6 +120,9 @@ public class Usuario {
 			recientes.add(0, video);
 			if (recientes.size() > tamHistorial)
 				recientes.remove(tamHistorial);
+		}else {
+			recientes.remove(aux);
+			recientes.add(0,aux);
 		}
 	}
 
