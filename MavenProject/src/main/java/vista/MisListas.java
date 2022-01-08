@@ -30,8 +30,8 @@ import javax.swing.JTextField;
 
 public class MisListas extends JPanel {
 
-	private JList<Video> listaVideos = new JList<Video>();
-	private DefaultListModel<Video> modeloVideos = new DefaultListModel<Video>();
+	private JList<Miniatura> listaVideos = new JList<Miniatura>();
+	private DefaultListModel<Miniatura> modeloVideos = new DefaultListModel<Miniatura>();
 	private List<String> aux = new LinkedList<String>();
 	private JComboBox<String> boxListaVideos = new JComboBox<String>();
 	private DefaultComboBoxModel<String> modeloBoxListaVideos = new DefaultComboBoxModel<String>();
@@ -87,6 +87,7 @@ public class MisListas extends JPanel {
 		verticalBox.add(rigidArea_1);
 
 		listaVideos.setModel(modeloVideos);
+		listaVideos.setCellRenderer(new VideoListRenderer());
 		JScrollPane scroll = new JScrollPane(listaVideos);
 		scroll.setPreferredSize(new Dimension(172, 320));
 		verticalBox.add(scroll);
@@ -201,7 +202,7 @@ public class MisListas extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				int index = listaVideos.getSelectedIndex();
 				if (index != -1) {
-					Video v = modeloVideos.get(index);
+					Video v = App.getInstancia().findVideoURL(modeloVideos.get(index).getUrl());
 					txtTitulo.setText(v.getTitulo());
 					v = App.getInstancia().incrementarVisualizaciones(v);
 					txtVisualizaciones.setText(String.valueOf(v.getNumRepro()));
@@ -239,7 +240,7 @@ public class MisListas extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				String nombreE = txtFEtiquetas.getText();
 				Etiqueta etiqueta = new Etiqueta(nombreE);
-				if (App.getInstancia().addEtiquetaAVideo(modeloVideos.get(listaVideos.getSelectedIndex()), etiqueta)) {
+				if (App.getInstancia().addEtiquetaAVideo(App.getInstancia().findVideoURL(modeloVideos.get(listaVideos.getSelectedIndex()).getUrl()), etiqueta)) {
 					txtEtiquetas.setText(txtEtiquetas.getText() + " - " + nombreE);
 					v.actualizarEtiquetasExplorar();
 				}
@@ -264,7 +265,7 @@ public class MisListas extends JPanel {
 		if (index != -1) {
 			List<Video> aux2 = App.getInstancia().findListaVideo(modeloBoxListaVideos.getElementAt(index)).getVideos();
 			for (Video v : aux2) {
-				modeloVideos.addElement(v);
+				modeloVideos.addElement(new Miniatura(v, 100, 100));
 			}
 			listaVideos.setSelectedIndex(0);
 			listaVideos.revalidate();
