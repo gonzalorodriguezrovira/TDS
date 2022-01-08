@@ -45,8 +45,7 @@ public class Miniatura extends JPanel {
         Titulo.setMinimumSize(new Dimension(x,10)); 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
-        this.add(lMiniatura);
-        this.add(Titulo);
+        
         
         Box horizontalBox = Box.createHorizontalBox();
         horizontalBox.add(lMiniatura);

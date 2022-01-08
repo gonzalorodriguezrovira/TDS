@@ -29,21 +29,36 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.border.BevelBorder;
 import java.awt.CardLayout;
+import javax.swing.ListSelectionModel;
+import java.awt.BorderLayout;
 
 public class Explorar extends JPanel {
+
+	// JSCOLL
+	private JScrollPane scrollListaVideos;
+
+	// CONTROL PANELES
+	private boolean control;
+
+	//
+	private final static String PANTALLA_VIDEOS = "";
+	private final static String REPRODUCTOR = "";
+
 	// PANELES
 	private JPanel panelBusqueda;
 	private JPanel panelEtiquetas;
-
+	private static JPanel panel;
+	private static JPanel panelReproductor;
+	private static JPanel panelVideosBuscados;
 	// LISTAS
 	private JList<String> listaSeleccionados;
 	private JList<String> listaEtiquetas;
-	private JList<JLabel> listaVideos;
+	private JList<Miniatura> listaVideos;
 
 	// MODELOS
 	private DefaultListModel<String> modeloEtiquetas;
 	private DefaultListModel<String> modeloEtiqSeleccionadas;
-	private DefaultListModel<JLabel> modeloVideos;
+	private DefaultListModel<Miniatura> modeloVideos;
 
 	// VIDEOS
 	private List<Video> Videos;
@@ -60,6 +75,7 @@ public class Explorar extends JPanel {
 	// BOTONES
 	private JButton bBuscar;
 	private JButton bNuevaBusqueda;
+	private JButton bReproducir;
 
 	public Explorar(AppVideo v) {
 		// COLOR DE FONDO
@@ -122,8 +138,32 @@ public class Explorar extends JPanel {
 						ll.add((String) o);
 				}
 				mostrarVideos();
-				//System.out.println(App.getInstancia().busquedaDeVideos(txtNombre.getText(),
-						//(String) filtros.getSelectedItem(), ll));
+				// System.out.println(App.getInstancia().busquedaDeVideos(txtNombre.getText(),
+				// (String) filtros.getSelectedItem(), ll));
+			}
+		});
+		
+		bNuevaBusqueda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				modeloVideos.removeAllElements();
+				listaVideos.revalidate();
+				if (!control) {
+					CardLayout c = (CardLayout) (panel.getLayout());
+					mostrarVideos();
+					c.show(panel, PANTALLA_VIDEOS);
+					control = true;
+
+				}
+			}
+		});
+
+		bReproducir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (control) {
+					CardLayout c = (CardLayout) (panel.getLayout());
+					c.show(panel, REPRODUCTOR);
+					control = false;
+				}
 			}
 		});
 		// *******************************************************************************************************************
@@ -161,7 +201,7 @@ public class Explorar extends JPanel {
 		panelBusqueda = new JPanel();
 		panelBusqueda.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panelBusqueda.setBackground(Color.GRAY);
-		panelBusqueda.setBounds(0, 0, 501, 107);
+		panelBusqueda.setBounds(0, 0, 528, 107);
 		add(panelBusqueda);
 		panelBusqueda.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
@@ -202,7 +242,7 @@ public class Explorar extends JPanel {
 		Component rigidArea_3 = Box.createRigidArea(new Dimension(170, 20));
 		horizontalBox_1.add(rigidArea_3);
 
-		JButton bReproducir = new JButton("Reproducir");
+		bReproducir = new JButton("Reproducir");
 		horizontalBox_1.add(bReproducir);
 
 		Component rigidArea_4 = Box.createRigidArea(new Dimension(39, 20));
@@ -217,7 +257,7 @@ public class Explorar extends JPanel {
 		panelEtiquetas = new JPanel();
 		panelEtiquetas.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panelEtiquetas.setBackground(Color.GRAY);
-		panelEtiquetas.setBounds(499, 0, 176, 510);
+		panelEtiquetas.setBounds(526, 0, 164, 510);
 		add(panelEtiquetas);
 
 		Box verticalBox_1 = Box.createVerticalBox();
@@ -275,37 +315,44 @@ public class Explorar extends JPanel {
 	}
 
 	private void inicializarScrollPanelVideos() {
-		listaVideos = new JList<JLabel>();
-		modeloVideos = new DefaultListModel<JLabel>();
+		listaVideos = new JList<Miniatura>();
+		listaVideos.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		listaVideos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listaVideos.setVisibleRowCount(-1);
+		modeloVideos = new DefaultListModel<Miniatura>();
+		control = true;
+		panel = new JPanel();
+		panelReproductor = new JPanel();
+		panel.setLayout(new CardLayout(0, 0));
+		panelVideosBuscados = new JPanel();
+		panelVideosBuscados.setLayout(new BorderLayout(0, 0));
+		scrollListaVideos = new JScrollPane(listaVideos);
 		listaVideos.setModel(modeloVideos);
-
-		JPanel panel = new JPanel();
-		JScrollPane scrollListaVideos = new JScrollPane(listaVideos);
-		panel.add(scrollListaVideos);
+		panelVideosBuscados.add(scrollListaVideos);
+		panel.add(panelVideosBuscados, PANTALLA_VIDEOS);
+		panel.add(panelReproductor, REPRODUCTOR);
 		panel.setBackground(Color.GRAY);
 		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel.setBounds(0, 107, 501, 403);
+		panel.setBounds(0, 107, 528, 403);
 		add(panel);
-		panel.setLayout(new CardLayout(0, 0));
+		Videos = new LinkedList<Video>();
 
 	}
 
 	public void mostrarVideos() {
+		modeloVideos.clear();
 		List<String> ll = new LinkedList<String>();
 		for (Object o : modeloEtiqSeleccionadas.toArray()) {
 			if (!o.equals("\r"))
 				ll.add((String) o);
 		}
-		Videos = new LinkedList<Video>();
+		
 		Videos = App.getInstancia().busquedaDeVideos(txtNombre.getText(), (String) filtros.getSelectedItem(), ll);
 		for (Video v : Videos) {
-			JLabel l = new JLabel();
-			l.setIcon(App.getVideoWeb().getSmallThumb(v.getUrl()));
-			l.setText(v.getTitulo());
-			modeloVideos.addElement(l);
+			Miniatura m = new Miniatura(v, 150, 150);
+			modeloVideos.addElement(m);
 		}
 		listaVideos.setCellRenderer(new VideoListRenderer());
-
 		listaVideos.revalidate();
 		listaVideos.setSelectedIndex(0);
 
