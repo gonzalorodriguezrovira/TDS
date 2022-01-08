@@ -183,6 +183,7 @@ public class NuevaLista extends JPanel {
 		listaVideosN.setVisibleRowCount(17);
 		modeloVideosN = new DefaultListModel<JLabel>();
 		listaVideosN.setModel(modeloVideosN);
+		listaVideosN.setCellRenderer(new VideoListRenderer());
 		listaVideosN.setSelectedIndex(0);
 
 		JScrollPane scrollLista = new JScrollPane(listaVideosN);
@@ -224,6 +225,7 @@ public class NuevaLista extends JPanel {
 		modeloVideosB = new DefaultListModel<JLabel>();
 
 		listaVideosB.setModel(modeloVideosB);
+		listaVideosB.setCellRenderer(new VideoListRenderer());
 		listaVideosB.setSelectedIndex(0);
 
 		JScrollPane scrollLista1 = new JScrollPane(listaVideosB);
