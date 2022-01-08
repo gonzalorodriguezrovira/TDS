@@ -149,8 +149,7 @@ public class Explorar extends JPanel {
 				listaVideos.revalidate();
 				if (!control) {
 					CardLayout c = (CardLayout) (panel.getLayout());
-					mostrarVideos();
-					c.show(panel, PANTALLA_VIDEOS);
+					c.removeLayoutComponent(panelReproductor);
 					control = true;
 
 				}
@@ -161,6 +160,7 @@ public class Explorar extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				if (control) {
 					CardLayout c = (CardLayout) (panel.getLayout());
+					panel.add(panelReproductor, REPRODUCTOR);
 					c.show(panel, REPRODUCTOR);
 					control = false;
 				}
@@ -329,8 +329,8 @@ public class Explorar extends JPanel {
 		scrollListaVideos = new JScrollPane(listaVideos);
 		listaVideos.setModel(modeloVideos);
 		panelVideosBuscados.add(scrollListaVideos);
-		panel.add(panelVideosBuscados, PANTALLA_VIDEOS);
-		panel.add(panelReproductor, REPRODUCTOR);
+		panel.add(panelVideosBuscados, PANTALLA_VIDEOS); 
+	
 		panel.setBackground(Color.GRAY);
 		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panel.setBounds(0, 107, 528, 403);
