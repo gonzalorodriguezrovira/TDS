@@ -3,8 +3,6 @@ package vista;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
-import javax.swing.JLabel;
-import javax.swing.JLabel;
 import javax.swing.JList;
 
 @SuppressWarnings("serial")
@@ -13,8 +11,8 @@ public class VideoListRenderer extends DefaultListCellRenderer{
     public Component getListCellRendererComponent(JList<?> list,  
                         Object value, int index, boolean isSelected, 
                         boolean cellHasFocus) {
-        if (value!=null && value instanceof JLabel) {
-            JLabel ele = (JLabel) value;
+        if (value!=null && value instanceof Miniatura) {
+        	Miniatura ele = (Miniatura) value;
             if (isSelected) {
                 ele.setBackground(Color.GRAY);
             } else {

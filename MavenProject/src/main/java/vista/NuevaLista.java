@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -29,16 +30,17 @@ import tds.video.VideoWeb;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ListSelectionModel;
 
 public class NuevaLista extends JPanel {
 	private JTextField txtBuscarLista;
 	private JTextField txtBuscarVideos;
 
-	private JList<JLabel> listaVideosN;
-	private JList<JLabel> listaVideosB;
+	private JList<Miniatura> listaVideosN;
+	private JList<Miniatura> listaVideosB;
 
-	private DefaultListModel<JLabel> modeloVideosN;
-	private DefaultListModel<JLabel> modeloVideosB;
+	private DefaultListModel<Miniatura> modeloVideosN;
+	private DefaultListModel<Miniatura> modeloVideosB;
 
 	private ListaVideos listaVideos = null;
 
@@ -110,10 +112,7 @@ public class NuevaLista extends JPanel {
 					} else {
 						modeloVideosN.clear();
 						for (Video v : listaVideos.getVideos()) {
-							JLabel l = new JLabel();
-							l.setIcon(App.getVideoWeb().getSmallThumb(v.getUrl()));
-							l.setText(v.getTitulo());
-							modeloVideosN.addElement(l);
+							modeloVideosN.addElement(new Miniatura(v,140,130));
 						}
 						listaVideosN.revalidate();
 						listaVideosN.setSelectedIndex(0);
@@ -178,11 +177,12 @@ public class NuevaLista extends JPanel {
 		pLista.add(verticalBox_2);
 
 		// INICIALIZAMOS LA LISTA DE LA IZQUIERDA
-		listaVideosN = new JList<JLabel>();
+		listaVideosN = new JList<Miniatura>();
 		// TODO ESTE VALOR HAY QUE CAMBIARLO CUANDO PODAMOS ENSEÑAR MINIATURAS
-		listaVideosN.setVisibleRowCount(17);
-		modeloVideosN = new DefaultListModel<JLabel>();
+		listaVideosN.setVisibleRowCount(-1);
+		modeloVideosN = new DefaultListModel<Miniatura>();
 		listaVideosN.setModel(modeloVideosN);
+		listaVideosN.setCellRenderer(new VideoListRenderer());
 		listaVideosN.setSelectedIndex(0);
 
 		JScrollPane scrollLista = new JScrollPane(listaVideosN);
@@ -219,11 +219,15 @@ public class NuevaLista extends JPanel {
 		JPanel pVideos = new JPanel();
 		// SI INICIALIZAS AQUÍ LA LISTA NO HACE FALTA QUE LA INICIALICES ARRIBA, CUANDO
 		// LA DECLARAS
-		listaVideosB = new JList<JLabel>();
-		listaVideosB.setVisibleRowCount(24);
-		modeloVideosB = new DefaultListModel<JLabel>();
+		listaVideosB = new JList<Miniatura>();
+		listaVideosB.setValueIsAdjusting(true);
+		listaVideosB.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listaVideosB.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		listaVideosB.setVisibleRowCount(-1);
+		modeloVideosB = new DefaultListModel<Miniatura>();
 
 		listaVideosB.setModel(modeloVideosB);
+		listaVideosB.setCellRenderer(new VideoListRenderer());
 		listaVideosB.setSelectedIndex(0);
 
 		JScrollPane scrollLista1 = new JScrollPane(listaVideosB);
@@ -243,16 +247,19 @@ public class NuevaLista extends JPanel {
 		 * listaVideos = null; } } });
 		 */
 
+		scrollLista.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollLista1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		
 		bAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (listaVideos != null) {
-					JLabel aux = modeloVideosB.get(listaVideosB.getSelectedIndex());
+					Miniatura aux = modeloVideosB.get(listaVideosB.getSelectedIndex());
 					if (aux != null) {
 						for (int i = 0; i < modeloVideosN.getSize(); i++) {
-							if (modeloVideosN.get(i).equals(aux))
+							if (modeloVideosN.get(i).equals(aux))		//CAMBIADO (CREO)
 								return;
 						}
-						listaVideos.addVideo(App.getInstancia().findVideoURL(aux.getIcon().toString()));
+						listaVideos.addVideo(App.getInstancia().findVideoURL(aux.getUrl()));
 						modeloVideosN.addElement(aux);
 						listaVideosN.revalidate();
 					}
@@ -264,8 +271,8 @@ public class NuevaLista extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				int index = listaVideosN.getSelectedIndex();
 				if (index != -1) {
-					JLabel aux = modeloVideosN.get(index);
-					listaVideos.removeVideo(App.getInstancia().findVideoURL(aux.getIcon().toString()));
+					Miniatura aux = modeloVideosN.get(index);
+					listaVideos.removeVideo(App.getInstancia().findVideoURL(aux.getUrl()));
 					modeloVideosN.remove(index);
 					listaVideosN.revalidate();
 				}
@@ -290,11 +297,8 @@ public class NuevaLista extends JPanel {
 				List<Video> aux = App.getInstancia().videosPorNombre(txtBuscarVideos.getText(),
 						App.getInstancia().recuperarVideos());
 				for (Video v : aux) {
-					JLabel l = new JLabel();
-					l.setIcon(App.getVideoWeb().getSmallThumb(v.getUrl()));
-					l.setText(v.getTitulo());
+					Miniatura l = new Miniatura(v,150,140);
 					modeloVideosB.addElement(l);
-
 				}
 			}
 		});
