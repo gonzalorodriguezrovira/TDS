@@ -1,6 +1,5 @@
 package vista;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import controlador.App;
 import modelo.Etiqueta;
+import modelo.Video;
+
 import javax.swing.JScrollPane;
 import java.awt.Component;
 import javax.swing.Box;
@@ -18,7 +19,6 @@ import java.awt.FlowLayout;
 import javax.swing.JTextField;
 import javax.swing.plaf.DimensionUIResource;
 
-import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -27,50 +27,59 @@ import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.border.BevelBorder;
+import java.awt.CardLayout;
 
 public class Explorar extends JPanel {
-	//PANELES
+	// PANELES
 	private JPanel panelBusqueda;
 	private JPanel panelEtiquetas;
-	
-	//LISTAS
-	JList<String> listaSeleccionados;
-	JList<String> listaEtiquetas;
-	
-	//MODELOS
-	DefaultListModel<String> modeloEtiquetas;
-	DefaultListModel<String> modeloEtiqSeleccionadas;
-	
-	//NOMBRE DEL VIDEO A BUSCAR
+
+	// LISTAS
+	private JList<String> listaSeleccionados;
+	private JList<String> listaEtiquetas;
+	private JList<JLabel> listaVideos;
+
+	// MODELOS
+	private DefaultListModel<String> modeloEtiquetas;
+	private DefaultListModel<String> modeloEtiqSeleccionadas;
+	private DefaultListModel<JLabel> modeloVideos;
+
+	// VIDEOS
+	private List<Video> Videos;
+
+	// NOMBRE DEL VIDEO A BUSCAR
 	private JTextField txtNombre;
-	
-	//FILTROS
+
+	// FILTROS
 	private JComboBox filtros;
-	
-	//ETIQUETAS
+
+	// ETIQUETAS
 	private String[] etiquetas;
-	
-	//BOTONES
+
+	// BOTONES
 	private JButton bBuscar;
 	private JButton bNuevaBusqueda;
-	
+
 	public Explorar(AppVideo v) {
-		//COLOR DE FONDO
+		// COLOR DE FONDO
 		setBackground(Color.GRAY);
 		setLayout(null);
-		
-		//ASIGNACIÓN VALORES PANEL BUSCAR
+
+		// ASIGNACIÓN VALORES PANEL BUSCAR
 		inicializarPanelBuscar();
-		
-		//ASIGNACIÓN VALORES PANEL ETIQUETAS
+
+		// ASIGNACIÓN VALORES PANEL ETIQUETAS
 		inicializarPanelEtiquetas();
-		
-		//ASIGNACIÓN VALORES SCROLLPANEL DE VIDEOS
+
+		// ASIGNACIÓN VALORES SCROLLPANEL DE VIDEOS
 		inicializarScrollPanelVideos();
-		
-		//*************************************************ACCIONES BOTONES**************************************************
+
+		// *************************************************ACCIONES
+		// BOTONES**************************************************
 		listaEtiquetas.addMouseListener(new MouseAdapter() {
 			String aux;
+
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1 && !modeloEtiquetas.contains("\r")) {
 					aux = modeloEtiquetas.remove(listaEtiquetas.getSelectedIndex());
@@ -87,15 +96,18 @@ public class Explorar extends JPanel {
 
 		listaSeleccionados.addMouseListener(new MouseAdapter() {
 			String aux;
+
 			public void mouseClicked(MouseEvent e) {
-				if(listaSeleccionados.getSelectedIndex() == -1) return;
+				if (listaSeleccionados.getSelectedIndex() == -1)
+					return;
 				if (e.getClickCount() == 1 && !modeloEtiqSeleccionadas.contains("\r")) {
 					aux = modeloEtiqSeleccionadas.remove(listaSeleccionados.getSelectedIndex());
 					if (modeloEtiquetas.contains("\r"))
 						modeloEtiquetas.remove(0);
 					if (modeloEtiqSeleccionadas.isEmpty())
 						modeloEtiqSeleccionadas.add(0, "\r");
-					listaSeleccionados.revalidate();;
+					listaSeleccionados.revalidate();
+					;
 					modeloEtiquetas.addElement(aux);
 					listaEtiquetas.revalidate();
 				}
@@ -105,17 +117,19 @@ public class Explorar extends JPanel {
 		bBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				List<String> ll = new LinkedList<String>();
-				for(Object o : modeloEtiqSeleccionadas.toArray()) {
-					if(!o.equals("\r"))
-						ll.add((String)o);
+				for (Object o : modeloEtiqSeleccionadas.toArray()) {
+					if (!o.equals("\r"))
+						ll.add((String) o);
 				}
-				System.out.println(App.getInstancia().busquedaDeVideos(txtNombre.getText(), (String) filtros.getSelectedItem(), ll));
+				mostrarVideos();
+				//System.out.println(App.getInstancia().busquedaDeVideos(txtNombre.getText(),
+						//(String) filtros.getSelectedItem(), ll));
 			}
 		});
-		//*******************************************************************************************************************
+		// *******************************************************************************************************************
 	}
-	
-	//******************************************************MÉTODOS******************************************************
+
+	// ******************************************************MÉTODOS******************************************************
 	public void cargarEtiquetas() {
 		int i = 0;
 		List<Etiqueta> listaEtiquetas = App.getInstancia().recuperarEtiquetas();
@@ -125,7 +139,7 @@ public class Explorar extends JPanel {
 			i++;
 		}
 	}
-	
+
 	public void actualizarEtiquetas() {
 		modeloEtiqSeleccionadas.clear();
 		modeloEtiquetas.clear();
@@ -140,13 +154,14 @@ public class Explorar extends JPanel {
 	public void habilitarFiltros(boolean ispremium) {
 		filtros.setEnabled(ispremium);
 	}
-	//*******************************************************************************************************************
-	
-	//**************************************************INICIALIZADORES**************************************************
+	// *******************************************************************************************************************
+
+	// **************************************************INICIALIZADORES**************************************************
 	private void inicializarPanelBuscar() {
 		panelBusqueda = new JPanel();
+		panelBusqueda.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panelBusqueda.setBackground(Color.GRAY);
-		panelBusqueda.setBounds(0, 0, 480, 107);
+		panelBusqueda.setBounds(0, 0, 501, 107);
 		add(panelBusqueda);
 		panelBusqueda.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
@@ -184,18 +199,25 @@ public class Explorar extends JPanel {
 		filtros.setModel(new DefaultComboBoxModel(new String[] { "NoFiltro", "Menores", "MisListas" }));
 		horizontalBox_1.add(filtros);
 
-		Component rigidArea_3 = Box.createRigidArea(new Dimension(200, 20));
+		Component rigidArea_3 = Box.createRigidArea(new Dimension(170, 20));
 		horizontalBox_1.add(rigidArea_3);
+
+		JButton bReproducir = new JButton("Reproducir");
+		horizontalBox_1.add(bReproducir);
+
+		Component rigidArea_4 = Box.createRigidArea(new Dimension(39, 20));
+		horizontalBox_1.add(rigidArea_4);
 
 		bNuevaBusqueda = new JButton("Nueva búsqueda");
 		horizontalBox_1.add(bNuevaBusqueda);
 	}
-	
+
 	private void inicializarPanelEtiquetas() {
-		cargarEtiquetas();						//Inicializamos el array de etiquetas
+		cargarEtiquetas(); // Inicializamos el array de etiquetas
 		panelEtiquetas = new JPanel();
+		panelEtiquetas.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panelEtiquetas.setBackground(Color.GRAY);
-		panelEtiquetas.setBounds(499, 0, 170, 504);
+		panelEtiquetas.setBounds(499, 0, 176, 510);
 		add(panelEtiquetas);
 
 		Box verticalBox_1 = Box.createVerticalBox();
@@ -239,7 +261,7 @@ public class Explorar extends JPanel {
 		Component rigidArea_4_1_1 = Box.createRigidArea(new Dimension(20, 20));
 		verticalBox_1.add(rigidArea_4_1_1);
 		listaSeleccionados = new JList<String>();
-		
+
 		modeloEtiqSeleccionadas = new DefaultListModel<String>();
 		modeloEtiqSeleccionadas.addElement("\r");
 
@@ -249,13 +271,43 @@ public class Explorar extends JPanel {
 		JScrollPane scrollLista1 = new JScrollPane(listaSeleccionados);
 		scrollLista1.setPreferredSize(new DimensionUIResource(150, 150));
 		verticalBox_1.add(scrollLista1);
+
 	}
-	
+
 	private void inicializarScrollPanelVideos() {
-		ScrollPane scrollPaneVideos = new ScrollPane();
-		scrollPaneVideos.setBackground(Color.GRAY);
-		scrollPaneVideos.setBounds(0, 107, 480, 397);
-		add(scrollPaneVideos);
+		listaVideos = new JList<JLabel>();
+		modeloVideos = new DefaultListModel<JLabel>();
+		listaVideos.setModel(modeloVideos);
+
+		JPanel panel = new JPanel();
+		JScrollPane scrollListaVideos = new JScrollPane(listaVideos);
+		panel.add(scrollListaVideos);
+		panel.setBackground(Color.GRAY);
+		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		panel.setBounds(0, 107, 501, 403);
+		add(panel);
+		panel.setLayout(new CardLayout(0, 0));
+
 	}
-	//*******************************************************************************************************************
+
+	public void mostrarVideos() {
+		List<String> ll = new LinkedList<String>();
+		for (Object o : modeloEtiqSeleccionadas.toArray()) {
+			if (!o.equals("\r"))
+				ll.add((String) o);
+		}
+		Videos = new LinkedList<Video>();
+		Videos = App.getInstancia().busquedaDeVideos(txtNombre.getText(), (String) filtros.getSelectedItem(), ll);
+		for (Video v : Videos) {
+			JLabel l = new JLabel();
+			l.setIcon(App.getVideoWeb().getSmallThumb(v.getUrl()));
+			l.setText(v.getTitulo());
+			modeloVideos.addElement(l);
+		}
+		listaVideos.setCellRenderer(new VideoListRenderer());
+
+		listaVideos.revalidate();
+		listaVideos.setSelectedIndex(0);
+
+	}
 }
