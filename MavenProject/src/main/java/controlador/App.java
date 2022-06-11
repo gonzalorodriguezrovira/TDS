@@ -2,11 +2,16 @@ package controlador;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
+import java.util.EventObject;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import componente.ComponenteBuscadorVideos;
+import componente.EventVideos;
+import componente.VideosListener;
 import modelo.Etiqueta;
 import modelo.FiltroVideo;
 import modelo.ListaVideos;
@@ -14,6 +19,7 @@ import modelo.RepositorioUsuario;
 import modelo.RepositorioVideo;
 import modelo.Usuario;
 import modelo.Video;
+import persistencia.AdaptadorVideoTDS;
 import persistencia.DAOException;
 import persistencia.FactoriaDAO;
 import persistencia.IAdaptadorEtiquetaDAO;
@@ -22,7 +28,7 @@ import persistencia.IAdaptadorUsuarioDAO;
 import persistencia.IAdaptadorVideoDAO;
 import tds.video.VideoWeb;
 
-public class App {
+public class App implements VideosListener {
 	// ATRIBUTOS
 	private static App aplicacion; // Única instancia de App
 	private Usuario usuarioActual; // Último usuario que ha iniciado sesión
@@ -37,6 +43,9 @@ public class App {
 	private RepositorioVideo repositorioVideo;
 	
 	private static VideoWeb videoWeb;
+	
+	private ComponenteBuscadorVideos componenteVideo;
+	
 
 	// Para que otras clases puedan acceder a App y sus métodos
 	public static App getInstancia() {
@@ -55,6 +64,11 @@ public class App {
 	private App() {
 		inicializarAdaptadores();
 		inicializarRepositorios();
+		
+		componenteVideo = ComponenteBuscadorVideos.getUnicaInstancia();
+		componenteVideo.addVideosListener(this);
+		componenteVideo.setArchivoVideos("xml/videos.xml");
+		
 	}
 
 	// MÉTODOS PARA EL CONSTRUCTOR
@@ -75,8 +89,40 @@ public class App {
 		adapatadorEtiqueta = factoria.getEtiquetaDAO();
 		adaptadorListaVideos = factoria.getListaVideosDAO();
 	}
+	
 
 	// MÉTODOS PARA EL USUARIO ACTUAL
+	
+	@Override
+	public void nuevosVideos(EventObject e) {
+		try {
+			AdaptadorVideoTDS adaptadorVideo = (AdaptadorVideoTDS) FactoriaDAO.getInstancia().getVideoDAO();
+		} catch (DAOException e1) {
+			e1.printStackTrace();
+		}
+		LinkedList<Video> lista = getVideosXML(((EventVideos) e).getVideos());
+		for(int i = 0; i < lista.size(); i++) {
+			if(lista.get(i)!=null) {
+			if (repositorioVideo.addVideo(lista.get(i))) { // Intentamos registrarlo en la base local
+				adaptadorVideo.addVideo(lista.get(i)); // Si hemos podido, entonces también lo introducimos en la bd.
+			}
+			}
+		}
+	}
+	
+	public LinkedList<Video> getVideosXML(componente.Videos videos) {
+		LinkedList<Video> lista = new LinkedList<Video>();
+		for (componente.Video v : videos.getVideo()) {
+			Set<Etiqueta> etiquetas = new HashSet<Etiqueta>();
+			for(String s : v.getEtiqueta()) {
+				Etiqueta nEtiqueta = new Etiqueta(s);
+				etiquetas.add(nEtiqueta);
+			}
+			lista.add(new Video(v.getURL(), v.getTitulo(), etiquetas));
+		}
+		return lista;
+	}
+	
 	public Usuario getUsuarioActual() {
 		return usuarioActual;
 	}
