@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import componente.ComponenteBuscadorVideos;
 import componente.EventVideos;
 import componente.VideosListener;
+import main.Lanzador;
 import modelo.Etiqueta;
 import modelo.FiltroVideo;
 import modelo.ListaVideos;
@@ -87,6 +88,37 @@ public class App implements VideosListener {
 		adaptadorVideo = factoria.getVideoDAO();
 		adapatadorEtiqueta = factoria.getEtiquetaDAO();
 		adaptadorListaVideos = factoria.getListaVideosDAO();
+	}
+	
+	// REPRODUCTOR VIDEO *   ROBERTO
+
+	public void playVideo(Video v) { 
+
+		Lanzador.videoWeb.playVideo(v.getUrl());
+		//v.incrementareproducciones(); cuando debemos incrementar las visualizaciones 
+		adaptadorVideo.modificarVideo(v);
+
+		usuarioActual.addRecientes(v);
+		adaptadorUsuario.modificarUsuario(usuarioActual);
+
+	}
+
+	public void playVideo(String s) {
+
+		Video v = findVideoURL(s);
+		//v.incrementareproducciones();cuando debemos incrementar las visualizaciones 
+
+		Lanzador.videoWeb.playVideo(v.getUrl());
+		adaptadorVideo.modificarVideo(v);
+
+		usuarioActual.addRecientes(v);
+		adaptadorUsuario.modificarUsuario(usuarioActual);
+
+	}
+
+	public void stopVideo() {
+
+		Lanzador.videoWeb.cancel();
 	}
 	
 

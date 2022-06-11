@@ -48,6 +48,10 @@ public class Video {
 	public void setNumRepro(int numRepro) {
 		this.numRepro = numRepro;
 	}
+	
+	public void incrementareproducciones() {//ROBERTO
+		this.numRepro= numRepro++;
+	}
 
 	// MÉTODOS
 	public boolean addEtiqueta(Etiqueta e) {
