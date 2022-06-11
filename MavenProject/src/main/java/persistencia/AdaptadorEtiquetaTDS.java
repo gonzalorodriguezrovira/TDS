@@ -30,6 +30,7 @@ public class AdaptadorEtiquetaTDS implements IAdaptadorEtiquetaDAO {
 
 	@Override
 	public void addEtiqueta(Etiqueta etiqueta) {
+		if(etiqueta.getNombre() == null || etiqueta.getNombre().isEmpty()) return;
 		Entidad eEtiqueta = null;
 		try {
 			eEtiqueta = servPersistencia.recuperarEntidad(etiqueta.getCodigo());
@@ -39,8 +40,10 @@ public class AdaptadorEtiquetaTDS implements IAdaptadorEtiquetaDAO {
 			return;
 		}
 		for(Entidad e : servPersistencia.recuperarEntidades("etiqueta")) {
-			if(etiqueta.getNombre().equals(servPersistencia.recuperarPropiedadEntidad(e, "nombre")))
+			if(etiqueta.getNombre().equals(servPersistencia.recuperarPropiedadEntidad(e, "nombre"))) {
+				etiqueta.setCodigo(e.getId());
 				return;
+			}
 		}
 
 		eEtiqueta = new Entidad();

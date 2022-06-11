@@ -19,7 +19,6 @@ import modelo.RepositorioUsuario;
 import modelo.RepositorioVideo;
 import modelo.Usuario;
 import modelo.Video;
-import persistencia.AdaptadorVideoTDS;
 import persistencia.DAOException;
 import persistencia.FactoriaDAO;
 import persistencia.IAdaptadorEtiquetaDAO;
@@ -67,7 +66,7 @@ public class App implements VideosListener {
 		
 		componenteVideo = ComponenteBuscadorVideos.getUnicaInstancia();
 		componenteVideo.addVideosListener(this);
-		componenteVideo.setArchivoVideos("xml/videos.xml");
+		componenteVideo.setArchivoVideos("xml/video.xml");
 		
 	}
 
@@ -95,11 +94,6 @@ public class App implements VideosListener {
 	
 	@Override
 	public void nuevosVideos(EventObject e) {
-		try {
-			AdaptadorVideoTDS adaptadorVideo = (AdaptadorVideoTDS) FactoriaDAO.getInstancia().getVideoDAO();
-		} catch (DAOException e1) {
-			e1.printStackTrace();
-		}
 		LinkedList<Video> lista = getVideosXML(((EventVideos) e).getVideos());
 		for(int i = 0; i < lista.size(); i++) {
 			if(lista.get(i)!=null) {
