@@ -5,6 +5,14 @@ import java.util.Vector;
 public class ComponenteBuscadorVideos {
 	private Vector videosListeners = new Vector();
 	private String archivoVideos;
+	private static ComponenteBuscadorVideos unicaInstancia;
+	
+	public static ComponenteBuscadorVideos getUnicaInstancia() {
+		
+		if (unicaInstancia == null)
+			unicaInstancia = new ComponenteBuscadorVideos();
+		return unicaInstancia;
+	}
 	
 	public ComponenteBuscadorVideos() {}
 	
