@@ -92,7 +92,7 @@ public class App implements VideosListener {
 	// REPRODUCTOR VIDEO *   ROBERTO
 
 	public void playVideo(Video v) { 
-
+		
 		Lanzador.videoWeb.playVideo(v.getUrl());
 		adaptadorVideo.modificarVideo(v);
 

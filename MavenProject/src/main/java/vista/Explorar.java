@@ -16,6 +16,8 @@ import java.awt.Component;
 import javax.swing.Box;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+
 import javax.swing.JTextField;
 import javax.swing.plaf.DimensionUIResource;
 
@@ -90,7 +92,34 @@ public class Explorar extends JPanel {
 
 		// ASIGNACIÓN VALORES SCROLLPANEL DE VIDEOS
 		inicializarScrollPanelVideos();
+		
+		// INICIALIZAR PANEL DE REPRODUCCIÓN
+		
+		Box verticalBox_1 = Box.createVerticalBox();
+		panelReproductor.add(verticalBox_1);
 
+		Component rigidArea_3 = Box.createRigidArea(new Dimension(20, 20));
+		verticalBox_1.add(rigidArea_3);
+
+		Box horizontalBox_6 = Box.createHorizontalBox();
+		verticalBox_1.add(horizontalBox_6);
+
+		JLabel txtTitulo = new JLabel("Titulo");
+		txtTitulo.setVisible(false);
+		txtTitulo.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		horizontalBox_6.add(txtTitulo);
+
+		Component rigidArea_4 = Box.createRigidArea(new Dimension(20, 20));
+		verticalBox_1.add(rigidArea_4);
+
+		JPanel pVideo = new JPanel();
+		pVideo.setVisible(false);
+		verticalBox_1.add(pVideo);
+
+		Component rigidArea_10 = Box.createRigidArea(new Dimension(450, 20));
+		verticalBox_1.add(rigidArea_10);
+		
+		//**********************************************************
 		// *************************************************ACCIONES
 		// BOTONES**************************************************
 		listaEtiquetas.addMouseListener(new MouseAdapter() {
@@ -148,6 +177,11 @@ public class Explorar extends JPanel {
 				modeloVideos.removeAllElements();
 				listaVideos.revalidate();
 				if (!control) {
+					for(Component c : pVideo.getComponents())
+						pVideo.remove(c);
+					App.getInstancia().stopVideo();
+					pVideo.revalidate();
+			        pVideo.repaint();
 					CardLayout c = (CardLayout) (panel.getLayout());
 					c.removeLayoutComponent(panelReproductor);
 					control = true;
@@ -160,12 +194,23 @@ public class Explorar extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				if (control) {
 					int index = listaVideos.getSelectedIndex();
-                    Video v = App.getInstancia().findVideoURL((modeloVideos.get(index).getUrl()));
-                    v = App.getInstancia().incrementarVisualizaciones(v);
-					CardLayout c = (CardLayout) (panel.getLayout());
-					panel.add(panelReproductor, REPRODUCTOR);
-					c.show(panel, REPRODUCTOR);
-					control = false;
+					if (index != -1) {
+	                    Video v = App.getInstancia().findVideoURL((modeloVideos.get(index).getUrl()));
+	                    v = App.getInstancia().incrementarVisualizaciones(v);
+						CardLayout c = (CardLayout) (panel.getLayout());
+						panel.add(panelReproductor, REPRODUCTOR);
+						c.show(panel, REPRODUCTOR);
+						App.getInstancia().stopVideo();
+						pVideo.remove(main.Lanzador.videoWeb);
+						pVideo.add(main.Lanzador.videoWeb);
+						txtTitulo.setText(v.getTitulo());
+						v = App.getInstancia().incrementarVisualizaciones(v);
+						txtTitulo.setVisible(true);
+						pVideo.setVisible(true);
+						App.getInstancia().playVideo(v);
+						validate();
+						control = false;
+					}
 				}
 			}
 		});

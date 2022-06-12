@@ -147,7 +147,7 @@ public class MisListas extends JPanel {
 		JPanel pVideo = new JPanel();
 		pVideo.setVisible(false);
 		verticalBox_1.add(pVideo);
-
+		
 		Box horizontalBox_8 = Box.createHorizontalBox();
 		verticalBox_1.add(horizontalBox_8);
 
@@ -202,6 +202,10 @@ public class MisListas extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				int index = listaVideos.getSelectedIndex();
 				if (index != -1) {
+					App.getInstancia().stopVideo();
+					pVideo.remove(main.Lanzador.videoWeb);
+
+					pVideo.add(main.Lanzador.videoWeb);
 					Video v = App.getInstancia().findVideoURL(modeloVideos.get(index).getUrl());
 					txtTitulo.setText(v.getTitulo());
 					v = App.getInstancia().incrementarVisualizaciones(v);
@@ -218,13 +222,20 @@ public class MisListas extends JPanel {
 					bEtiquetasNuevas.setVisible(true);
 					bEtiquetasNuevas.setEnabled(true);
 					pVideo.setVisible(true);
+					App.getInstancia().playVideo(v);
+					validate();
 				}
 			}
 		});
 
 		bCancelarML.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				txtTitulo.setVisible(false);
+				for(Component c : pVideo.getComponents())
+					pVideo.remove(c);
+				App.getInstancia().stopVideo();
+				pVideo.revalidate();
+		        pVideo.repaint();
+		        txtTitulo.setVisible(false);
 				txtVisualizaciones.setVisible(false);
 				txtEtiquetas.setVisible(false);
 				txtnuevaetiquetainfo.setVisible(false);
