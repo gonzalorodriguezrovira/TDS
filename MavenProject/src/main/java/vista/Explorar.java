@@ -159,6 +159,9 @@ public class Explorar extends JPanel {
 		bReproducir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (control) {
+					int index = listaVideos.getSelectedIndex();
+                    Video v = App.getInstancia().findVideoURL((modeloVideos.get(index).getUrl()));
+                    v = App.getInstancia().incrementarVisualizaciones(v);
 					CardLayout c = (CardLayout) (panel.getLayout());
 					panel.add(panelReproductor, REPRODUCTOR);
 					c.show(panel, REPRODUCTOR);

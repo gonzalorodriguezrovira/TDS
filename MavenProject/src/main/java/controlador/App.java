@@ -42,7 +42,6 @@ public class App implements VideosListener {
 	private RepositorioUsuario repositorioUsuario;
 	private RepositorioVideo repositorioVideo;
 	
-	private static VideoWeb videoWeb;
 	
 	private ComponenteBuscadorVideos componenteVideo;
 	
@@ -55,9 +54,9 @@ public class App implements VideosListener {
 	}
 	
 	public static VideoWeb getVideoWeb() {
-		if (videoWeb == null)
-			videoWeb = new VideoWeb();
-		return videoWeb;
+		if (Lanzador.videoWeb == null)
+			Lanzador.videoWeb = new VideoWeb();
+		return Lanzador.videoWeb;
 	}
 
 	// CONSTRUCTOR
@@ -95,7 +94,6 @@ public class App implements VideosListener {
 	public void playVideo(Video v) { 
 
 		Lanzador.videoWeb.playVideo(v.getUrl());
-		//v.incrementareproducciones(); cuando debemos incrementar las visualizaciones 
 		adaptadorVideo.modificarVideo(v);
 
 		usuarioActual.addRecientes(v);
@@ -106,7 +104,6 @@ public class App implements VideosListener {
 	public void playVideo(String s) {
 
 		Video v = findVideoURL(s);
-		//v.incrementareproducciones();cuando debemos incrementar las visualizaciones 
 
 		Lanzador.videoWeb.playVideo(v.getUrl());
 		adaptadorVideo.modificarVideo(v);
