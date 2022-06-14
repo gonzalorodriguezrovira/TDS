@@ -28,6 +28,15 @@ import persistencia.IAdaptadorUsuarioDAO;
 import persistencia.IAdaptadorVideoDAO;
 import tds.video.VideoWeb;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+
+
 public class App implements VideosListener {
 	// ATRIBUTOS
 	private static App aplicacion; // Única instancia de App
@@ -276,6 +285,18 @@ public class App implements VideosListener {
 		l.setVideos(l.getVideos());
 		adaptadorListaVideos.modificarListaVideos(l);
 		adaptadorUsuario.modificarUsuario(usuarioActual);
+	}
+	
+	public void generarPDF() throws FileNotFoundException, DocumentException {
+		Document doc = new Document();
+		PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("AppVideo.pdf"));
+	    doc.open();
+	    
+		List<ListaVideos> listaVideos= getUsuarioActual().getListaVideos();
+		for(ListaVideos lv: listaVideos) {
+			lv.generarPDF(doc);
+		}
+		doc.close();
 	}
 
 	// MÉTODOS ETIQUETA

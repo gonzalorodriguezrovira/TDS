@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.util.Date;
 
 import javax.swing.Box;
@@ -19,6 +20,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
+
+import com.itextpdf.text.DocumentException;
 
 import controlador.App;
 
@@ -63,10 +66,12 @@ public class AppVideo extends JFrame {
 	private JButton bRecientes;
 	private JButton bNuevaLista;
 	private JButton bPremium;
+	private JButton bGenerarPDF;
 	
 	// INFORMACIÓN SOBRE EL USUARIO ACTUAL
 	private JLabel lbUsuario;
 	private boolean premium;
+	private Component rigidArea_3;
 
 	public AppVideo() {
 		//ASIGNACIÓN DE LOS VALORES DE LA VENTANA DE LA APP
@@ -107,6 +112,17 @@ public class AppVideo extends JFrame {
 		
 		bRecientes.addActionListener(ev -> c.show(vDisplay, RECIENTES));
 		
+		bGenerarPDF.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					generarPDF();
+				} catch (FileNotFoundException | DocumentException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
 		//*******************************************************************************************************************
 	}
 	
@@ -121,10 +137,14 @@ public class AppVideo extends JFrame {
 
 	public void cambiarPremium() {
 		premium = App.getInstancia().getUsuarioActual().isPremium();
-		if(premium)
+		if(premium) {
+			bGenerarPDF.setEnabled(true);
 			bPremium.setText("NoPremium");
-		else
+		}
+		else {
+			bGenerarPDF.setEnabled(false);
 			bPremium.setText("Premium");
+		}
 		pE.habilitarFiltros(premium);
 		pRE.habilitar();
 	}
@@ -163,6 +183,7 @@ public class AppVideo extends JFrame {
 			c.show(vDisplay, INICIO_SESION);
 			setUsuario("");
 			App.getInstancia().setUsuarioActual(null);
+			bGenerarPDF.setEnabled(false);
 			bRegistro.setEnabled(true);
 			bLogin.setEnabled(true);
 			bMisListas.setEnabled(false);
@@ -179,6 +200,10 @@ public class AppVideo extends JFrame {
 	public void actualizarEtiquetasExplorar(){
 		pE.cargarEtiquetas();
 		pE.actualizarEtiquetas();
+	}
+	
+	public void generarPDF() throws FileNotFoundException, DocumentException {
+		App.getInstancia().generarPDF();
 	}
 	//*******************************************************************************************************************
 	
@@ -231,8 +256,16 @@ public class AppVideo extends JFrame {
 		lVideo.setForeground(new Color(255, 153, 0));
 		lVideo.setFont(new Font("DejaVu Sans Condensed", Font.BOLD, 18));
 		barraSuperior.add(lVideo);
+		
+		rigidArea_3 = Box.createRigidArea(new Dimension(20, 20));
+		barraSuperior.add(rigidArea_3);
+		
+		bGenerarPDF = new JButton("Generar PDF");
+		bGenerarPDF.setEnabled(false);
+		bGenerarPDF.setBackground(Color.LIGHT_GRAY);
+		barraSuperior.add(bGenerarPDF);
 
-		Component rigidArea1_BS = Box.createRigidArea(new Dimension(125, 40));
+		Component rigidArea1_BS = Box.createRigidArea(new Dimension(35, 40));
 		barraSuperior.add(rigidArea1_BS);
 
 		bRegistro = new JButton("Registro");
@@ -243,7 +276,7 @@ public class AppVideo extends JFrame {
 		bLogin.setBackground(Color.LIGHT_GRAY);
 		barraSuperior.add(bLogin);
 
-		Component rigidArea_2_BS = Box.createRigidArea(new Dimension(40, 40));
+		Component rigidArea_2_BS = Box.createRigidArea(new Dimension(35, 40));
 		barraSuperior.add(rigidArea_2_BS);
 
 		bLogout = new JButton("Logout");
@@ -252,7 +285,7 @@ public class AppVideo extends JFrame {
 		bLogout.setBackground(Color.LIGHT_GRAY);
 		barraSuperior.add(bLogout);
 
-		Component rigidArea_3_BS = Box.createRigidArea(new Dimension(40, 40));
+		Component rigidArea_3_BS = Box.createRigidArea(new Dimension(35, 40));
 		barraSuperior.add(rigidArea_3_BS);
 
 		bPremium = new JButton("Premium");
