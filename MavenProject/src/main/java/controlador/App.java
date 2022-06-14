@@ -1,6 +1,7 @@
 package controlador;
 
 import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
 import java.util.Date;
 import java.util.EventObject;
 import java.util.HashSet;
@@ -30,6 +31,7 @@ import tds.video.VideoWeb;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -287,7 +289,7 @@ public class App implements VideosListener {
 		adaptadorUsuario.modificarUsuario(usuarioActual);
 	}
 	
-	public void generarPDF() throws FileNotFoundException, DocumentException {
+	public void generarPDF() throws DocumentException, MalformedURLException, IOException {
 		Document doc = new Document();
 		PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("AppVideo.pdf"));
 	    doc.open();

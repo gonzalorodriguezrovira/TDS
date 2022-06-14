@@ -1,15 +1,18 @@
 package modelo;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 
-import main.Lanzador;
+
 
 public class ListaVideos {
 	//ATRIBUTOS
@@ -29,18 +32,19 @@ public class ListaVideos {
 	}
 	
 	//FUNCION
-	public void generarPDF(Document doc) throws DocumentException {
-		
+	public void generarPDF(Document doc) throws DocumentException, MalformedURLException, IOException {
+		doc.add(new Paragraph("Lista: " + name));
 		for(Video v:videos) {
-			
 			doc.add(new Paragraph(v.getTitulo()));
 			//doc.add((Element) Lanzador.videoWeb.getThumb(v.getUrl()).getImage());
+			Image image2 = Image.getInstance(new URL(v.getUrl()));
+			doc.add(image2);
 			String etiquetas = new String();
 			for(Etiqueta e: v.getEtiquetas()) {
 				etiquetas+= e.getNombre() + " ";
 			}
-			doc.add(new Paragraph(etiquetas));
-			doc.add(new Paragraph(v.getNumRepro()));
+			doc.add(new Paragraph("Etiquetas: "+ etiquetas));
+			doc.add(new Paragraph("Reproducciones: " + v.getNumRepro()));
 		}
 	}
 	

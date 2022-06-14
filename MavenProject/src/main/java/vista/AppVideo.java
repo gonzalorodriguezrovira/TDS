@@ -9,6 +9,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Date;
 
 import javax.swing.Box;
@@ -116,7 +118,7 @@ public class AppVideo extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					generarPDF();
-				} catch (FileNotFoundException | DocumentException e1) {
+				} catch (DocumentException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -202,7 +204,7 @@ public class AppVideo extends JFrame {
 		pE.actualizarEtiquetas();
 	}
 	
-	public void generarPDF() throws FileNotFoundException, DocumentException {
+	public void generarPDF() throws DocumentException, MalformedURLException, IOException {
 		App.getInstancia().generarPDF();
 	}
 	//*******************************************************************************************************************
