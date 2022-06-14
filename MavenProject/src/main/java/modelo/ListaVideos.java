@@ -12,6 +12,8 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 
+import main.Lanzador;
+
 
 
 public class ListaVideos {
@@ -36,8 +38,7 @@ public class ListaVideos {
 		doc.add(new Paragraph("Lista: " + name));
 		for(Video v:videos) {
 			doc.add(new Paragraph(v.getTitulo()));
-			//doc.add((Element) Lanzador.videoWeb.getThumb(v.getUrl()).getImage());
-			Image image2 = Image.getInstance(new URL(v.getUrl()));
+			Image image2 = Image.getInstance(Lanzador.videoWeb.getThumb(v.getUrl()).getImage(),null);
 			doc.add(image2);
 			String etiquetas = new String();
 			for(Etiqueta e: v.getEtiquetas()) {
