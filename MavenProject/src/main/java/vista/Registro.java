@@ -12,29 +12,19 @@ import javax.swing.JLabel;
 import java.awt.Component;
 import javax.swing.Box;
 import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import javax.swing.BoxLayout;
-import java.awt.BorderLayout;
 import com.toedter.calendar.JDateChooser;
 
 import controlador.App;
 
-import java.awt.GridBagConstraints;
 import javax.swing.SwingConstants;
 import java.awt.Color;
-import com.jgoodies.looks.plastic.PlasticComboBoxUI;
-import javax.swing.JPopupMenu;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.time.LocalDate;
 import java.util.Date;
 
 public class Registro extends JPanel {
 
-	/**
-	 * Create the panel.
-	 */
+
+	private static final long serialVersionUID = 1L;
+	
 	JPanel pRegistro = new JPanel();
 	private JTextField txtNombre;
 	private JTextField txtApellidos;
@@ -287,15 +277,4 @@ public class Registro extends JPanel {
 			}
 		});
 	}
-	/*
-	 * private static void addPopup(Component component, final JPopupMenu popup) {
-	 * component.addMouseListener(new MouseAdapter() { public void
-	 * mousePressed(MouseEvent e) { if (e.isPopupTrigger()) { showMenu(e); } }
-	 * 
-	 * public void mouseReleased(MouseEvent e) { if (e.isPopupTrigger()) {
-	 * showMenu(e); } }
-	 * 
-	 * private void showMenu(MouseEvent e) { popup.show(e.getComponent(), e.getX(),
-	 * e.getY()); } }); }
-	 */
 }

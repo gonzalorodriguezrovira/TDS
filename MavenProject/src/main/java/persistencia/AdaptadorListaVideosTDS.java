@@ -38,28 +38,27 @@ public class AdaptadorListaVideosTDS implements IAdaptadorListaVideosDAO {
 		}
 		if (eListaVideos != null)
 			return;
-		
-		// registrar primero los atributos que son objetos
+
+	
 		AdaptadorVideoTDS adaptadorVideo = AdaptadorVideoTDS.getUnicaInstancia();
 		for (Video v : lv.getVideos()) {
 			adaptadorVideo.addVideo(v);
 		}
 
-		// crear entidad ListaVideo
+		
 		eListaVideos = new Entidad();
 		eListaVideos.setNombre("ListaVideos");
 		eListaVideos.setPropiedades(new ArrayList<Propiedad>(Arrays.asList(new Propiedad("name", lv.getName()),
 				new Propiedad("videos", obtenerCodigosVideos(lv.getVideos())))));
-		// registrar entidad ListaVideos
+		
 		eListaVideos = servPersistencia.registrarEntidad(eListaVideos);
-		// Para asignar identificador unico se aprovecha el que genera el servicio de
-		// persistencia
+		
 		lv.setCodigo(eListaVideos.getId());
 	}
 
 	@Override
 	public void borrarListaVideo(ListaVideos lv) {
-		// No se comprueban restricciones de integridad
+		
 		Entidad eListaVideos = servPersistencia.recuperarEntidad(lv.getCodigo());
 		servPersistencia.borrarEntidad(eListaVideos);
 	}
@@ -77,9 +76,8 @@ public class AdaptadorListaVideosTDS implements IAdaptadorListaVideosDAO {
 
 	@Override
 	public ListaVideos recuperarListaVideos(int codigo) {
-		// Si la entidad está en el pool la devuelve directamente
-	
 		
+
 		Entidad ListaVideos;
 		String name;
 		List<Video> videos = new LinkedList<Video>();
@@ -99,7 +97,7 @@ public class AdaptadorListaVideosTDS implements IAdaptadorListaVideosDAO {
 		Entidad eListaVideo = servPersistencia.recuperarEntidad(lv.getCodigo());
 
 		for (Propiedad prop : eListaVideo.getPropiedades()) {
-			
+
 			if (prop.getNombre().equals("codigo")) {
 				prop.setValor(String.valueOf(lv.getCodigo()));
 			} else if (prop.getNombre().equals("name")) {
@@ -107,11 +105,11 @@ public class AdaptadorListaVideosTDS implements IAdaptadorListaVideosDAO {
 			} else if (prop.getNombre().equals("videos")) {
 				prop.setValor(obtenerCodigosVideos(lv.getVideos()));
 			}
-			
+
 			servPersistencia.modificarPropiedad(prop);
 		}
 	}
-	
+
 	// -------------------Funciones auxiliares-----------------------------
 	private String obtenerCodigosVideos(List<Video> listaVideo) {
 		String aux = "";

@@ -1,6 +1,6 @@
 package persistencia;
 
-public class TDSFactoriaDAO extends FactoriaDAO{
+public class TDSFactoriaDAO extends FactoriaDAO {
 
 	@Override
 	public IAdaptadorUsuarioDAO getUsuarioDAO() {

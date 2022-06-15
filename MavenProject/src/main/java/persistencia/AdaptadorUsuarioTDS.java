@@ -21,8 +21,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 
 	private static ServicioPersistencia servPersistencia;
 
-	private SimpleDateFormat dateFormat; // para formatear la fecha de venta en
-											// la base de datos
+	private SimpleDateFormat dateFormat;
 
 	private static AdaptadorUsuarioTDS unicaInstancia;
 
@@ -48,16 +47,14 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		if (eUsuario != null)
 			return;
 
-		// registrar primero los atributos que son objetos
 		AdaptadorListaVideosTDS adaptadorListaVideos = AdaptadorListaVideosTDS.getUnicaInstancia();
 		for (ListaVideos lv : usuario.getListaVideos())
 			adaptadorListaVideos.addListaVideos(lv);
-		
+
 		AdaptadorVideoTDS adaptadorVideo = AdaptadorVideoTDS.getUnicaInstancia();
 		for (Video v : usuario.getRecientes())
 			adaptadorVideo.addVideo(v);
 
-		// crear entidad Cliente
 		eUsuario = new Entidad();
 		eUsuario.setNombre("usuario");
 		eUsuario.setPropiedades(new ArrayList<Propiedad>(Arrays.asList(new Propiedad("nombre", usuario.getNombre()),
@@ -69,69 +66,66 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 				new Propiedad("premium", String.valueOf(usuario.isPremium())),
 				new Propiedad("nacimiento", dateFormat.format(usuario.getNacimiento())))));
 
-		// registrar entidad usuario
 		eUsuario = servPersistencia.registrarEntidad(eUsuario);
-		// asignar identificador unico
-		// Se aprovecha el que genera el servicio de persistencia
+
 		usuario.setCodigo(eUsuario.getId());
 
 	}
 
 	@Override
 	public void borrarUsuario(Usuario usuario) {
-		// No se comprueban restricciones de integridad
+
 		Entidad eUsuario = servPersistencia.recuperarEntidad(usuario.getCodigo());
 		servPersistencia.borrarEntidad(eUsuario);
 	}
 
 	@Override
 	public Usuario recuperarUsuario(int codigo) {
-			// Si la entidad está en el pool la devuelve directamente
-			
-			
-			Entidad eUsuario;
-			String nombre;
-			String apellidos;
-			String email;
-			String user;
-			String password;
-			Date nacimiento = new Date();
-			boolean premium;
 
-			List<ListaVideos> listaVideos = new LinkedList<ListaVideos>();
-			List<Video> recientes= new LinkedList<Video>();
-			int tamHistorial;
-			
-			eUsuario = servPersistencia.recuperarEntidad(codigo);
-			nombre = servPersistencia.recuperarPropiedadEntidad(eUsuario, "nombre");
-			apellidos = servPersistencia.recuperarPropiedadEntidad(eUsuario, "apellidos");
-			email = servPersistencia.recuperarPropiedadEntidad(eUsuario, "email");
-			user = servPersistencia.recuperarPropiedadEntidad(eUsuario, "usuario");
-			password = servPersistencia.recuperarPropiedadEntidad(eUsuario, "password");
-			try {
-				nacimiento = dateFormat.parse(servPersistencia.recuperarPropiedadEntidad(eUsuario, "nacimiento"));
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-			
-			premium = Boolean.valueOf(servPersistencia.recuperarPropiedadEntidad(eUsuario, "premium"));
-			tamHistorial = Integer.valueOf(servPersistencia.recuperarPropiedadEntidad(eUsuario, "tamHistorial"));
+		Entidad eUsuario;
+		String nombre;
+		String apellidos;
+		String email;
+		String user;
+		String password;
+		Date nacimiento = new Date();
+		boolean premium;
 
-			Usuario usuario= new Usuario(nombre, apellidos, email, tamHistorial, user, password, nacimiento);
-			usuario.setCodigo(codigo);
-			
-			recientes = obtenerRecientesDesdeCodigos(servPersistencia.recuperarPropiedadEntidad(eUsuario, "recientes"));
-			listaVideos = obtenerListaVideosDesdeCodigos(servPersistencia.recuperarPropiedadEntidad(eUsuario, "listaVideos")) ;
-			for (Video v : recientes)
-				usuario.addRecientes(v);
+		List<ListaVideos> listaVideos = new LinkedList<ListaVideos>();
+		List<Video> recientes = new LinkedList<Video>();
+		int tamHistorial;
 
-			for (ListaVideos lv : listaVideos)
-				usuario.addListaVideo(lv);
-			
-			if(premium)
-				usuario.setPremium(true);
-			
-			return usuario;
+		eUsuario = servPersistencia.recuperarEntidad(codigo);
+		nombre = servPersistencia.recuperarPropiedadEntidad(eUsuario, "nombre");
+		apellidos = servPersistencia.recuperarPropiedadEntidad(eUsuario, "apellidos");
+		email = servPersistencia.recuperarPropiedadEntidad(eUsuario, "email");
+		user = servPersistencia.recuperarPropiedadEntidad(eUsuario, "usuario");
+		password = servPersistencia.recuperarPropiedadEntidad(eUsuario, "password");
+		try {
+			nacimiento = dateFormat.parse(servPersistencia.recuperarPropiedadEntidad(eUsuario, "nacimiento"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		premium = Boolean.valueOf(servPersistencia.recuperarPropiedadEntidad(eUsuario, "premium"));
+		tamHistorial = Integer.valueOf(servPersistencia.recuperarPropiedadEntidad(eUsuario, "tamHistorial"));
+
+		Usuario usuario = new Usuario(nombre, apellidos, email, tamHistorial, user, password, nacimiento);
+		usuario.setCodigo(codigo);
+
+		recientes = obtenerRecientesDesdeCodigos(servPersistencia.recuperarPropiedadEntidad(eUsuario, "recientes"));
+		listaVideos = obtenerListaVideosDesdeCodigos(
+				servPersistencia.recuperarPropiedadEntidad(eUsuario, "listaVideos"));
+		for (Video v : recientes)
+			usuario.addRecientes(v);
+
+		for (ListaVideos lv : listaVideos)
+			usuario.addListaVideo(lv);
+
+		if (premium)
+			usuario.setPremium(true);
+
+		return usuario;
 	}
 
 	@Override
@@ -144,13 +138,13 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		}
 		return usuarios;
 	}
-	
+
 	@Override
 	public void modificarUsuario(Usuario usuario) {
 		Entidad eUsuario = servPersistencia.recuperarEntidad(usuario.getCodigo());
 
 		for (Propiedad prop : eUsuario.getPropiedades()) {
-			
+
 			if (prop.getNombre().equals("codigo")) {
 				prop.setValor(String.valueOf(usuario.getCodigo()));
 			} else if (prop.getNombre().equals("nombre")) {
@@ -169,22 +163,22 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 				prop.setValor(String.valueOf(usuario.isPremium()));
 			} else if (prop.getNombre().equals("listaVideos")) {
 				String str = obtenerCodigosListaVideos(usuario.getListaVideos());
-				if(str != null)
+				if (str != null)
 					prop.setValor(str);
 			} else if (prop.getNombre().equals("recientes")) {
 				String str = obtenerCodigosVideos(usuario.getRecientes());
-				if(str != null)
+				if (str != null)
 					prop.setValor(str);
 			} else if (prop.getNombre().equals("tamHistorial")) {
 				prop.setValor(String.valueOf(usuario.getTamHistorial()));
 			}
-			
+
 			servPersistencia.modificarPropiedad(prop);
 		}
 	}
 
 	// -------------------Funciones auxiliares-----------------------------
-	// TODO pasa a codigo. YA ESTÁ HECHO?
+
 	private String obtenerCodigosVideos(List<Video> listaVideo) {
 		String aux = "";
 		for (Video v : listaVideo) {
@@ -193,7 +187,6 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		return aux.trim();
 	}
 
-	// TODO pasa a codigo. YA ESTÁ HECHO?
 	private String obtenerCodigosListaVideos(List<ListaVideos> listaVideos) {
 		String aux = "";
 		for (ListaVideos lv : listaVideos) {
@@ -201,6 +194,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		}
 		return aux.trim();
 	}
+
 	private List<Video> obtenerRecientesDesdeCodigos(String video) {
 
 		List<Video> Recientes = new LinkedList<Video>();
@@ -211,7 +205,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		}
 		return Recientes;
 	}
-	
+
 	private List<ListaVideos> obtenerListaVideosDesdeCodigos(String listaVideos) {
 
 		List<ListaVideos> lv = new LinkedList<ListaVideos>();
@@ -223,5 +217,4 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		return lv;
 	}
 
-	
 }

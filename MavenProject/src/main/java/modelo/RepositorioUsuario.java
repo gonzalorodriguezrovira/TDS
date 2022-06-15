@@ -55,22 +55,12 @@ public class RepositorioUsuario {
 		return bdu == null;						//Devolvemos si se ha podido o no añadir
 	}
 
-	public boolean removeUsuario(Usuario usr) {
-		//Borramos de la base de datos y localmente
-		adaptadorUsuario.borrarUsuario(usr);
-		return bdUser.remove(usr);
-	}
-
 	public void addListaVideo(Usuario user, ListaVideos lista) {
 		user.addListaVideo(lista);
 	}
 	
 	public ListaVideos findListaVideo(Usuario user, String name) {
 		return user.findLista(name);
-	}
-	
-	public void addVideoALista(Usuario user, ListaVideos lista, Video video) {
-		user.addVideoALista(lista, video);
 	}
 
 	public boolean checkContraseña(Usuario usuario, String password) {

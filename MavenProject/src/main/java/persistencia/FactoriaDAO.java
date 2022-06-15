@@ -1,4 +1,4 @@
-	package persistencia;
+package persistencia;
 
 public abstract class FactoriaDAO {
 	private static FactoriaDAO unicaInstancia;
@@ -29,8 +29,6 @@ public abstract class FactoriaDAO {
 	protected FactoriaDAO() {
 	}
 
-// Metodos factoria que devuelven adaptadores que implementen estos
-// interfaces
 	public abstract IAdaptadorUsuarioDAO getUsuarioDAO();
 
 	public abstract IAdaptadorVideoDAO getVideoDAO();

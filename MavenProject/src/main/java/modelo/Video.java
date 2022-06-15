@@ -69,12 +69,6 @@ public class Video {
 		if (getClass() != obj.getClass())
 			return false;
 		Video otro = (Video) obj;
-//		for (Etiqueta e : otro.getEtiquetas()) {
-//			for (Etiqueta et : etiquetas) {
-//				if (et.equals(e))
-//					return false;
-//			}
-//		}
 		return codigo == otro.getCodigo();
 	}
 

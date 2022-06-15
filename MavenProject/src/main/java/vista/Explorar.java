@@ -36,6 +36,8 @@ import java.awt.BorderLayout;
 
 public class Explorar extends JPanel {
 
+	private static final long serialVersionUID = 1L;
+
 	// JSCOLL
 	private JScrollPane scrollListaVideos;
 
@@ -69,7 +71,7 @@ public class Explorar extends JPanel {
 	private JTextField txtNombre;
 
 	// FILTROS
-	private JComboBox filtros;
+	private JComboBox<?> filtros;
 
 	// ETIQUETAS
 	private String[] etiquetas;
@@ -92,9 +94,9 @@ public class Explorar extends JPanel {
 
 		// ASIGNACIÓN VALORES SCROLLPANEL DE VIDEOS
 		inicializarScrollPanelVideos();
-		
+
 		// INICIALIZAR PANEL DE REPRODUCCIÓN
-		
+
 		Box verticalBox_1 = Box.createVerticalBox();
 		panelReproductor.add(verticalBox_1);
 
@@ -118,8 +120,8 @@ public class Explorar extends JPanel {
 
 		Component rigidArea_10 = Box.createRigidArea(new Dimension(450, 20));
 		verticalBox_1.add(rigidArea_10);
-		
-		//**********************************************************
+
+		// **********************************************************
 		// *************************************************ACCIONES
 		// BOTONES**************************************************
 		listaEtiquetas.addMouseListener(new MouseAdapter() {
@@ -167,21 +169,19 @@ public class Explorar extends JPanel {
 						ll.add((String) o);
 				}
 				mostrarVideos();
-				// System.out.println(App.getInstancia().busquedaDeVideos(txtNombre.getText(),
-				// (String) filtros.getSelectedItem(), ll));
 			}
 		});
-		
+
 		bNuevaBusqueda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				modeloVideos.removeAllElements();
 				listaVideos.revalidate();
 				if (!control) {
-					for(Component c : pVideo.getComponents())
+					for (Component c : pVideo.getComponents())
 						pVideo.remove(c);
-					App.getInstancia().stopVideo();
+					App.getInstancia().pararVideo();
 					pVideo.revalidate();
-			        pVideo.repaint();
+					pVideo.repaint();
 					CardLayout c = (CardLayout) (panel.getLayout());
 					c.removeLayoutComponent(panelReproductor);
 					control = true;
@@ -195,19 +195,19 @@ public class Explorar extends JPanel {
 				if (control) {
 					int index = listaVideos.getSelectedIndex();
 					if (index != -1) {
-	                    Video v = App.getInstancia().findVideoURL((modeloVideos.get(index).getUrl()));
-	                    v = App.getInstancia().incrementarVisualizaciones(v);
+						Video v = App.getInstancia().findVideoURL((modeloVideos.get(index).getUrl()));
+						v = App.getInstancia().incrementarVisualizaciones(v);
 						CardLayout c = (CardLayout) (panel.getLayout());
 						panel.add(panelReproductor, REPRODUCTOR);
 						c.show(panel, REPRODUCTOR);
-						App.getInstancia().stopVideo();
+						App.getInstancia().pararVideo();
 						pVideo.remove(main.Lanzador.videoWeb);
 						pVideo.add(main.Lanzador.videoWeb);
 						txtTitulo.setText(v.getTitulo());
 						v = App.getInstancia().incrementarVisualizaciones(v);
 						txtTitulo.setVisible(true);
 						pVideo.setVisible(true);
-						App.getInstancia().playVideo(v);
+						App.getInstancia().reproducirVideo(v);
 						validate();
 						control = false;
 					}
@@ -245,6 +245,8 @@ public class Explorar extends JPanel {
 	// *******************************************************************************************************************
 
 	// **************************************************INICIALIZADORES**************************************************
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void inicializarPanelBuscar() {
 		panelBusqueda = new JPanel();
 		panelBusqueda.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -282,7 +284,7 @@ public class Explorar extends JPanel {
 		Box horizontalBox_1 = Box.createHorizontalBox();
 		verticalBox.add(horizontalBox_1);
 
-		filtros = new JComboBox();
+		filtros = new JComboBox<>();
 		filtros.setEnabled(false);
 		filtros.setModel(new DefaultComboBoxModel(new String[] { "NoFiltro", "Menores", "MisListas" }));
 		horizontalBox_1.add(filtros);
@@ -301,7 +303,7 @@ public class Explorar extends JPanel {
 	}
 
 	private void inicializarPanelEtiquetas() {
-		cargarEtiquetas(); // Inicializamos el array de etiquetas
+		cargarEtiquetas(); 
 		panelEtiquetas = new JPanel();
 		panelEtiquetas.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panelEtiquetas.setBackground(Color.GRAY);
@@ -377,8 +379,8 @@ public class Explorar extends JPanel {
 		scrollListaVideos = new JScrollPane(listaVideos);
 		listaVideos.setModel(modeloVideos);
 		panelVideosBuscados.add(scrollListaVideos);
-		panel.add(panelVideosBuscados, PANTALLA_VIDEOS); 
-	
+		panel.add(panelVideosBuscados, PANTALLA_VIDEOS);
+
 		panel.setBackground(Color.GRAY);
 		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panel.setBounds(0, 107, 528, 403);
@@ -386,7 +388,7 @@ public class Explorar extends JPanel {
 		Videos = new LinkedList<Video>();
 
 	}
-
+	//******************************************************MÉTODOS******************************************************
 	public void mostrarVideos() {
 		modeloVideos.clear();
 		List<String> ll = new LinkedList<String>();
@@ -394,7 +396,7 @@ public class Explorar extends JPanel {
 			if (!o.equals("\r"))
 				ll.add((String) o);
 		}
-		
+
 		Videos = App.getInstancia().busquedaDeVideos(txtNombre.getText(), (String) filtros.getSelectedItem(), ll);
 		for (Video v : Videos) {
 			Miniatura m = new Miniatura(v, 150, 150);

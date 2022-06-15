@@ -4,20 +4,17 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
-
 import controlador.App;
 import modelo.Video;
-import java.awt.BorderLayout;
-import javax.swing.SwingConstants;
 import javax.swing.Box;
 
 public class Miniatura extends JPanel {
 	
+
+	private static final long serialVersionUID = 1L;
 	private String url;
 	private String nombre;
 	
@@ -31,8 +28,6 @@ public class Miniatura extends JPanel {
 		
         JLabel lMiniatura = new JLabel();
         lMiniatura.setIcon(App.getVideoWeb().getThumb(url));
-        ImageIcon i = new ImageIcon();
-        i = App.getVideoWeb().getThumb(url);
         lMiniatura.setMaximumSize(new Dimension(x-10,y-10));
         lMiniatura.setPreferredSize(new Dimension(x-10,y-10));
         lMiniatura.setMinimumSize(new Dimension(x-10,y-10)); 

@@ -67,12 +67,6 @@ public class RepositorioVideo {
 		return bdu == null;						//Devolvemos si se ha podido o no añadir
 	}
 	
-	public boolean removeVideo(Video video) {
-		//Borramos de la base de datos y localmente
-		adaptadorVideo.borrarVideo(video);
-		return bdVideos.remove(video);
-	}
-	
 	public List<Video> recuperarVideos(){
 		//Devolvemos la base de datos entera
 		return bdVideos;

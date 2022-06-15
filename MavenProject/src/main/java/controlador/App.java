@@ -29,15 +29,12 @@ import persistencia.IAdaptadorUsuarioDAO;
 import persistencia.IAdaptadorVideoDAO;
 import tds.video.VideoWeb;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
-
 
 public class App implements VideosListener {
 	// ATRIBUTOS
@@ -52,18 +49,16 @@ public class App implements VideosListener {
 
 	private RepositorioUsuario repositorioUsuario;
 	private RepositorioVideo repositorioVideo;
-	
-	
-	private ComponenteBuscadorVideos componenteVideo;
-	
 
-	// Para que otras clases puedan acceder a App y sus métodos
+	private ComponenteBuscadorVideos componenteVideo;
+
+	
 	public static App getInstancia() {
 		if (aplicacion == null)
 			aplicacion = new App();
 		return aplicacion;
 	}
-	
+
 	public static VideoWeb getVideoWeb() {
 		if (Lanzador.videoWeb == null)
 			Lanzador.videoWeb = new VideoWeb();
@@ -74,11 +69,11 @@ public class App implements VideosListener {
 	private App() {
 		inicializarAdaptadores();
 		inicializarRepositorios();
-		
+
 		componenteVideo = ComponenteBuscadorVideos.getUnicaInstancia();
 		componenteVideo.addVideosListener(this);
 		componenteVideo.setArchivoVideos("xml/video.xml");
-		
+
 	}
 
 	// MÉTODOS PARA EL CONSTRUCTOR
@@ -99,22 +94,10 @@ public class App implements VideosListener {
 		adapatadorEtiqueta = factoria.getEtiquetaDAO();
 		adaptadorListaVideos = factoria.getListaVideosDAO();
 	}
-	
-	// REPRODUCTOR VIDEO *   ROBERTO
 
-	public void playVideo(Video v) { 
-		
-		Lanzador.videoWeb.playVideo(v.getUrl());
-		adaptadorVideo.modificarVideo(v);
+	// REPRODUCTOR VIDEO 
 
-		usuarioActual.addRecientes(v);
-		adaptadorUsuario.modificarUsuario(usuarioActual);
-
-	}
-
-	public void playVideo(String s) {
-
-		Video v = findVideoURL(s);
+	public void reproducirVideo(Video v) {
 
 		Lanzador.videoWeb.playVideo(v.getUrl());
 		adaptadorVideo.modificarVideo(v);
@@ -124,31 +107,30 @@ public class App implements VideosListener {
 
 	}
 
-	public void stopVideo() {
+	public void pararVideo() {
 
 		Lanzador.videoWeb.cancel();
 	}
-	
 
 	// MÉTODOS PARA EL USUARIO ACTUAL
-	
+
 	@Override
 	public void nuevosVideos(EventObject e) {
 		LinkedList<Video> lista = getVideosXML(((EventVideos) e).getVideos());
-		for(int i = 0; i < lista.size(); i++) {
-			if(lista.get(i)!=null) {
-			if (repositorioVideo.addVideo(lista.get(i))) { // Intentamos registrarlo en la base local
-				adaptadorVideo.addVideo(lista.get(i)); // Si hemos podido, entonces también lo introducimos en la bd.
-			}
+		for (int i = 0; i < lista.size(); i++) {
+			if (lista.get(i) != null) {
+				if (repositorioVideo.addVideo(lista.get(i))) { 
+					adaptadorVideo.addVideo(lista.get(i)); 
+				}
 			}
 		}
 	}
-	
+
 	public LinkedList<Video> getVideosXML(componente.Videos videos) {
 		LinkedList<Video> lista = new LinkedList<Video>();
 		for (componente.Video v : videos.getVideo()) {
 			Set<Etiqueta> etiquetas = new HashSet<Etiqueta>();
-			for(String s : v.getEtiqueta()) {
+			for (String s : v.getEtiqueta()) {
 				Etiqueta nEtiqueta = new Etiqueta(s);
 				etiquetas.add(nEtiqueta);
 			}
@@ -156,7 +138,7 @@ public class App implements VideosListener {
 		}
 		return lista;
 	}
-	
+
 	public Usuario getUsuarioActual() {
 		return usuarioActual;
 	}
@@ -175,28 +157,19 @@ public class App implements VideosListener {
 		return usuarioActual.getRecientes();
 	}
 
-
 	// MÉTODOS USUARIO
 	public boolean registrarUsuario(String nombre, String apellidos, String email, String usuario, String password,
 			Date nacimiento) {
 		Usuario usr = new Usuario(nombre, apellidos, email, usuario, password, nacimiento);
-		if (repositorioUsuario.addUsuario(usr)) {// Intentamos registrarlo en la base local
-			adaptadorUsuario.addUsuario(usr);// Si hemos podido, entonces también lo introducimos en la bd.
+		if (repositorioUsuario.addUsuario(usr)) {
+			adaptadorUsuario.addUsuario(usr);
 			return true;
 		}
-		return false; // Si no se ha podido añadir en la local tampoco se debería poder añadir en la
-						// bd.
-	}
-
-	// TODO comprobar utilidad en el proyecto fnal. si no, borrar o dejar comentado
-	public boolean removeUsuario(Usuario usr) {
-		adaptadorUsuario.borrarUsuario(usr);
-		return repositorioUsuario.removeUsuario(usr);
+		return false; 
 	}
 
 	public Usuario findUsuario(String user) {
-		// Basta con mirar en la en el repositorio ya que se han cargado los usuarios de
-		// la bd.
+		
 		return repositorioUsuario.findUsuario(user);
 	}
 
@@ -213,50 +186,43 @@ public class App implements VideosListener {
 	}
 
 	// MÉTODOS VIDEO
-	// TODO comprobar utilidad en el proyecto fnal. si no, borrar o dejar comentado
-	public List<Video> recuperarMasVistos(){
-        List<Video> l = recuperarVideos();
-        List<Video> lista = new LinkedList<Video>();
-        l.sort((v1,v2) -> ((Integer)v2.getNumRepro()).compareTo((Integer)v1.getNumRepro()));
-        if(l.size()>5) {
-        for(int i = 0 ; i < 5 ; i++) lista.add(l.get(i));
-        }else {
-        	return l;
-        }
-       
-        return lista;
-    }
 	
-	
+	public List<Video> recuperarMasVistos() {
+		List<Video> l = recuperarVideos();
+		List<Video> lista = new LinkedList<Video>();
+		l.sort((v1, v2) -> ((Integer) v2.getNumRepro()).compareTo((Integer) v1.getNumRepro()));
+		if (l.size() > 5) {
+			for (int i = 0; i < 5; i++)
+				lista.add(l.get(i));
+		} else {
+			return l;
+		}
+
+		return lista;
+	}
+
 	public List<Video> recuperarVideos() {
 		return repositorioVideo.recuperarVideos();
 	}
 
 	public boolean registrarVideo(String url, String titulo, Set<Etiqueta> etiquetas) {
 		Video video = new Video(url, titulo, etiquetas);
-		if (repositorioVideo.addVideo(video)) { // Intentamos registrarlo en la base local
-			adaptadorVideo.addVideo(video); // Si hemos podido, entonces también lo introducimos en la bd.
+		if (repositorioVideo.addVideo(video)) { 
+			adaptadorVideo.addVideo(video); 
 			return true;
 		}
-		return false; // Si no se ha podido añadir en la local tampoco se debería poder añadir en la
-						// bd.
+		return false; 
 	}
 
-	public boolean removeVideo(Video video) {
-		adaptadorVideo.borrarVideo(video);
-		return repositorioVideo.removeVideo(video);
-	}
 
-	// TODO. comprobar si se usa. si no, borrar
+	
 	public Video findVideo(Video video) {
-		// Basta con mirar en la en el repositorio ya que se han cargado los videos de
-		// la bd.
+		
 		return repositorioVideo.findVideo(video);
 	}
-	
+
 	public Video findVideoURL(String url) {
-		// Basta con mirar en la en el repositorio ya que se han cargado los videos de
-		// la bd.
+		
 		return repositorioVideo.findVideoURL(url);
 	}
 
@@ -264,23 +230,15 @@ public class App implements VideosListener {
 	public void addListaVideo(ListaVideos lista) {
 		repositorioUsuario.addListaVideo(usuarioActual, lista);
 		adaptadorListaVideos.addListaVideos(lista);
-		// Tras añadirle la lista modificamos las bases de datos
-		// La local ya se modifica debido al aliasing
-		adaptadorUsuario.modificarUsuario(usuarioActual); // Modificamos la base de datos
+		
+		adaptadorUsuario.modificarUsuario(usuarioActual);
 	}
 
 	public ListaVideos findListaVideo(String name) {
-		// Basta con buscarlo en la base de datos
+		
 		return repositorioUsuario.findListaVideo(usuarioActual, name);
 	}
 
-	// TODO COMPROBAR USO
-	public void addVideoALista(ListaVideos lista, Video video) {
-		// Añadimos el video a la lista del usuario actual
-		repositorioUsuario.addVideoALista(usuarioActual, lista, video);
-		// Actualizamos el usuario en la base de datos
-		adaptadorUsuario.modificarUsuario(usuarioActual);
-	}
 
 	public void setVideosALista(ListaVideos lista) {
 		ListaVideos l = findListaVideo(lista.getName());
@@ -288,24 +246,21 @@ public class App implements VideosListener {
 		adaptadorListaVideos.modificarListaVideos(l);
 		adaptadorUsuario.modificarUsuario(usuarioActual);
 	}
-	
+
 	public void generarPDF() throws DocumentException, MalformedURLException, IOException {
 		Document doc = new Document();
+		@SuppressWarnings("unused")
 		PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("AppVideo.pdf"));
-	    doc.open();
-	    
-		List<ListaVideos> listaVideos= getUsuarioActual().getListaVideos();
-		for(ListaVideos lv: listaVideos) {
+		doc.open();
+
+		List<ListaVideos> listaVideos = getUsuarioActual().getListaVideos();
+		for (ListaVideos lv : listaVideos) {
 			lv.generarPDF(doc);
 		}
 		doc.close();
 	}
 
 	// MÉTODOS ETIQUETA
-	// TODO. comprobar uso. borrar si no se usa.
-	public void addEtiqueta(Etiqueta e) {
-		adapatadorEtiqueta.addEtiqueta(e);
-	}
 
 	public List<Etiqueta> recuperarEtiquetas() {
 		return adapatadorEtiqueta.recuperarEtiquetas();
@@ -314,9 +269,9 @@ public class App implements VideosListener {
 	public boolean addEtiquetaAVideo(Video video, Etiqueta etiqueta) {
 		if (!etiqueta.getNombre().isEmpty()) {
 			video = findVideo(video);
-			for(Etiqueta e : recuperarEtiquetas()) {
-				if(etiqueta.getNombre().equals(e.getNombre())) {
-					if(video.addEtiqueta(e)) {						
+			for (Etiqueta e : recuperarEtiquetas()) {
+				if (etiqueta.getNombre().equals(e.getNombre())) {
+					if (video.addEtiqueta(e)) {
 						adaptadorVideo.modificarVideo(video);
 						return true;
 					}
@@ -363,6 +318,7 @@ public class App implements VideosListener {
 			Set<Etiqueta> conjuntoE = v.getEtiquetas();
 			for (Etiqueta e : conjuntoE) {
 				if (etiquetas.contains(e.getNombre())) {
+					if(!l.contains(v))
 					l.add(v);
 				}
 			}

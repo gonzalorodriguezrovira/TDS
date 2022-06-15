@@ -30,6 +30,7 @@ import javax.swing.JTextField;
 
 public class MisListas extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	private JList<Miniatura> listaVideos = new JList<Miniatura>();
 	private DefaultListModel<Miniatura> modeloVideos = new DefaultListModel<Miniatura>();
 	private List<String> aux = new LinkedList<String>();
@@ -147,7 +148,7 @@ public class MisListas extends JPanel {
 		JPanel pVideo = new JPanel();
 		pVideo.setVisible(false);
 		verticalBox_1.add(pVideo);
-		
+
 		Box horizontalBox_8 = Box.createHorizontalBox();
 		verticalBox_1.add(horizontalBox_8);
 
@@ -188,21 +189,11 @@ public class MisListas extends JPanel {
 		Component rigidArea_8 = Box.createRigidArea(new Dimension(50, 20));
 		horizontalBox_9.add(rigidArea_8);
 
-		// CardLayout c = (CardLayout) (AppVideo.vDisplay.getLayout());
-		// bCancelarML.addActionListener(ev -> c.show(AppVideo.vDisplay,
-		// AppVideo.INICIO_SESION));
-		/*
-		 * bCancelarML.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) { CardLayout c =
-		 * (CardLayout)(AppVideo.vDisplay.getLayout()); c.show(AppVideo.vDisplay,
-		 * AppVideo.BRUH); } });
-		 */
-
 		bReproducir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int index = listaVideos.getSelectedIndex();
 				if (index != -1) {
-					App.getInstancia().stopVideo();
+					App.getInstancia().pararVideo();
 					pVideo.remove(main.Lanzador.videoWeb);
 
 					pVideo.add(main.Lanzador.videoWeb);
@@ -222,7 +213,7 @@ public class MisListas extends JPanel {
 					bEtiquetasNuevas.setVisible(true);
 					bEtiquetasNuevas.setEnabled(true);
 					pVideo.setVisible(true);
-					App.getInstancia().playVideo(v);
+					App.getInstancia().reproducirVideo(v);
 					validate();
 				}
 			}
@@ -230,12 +221,12 @@ public class MisListas extends JPanel {
 
 		bCancelarML.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				for(Component c : pVideo.getComponents())
+				for (Component c : pVideo.getComponents())
 					pVideo.remove(c);
-				App.getInstancia().stopVideo();
+				App.getInstancia().pararVideo();
 				pVideo.revalidate();
-		        pVideo.repaint();
-		        txtTitulo.setVisible(false);
+				pVideo.repaint();
+				txtTitulo.setVisible(false);
 				txtVisualizaciones.setVisible(false);
 				txtEtiquetas.setVisible(false);
 				txtnuevaetiquetainfo.setVisible(false);
@@ -251,7 +242,9 @@ public class MisListas extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				String nombreE = txtFEtiquetas.getText();
 				Etiqueta etiqueta = new Etiqueta(nombreE);
-				if (App.getInstancia().addEtiquetaAVideo(App.getInstancia().findVideoURL(modeloVideos.get(listaVideos.getSelectedIndex()).getUrl()), etiqueta)) {
+				if (App.getInstancia().addEtiquetaAVideo(
+						App.getInstancia().findVideoURL(modeloVideos.get(listaVideos.getSelectedIndex()).getUrl()),
+						etiqueta)) {
 					txtEtiquetas.setText(txtEtiquetas.getText() + " - " + nombreE);
 					v.actualizarEtiquetasExplorar();
 				}
@@ -259,6 +252,7 @@ public class MisListas extends JPanel {
 		});
 
 	}
+	// **************************************************INICIALIZADORES**************************************************
 
 	public void inicializarLista() {
 		aux = App.getInstancia().recuperarNombesListaVideos();
@@ -270,6 +264,7 @@ public class MisListas extends JPanel {
 		mostrarListaVideos();
 	}
 
+	// ******************************************************MÉTODOS******************************************************
 	public void mostrarListaVideos() {
 		modeloVideos.clear();
 		int index = boxListaVideos.getSelectedIndex();

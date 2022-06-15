@@ -7,13 +7,14 @@ import vista.AppVideo;
 
 public class Lanzador {	
 	
-	public static VideoWeb videoWeb;//ROBERTO
+	public static VideoWeb videoWeb;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					videoWeb = new VideoWeb(); //ROBERTO
+					videoWeb = new VideoWeb(); 
+					@SuppressWarnings("unused")
 					AppVideo frame = new AppVideo();
 				} catch (Exception e) {
 					e.printStackTrace();

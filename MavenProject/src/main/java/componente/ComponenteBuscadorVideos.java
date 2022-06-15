@@ -3,8 +3,7 @@ package componente;
 import java.util.Vector;
 
 public class ComponenteBuscadorVideos {
-	private Vector videosListeners = new Vector();
-	private String archivoVideos;
+	private Vector<VideosListener> videosListeners = new Vector<VideosListener>();
 	private static ComponenteBuscadorVideos unicaInstancia;
 	
 	public static ComponenteBuscadorVideos getUnicaInstancia() {
@@ -24,10 +23,11 @@ public class ComponenteBuscadorVideos {
 		notificarNuevosVideos(ev);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void notificarNuevosVideos(EventVideos evento) {
-		Vector lista;
+		Vector<VideosListener> lista;
 		synchronized (this) {
-			lista = (Vector) videosListeners.clone();
+			lista = (Vector<VideosListener>) videosListeners.clone();
 		}
 		for(int i=0; i<lista.size(); i++){
 			VideosListener listener = (VideosListener) lista.elementAt(i);
@@ -35,7 +35,4 @@ public class ComponenteBuscadorVideos {
 		}
 	}
 	
-	public void videosCargados() {
-		
-	}
 }

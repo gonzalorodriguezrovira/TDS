@@ -4,7 +4,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import java.awt.FlowLayout;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Box;
@@ -26,13 +25,14 @@ import javax.swing.plaf.DimensionUIResource;
 import controlador.App;
 import modelo.ListaVideos;
 import modelo.Video;
-import tds.video.VideoWeb;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
 
 public class NuevaLista extends JPanel {
+
+	private static final long serialVersionUID = 1L;
 	private JTextField txtBuscarLista;
 	private JTextField txtBuscarVideos;
 
@@ -68,43 +68,17 @@ public class NuevaLista extends JPanel {
 		txtBuscarLista.setColumns(10);
 		horizontalBox.add(txtBuscarLista);
 		JButton bBuscarLista = new JButton("Buscar");
-		// ACCIÓN PASAR DE UNA LISTA A OTRA
-		/*
-		 * bBuscarLista.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) { // ANOTACIÓN DE ROBERTO: Aquí quizas en los
-		 * siguientes ifs, los más externos, se // deba quitar la comprobación de que la
-		 * lista sea vacía y ponerla // como un if que engloble todo. Te ahorras esa
-		 * comprobación varias veces: // if(!txtBuscarLista.getText().isEmpty()){ (todo
-		 * LO QUE HAY DEBAJO) } listaVideos =
-		 * App.getInstancia().findListaVideo(txtBuscarLista.getText()); if (listaVideos
-		 * == null && !txtBuscarLista.getText().isEmpty()) { // SI NO ENCONTRAMOS
-		 * NINGÚNA LISTA listaVideos = new ListaVideos(txtBuscarLista.getText()); // LA
-		 * CREAMOS JFrame jFrame = new JFrame(); // (POP UP) int result =
-		 * JOptionPane.showConfirmDialog(jFrame, "Desea crear la lista " +
-		 * txtBuscarLista.getText()); if (result == 0) { // SE ELIGE CREAR LA LISTA //
-		 * HE AÑADIDO DESDE AQUI { listaVideos = new
-		 * ListaVideos(txtBuscarLista.getText()); // CON ESTO SE GUARDA EN LA BD
-		 * App.getInstancia().addListaVideo(listaVideos); // PARA QUE NO SE CREE OTRA
-		 * VEZ // } HASTA AQUI modeloVideosN = new DefaultListModel<Video>();
-		 * listaVideosN = new JList<Video>(); } } else if
-		 * (!txtBuscarLista.getText().isEmpty()) { // SI ENCONTRAMOS UNA LISTA for
-		 * (Video v : listaVideos.getVideos()) { modeloVideosN.addElement(v); }
-		 * listaVideosN = new JList<Video>(); listaVideosN.setModel(modeloVideosN); //TE
-		 * FALTA PONER ESTO DE AQUI ABAJO PARA EVITAR POSIBLES ERRORES
-		 * //listaVideosN.setSelectedIndex(0); } } });
-		 */
-		// QUEDARÍA TAL QUE ASÍ
 
 		bBuscarLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!txtBuscarLista.getText().isEmpty()) {
 					listaVideos = App.getInstancia().findListaVideo(txtBuscarLista.getText());
 					if (listaVideos == null) {
-						listaVideos = new ListaVideos(txtBuscarLista.getText()); // LA CREAMOS
-						JFrame jFrame = new JFrame(); // (POP UP)
+						listaVideos = new ListaVideos(txtBuscarLista.getText());
+						JFrame jFrame = new JFrame();
 						int result = JOptionPane.showConfirmDialog(jFrame,
 								"Desea crear la lista " + txtBuscarLista.getText());
-						if (result == 0) { // SE ELIGE CREAR LA LISTA
+						if (result == 0) {
 							modeloVideosN.clear();
 							listaVideosN.revalidate();
 							listaVideosN.setSelectedIndex(0);
@@ -112,7 +86,7 @@ public class NuevaLista extends JPanel {
 					} else {
 						modeloVideosN.clear();
 						for (Video v : listaVideos.getVideos()) {
-							modeloVideosN.addElement(new Miniatura(v,140,130));
+							modeloVideosN.addElement(new Miniatura(v, 140, 130));
 						}
 						listaVideosN.revalidate();
 						listaVideosN.setSelectedIndex(0);
@@ -149,7 +123,6 @@ public class NuevaLista extends JPanel {
 		lblNewLabel_1.setForeground(Color.WHITE);
 		horizontalBox_1.add(lblNewLabel_1);
 
-		// TITULO DEL VIDEO QUE ESTAMOS BUSCANDO
 		txtBuscarVideos = new JTextField();
 		horizontalBox_1.add(txtBuscarVideos);
 		txtBuscarVideos.setColumns(26);
@@ -176,9 +149,7 @@ public class NuevaLista extends JPanel {
 		Box verticalBox_2 = Box.createVerticalBox();
 		pLista.add(verticalBox_2);
 
-		// INICIALIZAMOS LA LISTA DE LA IZQUIERDA
 		listaVideosN = new JList<Miniatura>();
-		// TODO ESTE VALOR HAY QUE CAMBIARLO CUANDO PODAMOS ENSEÑAR MINIATURAS
 		listaVideosN.setVisibleRowCount(-1);
 		modeloVideosN = new DefaultListModel<Miniatura>();
 		listaVideosN.setModel(modeloVideosN);
@@ -187,8 +158,7 @@ public class NuevaLista extends JPanel {
 
 		JScrollPane scrollLista = new JScrollPane(listaVideosN);
 		verticalBox_2.add(scrollLista);
-		// HE CAMBIADO EL TAMAÑO DE LA LISTA DE LA IZQUIERDA
-		// CON LOS VALORES DE ABAJO
+
 		scrollLista.setPreferredSize(new DimensionUIResource(180, 300));
 
 		Component rigidArea_5 = Box.createRigidArea(new Dimension(20, 15));
@@ -217,8 +187,7 @@ public class NuevaLista extends JPanel {
 
 		// *************************PANEL DE VIDEOS BUSCADOS**************************
 		JPanel pVideos = new JPanel();
-		// SI INICIALIZAS AQUÍ LA LISTA NO HACE FALTA QUE LA INICIALICES ARRIBA, CUANDO
-		// LA DECLARAS
+
 		listaVideosB = new JList<Miniatura>();
 		listaVideosB.setValueIsAdjusting(true);
 		listaVideosB.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -238,25 +207,16 @@ public class NuevaLista extends JPanel {
 		pVideos.setBounds(200, 106, 491, 408);
 		add(pVideos);
 
-		// QUE? ESTO ES UN CUADRO DE TEXTO, NO UN BOTÓN.
-		// CREO QUE QUERÍAS PONER EL BOTON DE NUEVA BUSQUEDA
-		// QUE ESTÁ MÁS ABAJO, O SEA QUE CREO QUE SE PUEDE QUITAR
-		/*
-		 * txtBuscarLista.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) { if (txtBuscarLista.getText().isEmpty()) {
-		 * listaVideos = null; } } });
-		 */
-
 		scrollLista.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollLista1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		
+
 		bAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (listaVideos != null) {
 					Miniatura aux = modeloVideosB.get(listaVideosB.getSelectedIndex());
 					if (aux != null) {
 						for (int i = 0; i < modeloVideosN.getSize(); i++) {
-							if (modeloVideosN.get(i).equals(aux))		//CAMBIADO (CREO)
+							if (modeloVideosN.get(i).equals(aux)) // CAMBIADO (CREO)
 								return;
 						}
 						listaVideos.addVideo(App.getInstancia().findVideoURL(aux.getUrl()));
@@ -284,8 +244,8 @@ public class NuevaLista extends JPanel {
 				if (listaVideos != null) {
 					if (App.getInstancia().findListaVideo(listaVideos.getName()) != null) {
 						App.getInstancia().setVideosALista(listaVideos);
-					}else {
-						App.getInstancia().addListaVideo(listaVideos);						
+					} else {
+						App.getInstancia().addListaVideo(listaVideos);
 						v.actualizarListavideos();
 					}
 				}
@@ -297,7 +257,7 @@ public class NuevaLista extends JPanel {
 				List<Video> aux = App.getInstancia().videosPorNombre(txtBuscarVideos.getText(),
 						App.getInstancia().recuperarVideos());
 				for (Video v : aux) {
-					Miniatura l = new Miniatura(v,150,140);
+					Miniatura l = new Miniatura(v, 150, 140);
 					modeloVideosB.addElement(l);
 				}
 			}
@@ -319,6 +279,7 @@ public class NuevaLista extends JPanel {
 			}
 		});
 	}
+	// **************************************************METODOS**************************************************
 
 	public void vaciar() {
 		txtBuscarLista.setText("");

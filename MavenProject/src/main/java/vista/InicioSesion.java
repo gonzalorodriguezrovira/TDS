@@ -13,10 +13,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.BevelBorder;
-import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 import javax.swing.border.LineBorder;
 
 import controlador.App;
@@ -24,11 +20,13 @@ import modelo.Usuario;
 import javax.swing.JPasswordField;
 
 public class InicioSesion extends JPanel {
+
+	private static final long serialVersionUID = 1L;
 	private JTextField txtLogin;
 	private JPasswordField txtPassword;
 
 	public InicioSesion(AppVideo v) {
-		//**************************************************INICIALIZACIÓN***************************************************
+		// **************************************************INICIALIZACIÓN***************************************************
 		setBackground(Color.GRAY);
 		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
@@ -115,9 +113,10 @@ public class InicioSesion extends JPanel {
 
 		Component rigidArea_1 = Box.createRigidArea(new Dimension(20, 20));
 		verticalBox_2.add(rigidArea_1);
-		//*******************************************************************************************************************
-		
-		//*************************************************ACCIONES BOTONES**************************************************
+		// *******************************************************************************************************************
+
+		// *************************************************ACCIONES
+		// BOTONES**************************************************
 		CardLayout c = (CardLayout) (AppVideo.vDisplay.getLayout());
 		bCancelarLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -130,6 +129,7 @@ public class InicioSesion extends JPanel {
 		bAceptarLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String nombre = txtLogin.getText().trim();
+				@SuppressWarnings("deprecation")
 				String password = txtPassword.getText().trim();
 
 				if (nombre.isEmpty() || password.isEmpty()) {
@@ -140,8 +140,7 @@ public class InicioSesion extends JPanel {
 					camposVacios.setVisible(false);
 					if (aux != null) {
 						if (App.getInstancia().comprobarPassword(aux, password)) {
-							App.getInstancia().setUsuarioActual(aux); // Se ha iniciado sesión y el controlador tratará
-																		// a este usuario
+							App.getInstancia().setUsuarioActual(aux);
 							v.inicioValido(nombre);
 							txtLogin.setText("");
 							txtPassword.setText("");
@@ -156,6 +155,6 @@ public class InicioSesion extends JPanel {
 				}
 			}
 		});
-		//*******************************************************************************************************************
+		// *******************************************************************************************************************
 	}
 }

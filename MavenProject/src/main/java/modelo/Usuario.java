@@ -3,7 +3,7 @@ package modelo;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 public class Usuario {
 	//ATRIBUTOS
@@ -109,11 +109,6 @@ public class Usuario {
 		return listaVideos.stream().filter(l -> l.getName().contains(name)).findAny().orElse(null);
 	}
 	
-	public void addVideoALista(ListaVideos lista, Video video) {
-		lista.addVideo(video);
-	}
-	
-	//TODO LLAMAR EN EL REPOSITORIO CUANDO SE VEA UN VIDEO. TRAS ESO ACTUALIZAR USUARIO EN LA BD
 	public void addRecientes(Video video) {
 		Video aux = recientes.stream().filter(v -> v.getUrl().equals(video.getUrl())).findAny().orElse(null);
 		if (aux == null) {

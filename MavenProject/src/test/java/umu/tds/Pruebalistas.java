@@ -1,13 +1,9 @@
 package umu.tds;
 
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 
-import controlador.App;
 import modelo.Etiqueta;
-import modelo.Usuario;
-import modelo.Video;
+
 
 public class Pruebalistas {
 

@@ -42,12 +42,10 @@ public class AdaptadorVideoTDS implements IAdaptadorVideoDAO {
 		if (eVideo != null)
 			return;
 
-		// registrar primero los atributos que son objetos
 		AdaptadorEtiquetaTDS adaptadorEtiqueta = AdaptadorEtiquetaTDS.getUnicaInstancia();
 		for (Etiqueta e : video.getEtiquetas())
 			adaptadorEtiqueta.addEtiqueta(e);
 
-		// crear entidad Cliente
 		eVideo = new Entidad();
 		eVideo.setNombre("video");
 		eVideo.setPropiedades(new ArrayList<Propiedad>(
@@ -55,17 +53,14 @@ public class AdaptadorVideoTDS implements IAdaptadorVideoDAO {
 						new Propiedad("numRepro", String.valueOf(video.getNumRepro())),
 						new Propiedad("etiquetas", obtenercodigoEtiquetas(video.getEtiquetas())))));
 
-		// registrar entidad cliente
 		eVideo = servPersistencia.registrarEntidad(eVideo);
-		// asignar identificador unico
-		// Se aprovecha el que genera el servicio de persistencia
+
 		video.setCodigo(eVideo.getId());
 
 	}
 
 	@Override
 	public void borrarVideo(Video video) {
-		// No se comprueban restricciones de integridad
 		Entidad eVideo = servPersistencia.recuperarEntidad(video.getCodigo());
 		servPersistencia.borrarEntidad(eVideo);
 
@@ -83,21 +78,18 @@ public class AdaptadorVideoTDS implements IAdaptadorVideoDAO {
 			} else if (prop.getNombre().equals("titulo")) {
 				prop.setValor(video.getTitulo());
 			} else if (prop.getNombre().equals("numRepro")) {
-				prop.setValor(String.valueOf(video.getNumRepro()));				
-			}else if (prop.getNombre().equals("etiquetas")) {
+				prop.setValor(String.valueOf(video.getNumRepro()));
+			} else if (prop.getNombre().equals("etiquetas")) {
 				prop.setValor(obtenercodigoEtiquetas(video.getEtiquetas()));
 			}
-				
+
 			servPersistencia.modificarPropiedad(prop);
 		}
-		
 
 	}
 
 	@Override
 	public Video recuperarVideo(int codigo) {
-		// Si la entidad está en el pool la devuelve directamente
-		
 
 		Entidad eVideo;
 		String url;
@@ -114,8 +106,6 @@ public class AdaptadorVideoTDS implements IAdaptadorVideoDAO {
 		Video video = new Video(url, titulo, etiquetas);
 		video.setCodigo(codigo);
 		video.setNumRepro(numRepro);
-
-		
 
 		for (Etiqueta e : etiquetas)
 			video.addEtiqueta(e);

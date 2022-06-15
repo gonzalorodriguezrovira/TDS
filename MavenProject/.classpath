@@ -25,11 +25,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/openjfx-11"/>
-	<classpathentry kind="lib" path="jgoodies-forms-1.8.0.jar" sourcepath="jgoodies-forms-1.8.0-sources.jar"/>
-	<classpathentry kind="lib" path="jcalendar-1.4.jar"/>
-	<classpathentry kind="lib" path="jgoodies-common-1.2.0.jar"/>
-	<classpathentry kind="lib" path="jgoodies-looks-2.4.1.jar"/>
-	<classpathentry kind="lib" path="junit-4.6.jar"/>
 	<classpathentry kind="lib" path="lib/DriverPersistencia.jar"/>
 	<classpathentry kind="lib" path="lib/eclipselink-2.7.7.jar"/>
 	<classpathentry kind="lib" path="lib/h2-1.3.160.jar"/>
@@ -68,7 +63,13 @@
 	<classpathentry kind="lib" path="C:/Users/gonza/OneDrive/Escritorio/aa/svg-7.1.3-javadoc.jar"/>
 	<classpathentry kind="lib" path="C:/Users/gonza/OneDrive/Escritorio/aa/svg-7.1.3-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PDF"/>
-	<classpathentry kind="lib" path="C:/Users/gonza/Downloads/itext-5.0.6.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PDF2"/>
+	<classpathentry kind="lib" path="lib/itext-5.0.6.jar"/>
+	<classpathentry kind="lib" path="lib/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/jgoodies-common-1.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/jgoodies-forms-1.8.0.jar"/>
+	<classpathentry kind="lib" path="lib/jgoodies-forms-1.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="lib/jgoodies-looks-2.4.1.jar"/>
+	<classpathentry kind="lib" path="lib/junit-4.6.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

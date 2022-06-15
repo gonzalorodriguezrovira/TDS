@@ -8,7 +8,6 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -30,9 +29,9 @@ import javax.swing.JTextField;
 
 public class Recientes extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	private JList<Miniatura> listaVideos = new JList<Miniatura>();
 	private DefaultListModel<Miniatura> modeloVideos = new DefaultListModel<Miniatura>();
-	private List<String> aux = new LinkedList<String>();
 	private JComboBox<String> boxListaVideos = new JComboBox<String>();
 	private DefaultComboBoxModel<String> modeloBoxListaVideos = new DefaultComboBoxModel<String>();
 	private JTextField txtFEtiquetas;
@@ -188,21 +187,11 @@ public class Recientes extends JPanel {
 		Component rigidArea_8 = Box.createRigidArea(new Dimension(50, 20));
 		horizontalBox_9.add(rigidArea_8);
 
-		// CardLayout c = (CardLayout) (AppVideo.vDisplay.getLayout());
-		// bCancelarML.addActionListener(ev -> c.show(AppVideo.vDisplay,
-		// AppVideo.INICIO_SESION));
-		/*
-		 * bCancelarML.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) { CardLayout c =
-		 * (CardLayout)(AppVideo.vDisplay.getLayout()); c.show(AppVideo.vDisplay,
-		 * AppVideo.BRUH); } });
-		 */
-
 		bReproducir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int index = listaVideos.getSelectedIndex();
 				if (index != -1) {
-					App.getInstancia().stopVideo();
+					App.getInstancia().pararVideo();
 					pVideo.remove(main.Lanzador.videoWeb);
 					pVideo.add(main.Lanzador.videoWeb);
 					Video v = App.getInstancia().findVideoURL((modeloVideos.get(index).getUrl()));
@@ -222,7 +211,7 @@ public class Recientes extends JPanel {
 					bEtiquetasNuevas.setVisible(true);
 					bEtiquetasNuevas.setEnabled(true);
 					pVideo.setVisible(true);
-					App.getInstancia().playVideo(v);
+					App.getInstancia().reproducirVideo(v);
 					validate();
 				}
 			}
@@ -230,11 +219,11 @@ public class Recientes extends JPanel {
 
 		bCancelarML.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				for(Component c : pVideo.getComponents())
+				for (Component c : pVideo.getComponents())
 					pVideo.remove(c);
-				App.getInstancia().stopVideo();
+				App.getInstancia().pararVideo();
 				pVideo.revalidate();
-		        pVideo.repaint();
+				pVideo.repaint();
 				txtTitulo.setVisible(false);
 				txtVisualizaciones.setVisible(false);
 				txtEtiquetas.setVisible(false);
@@ -251,7 +240,9 @@ public class Recientes extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				String nombreE = txtFEtiquetas.getText();
 				Etiqueta etiqueta = new Etiqueta(nombreE);
-				if (App.getInstancia().addEtiquetaAVideo(App.getInstancia().findVideoURL((modeloVideos.get(listaVideos.getSelectedIndex()).getUrl())), etiqueta)) {
+				if (App.getInstancia().addEtiquetaAVideo(
+						App.getInstancia().findVideoURL((modeloVideos.get(listaVideos.getSelectedIndex()).getUrl())),
+						etiqueta)) {
 					txtEtiquetas.setText(txtEtiquetas.getText() + " - " + nombreE);
 					v.actualizarEtiquetasExplorar();
 				}
@@ -259,12 +250,14 @@ public class Recientes extends JPanel {
 		});
 
 	}
+	// **************************************************INICIALIZADORES**************************************************
 
 	public void inicializarLista() {
 		habilitar();
-		boxListaVideos.setModel(new DefaultComboBoxModel(new String[] { "Recientes", "MasPopulares" }));
+		boxListaVideos.setModel(new DefaultComboBoxModel<>(new String[] { "Recientes", "MasPopulares" }));
 		mostrarListaVideos();
 	}
+	// **************************************************METODOS**************************************************
 
 	public void mostrarListaVideos() {
 		modeloVideos.clear();

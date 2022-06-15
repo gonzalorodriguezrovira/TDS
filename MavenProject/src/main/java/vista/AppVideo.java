@@ -8,7 +8,6 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Date;
@@ -32,6 +31,8 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
 public class AppVideo extends JFrame {
+	
+	private static final long serialVersionUID = 1L;
 	//VENTANA APLICACIÓN
 	private JFrame ventana;
 	//PANEL PRINCIPAL

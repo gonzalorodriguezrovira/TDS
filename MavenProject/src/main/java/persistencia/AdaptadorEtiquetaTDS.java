@@ -30,7 +30,8 @@ public class AdaptadorEtiquetaTDS implements IAdaptadorEtiquetaDAO {
 
 	@Override
 	public void addEtiqueta(Etiqueta etiqueta) {
-		if(etiqueta.getNombre() == null || etiqueta.getNombre().isEmpty()) return;
+		if (etiqueta.getNombre() == null || etiqueta.getNombre().isEmpty())
+			return;
 		Entidad eEtiqueta = null;
 		try {
 			eEtiqueta = servPersistencia.recuperarEntidad(etiqueta.getCodigo());
@@ -39,8 +40,8 @@ public class AdaptadorEtiquetaTDS implements IAdaptadorEtiquetaDAO {
 		if (eEtiqueta != null) {
 			return;
 		}
-		for(Entidad e : servPersistencia.recuperarEntidades("etiqueta")) {
-			if(etiqueta.getNombre().equals(servPersistencia.recuperarPropiedadEntidad(e, "nombre"))) {
+		for (Entidad e : servPersistencia.recuperarEntidades("etiqueta")) {
+			if (etiqueta.getNombre().equals(servPersistencia.recuperarPropiedadEntidad(e, "nombre"))) {
 				etiqueta.setCodigo(e.getId());
 				return;
 			}
@@ -51,31 +52,16 @@ public class AdaptadorEtiquetaTDS implements IAdaptadorEtiquetaDAO {
 		eEtiqueta
 				.setPropiedades(new ArrayList<Propiedad>(Arrays.asList(new Propiedad("nombre", etiqueta.getNombre()))));
 
-		// registrar entidad Etiqueta
 		eEtiqueta = servPersistencia.registrarEntidad(eEtiqueta);
-		// Para asignar identificador unico se aprovecha el que genera el servicio de
-		// persistencia
 		etiqueta.setCodigo(eEtiqueta.getId());
 	}
 
 	@Override
 	public void borrarEtiqueta(Etiqueta etiqueta) {
-		// No se comprueban restricciones de integridad
 		Entidad eEtiqueta = servPersistencia.recuperarEntidad(etiqueta.getCodigo());
 		servPersistencia.borrarEntidad(eEtiqueta);
 	}
 
-	/*
-	 * @Override public void modificarEtiqueta(Etiqueta etiqueta) { Entidad
-	 * eEtiqueta = servPersistencia.recuperarEntidad(etiqueta.getCodigo()); for
-	 * (Propiedad prop : eEtiqueta.getPropiedades()) {
-	 * 
-	 * if (prop.getNombre().equals("codigo")) {
-	 * prop.setValor(String.valueOf(etiqueta.getCodigo())); } else if
-	 * (prop.getNombre().equals("nombre")) { prop.setValor(etiqueta.getNombre()); }
-	 * 
-	 * servPersistencia.modificarPropiedad(prop); } }
-	 */
 	@Override
 	public List<Etiqueta> recuperarEtiquetas() {
 		List<Entidad> eEtiquetas = servPersistencia.recuperarEntidades("etiqueta");
