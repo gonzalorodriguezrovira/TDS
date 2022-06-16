@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import java.awt.FlowLayout;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.Box;
@@ -41,6 +42,9 @@ public class NuevaLista extends JPanel {
 
 	private DefaultListModel<Miniatura> modeloVideosN;
 	private DefaultListModel<Miniatura> modeloVideosB;
+	
+	private List<String> listaAdd = new LinkedList<String>();
+    private List<String> listaRmv = new LinkedList<String>();
 
 	private ListaVideos listaVideos = null;
 
@@ -72,6 +76,8 @@ public class NuevaLista extends JPanel {
 		bBuscarLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!txtBuscarLista.getText().isEmpty()) {
+					listaAdd.clear();
+                    listaRmv.clear();
 					listaVideos = App.getInstancia().findListaVideo(txtBuscarLista.getText());
 					if (listaVideos == null) {
 						listaVideos = new ListaVideos(txtBuscarLista.getText());
@@ -216,10 +222,10 @@ public class NuevaLista extends JPanel {
 					Miniatura aux = modeloVideosB.get(listaVideosB.getSelectedIndex());
 					if (aux != null) {
 						for (int i = 0; i < modeloVideosN.getSize(); i++) {
-							if (modeloVideosN.get(i).equals(aux)) // CAMBIADO (CREO)
+							if (modeloVideosN.get(i).equals(aux)) 
 								return;
 						}
-						listaVideos.addVideo(App.getInstancia().findVideoURL(aux.getUrl()));
+						listaAdd.add(aux.getUrl());
 						modeloVideosN.addElement(aux);
 						listaVideosN.revalidate();
 					}
@@ -232,7 +238,7 @@ public class NuevaLista extends JPanel {
 				int index = listaVideosN.getSelectedIndex();
 				if (index != -1) {
 					Miniatura aux = modeloVideosN.get(index);
-					listaVideos.removeVideo(App.getInstancia().findVideoURL(aux.getUrl()));
+					listaRmv.add(aux.getUrl());
 					modeloVideosN.remove(index);
 					listaVideosN.revalidate();
 				}
@@ -243,10 +249,14 @@ public class NuevaLista extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (listaVideos != null) {
 					if (App.getInstancia().findListaVideo(listaVideos.getName()) != null) {
-						App.getInstancia().setVideosALista(listaVideos);
+						App.getInstancia().setVideosALista(listaVideos.getName(), listaAdd, listaRmv);
+						listaAdd.clear();
+                        listaRmv.clear();
 					} else {
 						App.getInstancia().addListaVideo(listaVideos);
 						v.actualizarListavideos();
+						listaAdd.clear();
+                        listaRmv.clear();
 					}
 				}
 			}
@@ -276,6 +286,8 @@ public class NuevaLista extends JPanel {
 				listaVideosN.revalidate();
 				txtBuscarLista.setText("");
 				listaVideos = null;
+				listaAdd.clear();
+                listaRmv.clear();
 			}
 		});
 	}

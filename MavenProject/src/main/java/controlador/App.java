@@ -229,12 +229,17 @@ public class App implements VideosListener {
 	}
 
 
-	public void setVideosALista(ListaVideos lista) {
-		ListaVideos l = findListaVideo(lista.getName());
-		l.setVideos(l.getVideos());
-		adaptadorListaVideos.modificarListaVideos(l);
-		adaptadorUsuario.modificarUsuario(usuarioActual);
-	}
+	public void setVideosALista(String nombreLista, List<String> listaAdd, List<String> listaRmv) {
+        ListaVideos l = findListaVideo(nombreLista);
+        for(String url : listaAdd) {
+	        l.addVideo(repositorioVideo.findVideoURL(url));
+        }
+        for(String url : listaRmv) {
+            l.removeVideo(repositorioVideo.findVideoURL(url));
+        }
+        adaptadorListaVideos.modificarListaVideos(l);
+        adaptadorUsuario.modificarUsuario(usuarioActual);
+    }
 
 	public void generarPDF() throws DocumentException, MalformedURLException, IOException {
 		Document doc = new Document();
