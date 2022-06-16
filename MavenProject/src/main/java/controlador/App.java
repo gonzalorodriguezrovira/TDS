@@ -204,17 +204,6 @@ public class App implements VideosListener {
 	public List<Video> recuperarVideos() {
 		return repositorioVideo.recuperarVideos();
 	}
-
-	public boolean registrarVideo(String url, String titulo, Set<Etiqueta> etiquetas) {
-		Video video = new Video(url, titulo, etiquetas);
-		if (repositorioVideo.addVideo(video)) { 
-			adaptadorVideo.addVideo(video); 
-			return true;
-		}
-		return false; 
-	}
-
-
 	
 	public Video findVideo(Video video) {
 		
