@@ -136,11 +136,11 @@ public class InicioSesion extends JPanel {
 					camposVacios.setText("Campos vacios");
 					camposVacios.setVisible(true);
 				} else {
-					Usuario aux = App.getInstancia().findUsuario(nombre);
+					Usuario aux = App.getUnicaInstancia().findUsuario(nombre);
 					camposVacios.setVisible(false);
 					if (aux != null) {
-						if (App.getInstancia().comprobarPassword(aux, password)) {
-							App.getInstancia().setUsuarioActual(aux);
+						if (App.getUnicaInstancia().comprobarPassword(aux, password)) {
+							App.getUnicaInstancia().setUsuarioActual(aux);
 							v.inicioValido(nombre);
 							txtLogin.setText("");
 							txtPassword.setText("");

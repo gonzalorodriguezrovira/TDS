@@ -10,12 +10,12 @@ import persistencia.IAdaptadorUsuarioDAO;
 public class RepositorioUsuario {
 	// ATRIBUTOS
 	private static RepositorioUsuario unicaInstancia = new RepositorioUsuario();
-	private List<Usuario> bdUser; 		// Donde almacenamos localmente a los usuario
+	private List<Usuario> bdUser; // Donde almacenamos localmente a los usuario
 
 	private FactoriaDAO dao;
 	private IAdaptadorUsuarioDAO adaptadorUsuario;
 
-	//CONSTRUCTOR
+	// CONSTRUCTOR
 	public RepositorioUsuario() {
 		bdUser = new ArrayList<Usuario>();
 		try {
@@ -27,38 +27,43 @@ public class RepositorioUsuario {
 		}
 	}
 
-	//CARGADOR
-	//Para que el constructor pueda añadir a la base local los usuario de la base de datos
+	// CARGADOR
+	
 	public void cargarUsuarios() {
 		List<Usuario> userBD = adaptadorUsuario.recuperarUsuarios();
 		for (Usuario user : userBD)
 			bdUser.add(user);
 	}
+
+	// MÉTODOS
 	
-	//MÉTODOS
-	//Para que otras clases puedan acceder a este positorio y sus métodos
 	public static RepositorioUsuario getUnicaInstancia() {
 		return unicaInstancia;
 	}
-	
+
 	public Usuario findUsuario(String user) {
-		//Buscamos localmente y devolvemos el usuario o nulo en caso de no estar registrado
+		
 		return bdUser.stream().filter(u -> user.equals(u.getUsuario())).findAny().orElse(null);
 	}
 
 	public boolean addUsuario(Usuario user) {
 		Usuario bdu = findUsuario(user.getUsuario());
 		if (bdu == null) {
-			adaptadorUsuario.addUsuario(user);	//Guardamos en la base de datos
-			bdUser.add(user);					//Guardamos localmente
+			adaptadorUsuario.addUsuario(user); 
+			bdUser.add(user); 
 		}
-		return bdu == null;						//Devolvemos si se ha podido o no añadir
+		return bdu == null; 
+	}
+	
+	public boolean removeUsuario(Usuario usr) {
+		adaptadorUsuario.borrarUsuario(usr);
+		return bdUser.remove(usr);
 	}
 
 	public void addListaVideo(Usuario user, ListaVideos lista) {
 		user.addListaVideo(lista);
 	}
-	
+
 	public ListaVideos findListaVideo(Usuario user, String name) {
 		return user.findLista(name);
 	}
@@ -66,13 +71,17 @@ public class RepositorioUsuario {
 	public boolean checkContraseña(Usuario usuario, String password) {
 		return usuario.checkContraseña(password);
 	}
-	
-	public List<ListaVideos> recuperarListaVideos(Usuario user){
+
+	public List<ListaVideos> recuperarListaVideos(Usuario user) {
 		return user.getListaVideos();
 	}
 
 	public void addHistorial(Usuario u, Video v) {
 		u.addRecientes(v);
+	}
+
+	public List<Usuario> getUsuarios() {
+		return bdUser;
 	}
 
 }

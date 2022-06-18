@@ -179,7 +179,7 @@ public class Explorar extends JPanel {
 				if (!control) {
 					for (Component c : pVideo.getComponents())
 						pVideo.remove(c);
-					App.getInstancia().pararVideo();
+					App.getUnicaInstancia().pararVideo();
 					pVideo.revalidate();
 					pVideo.repaint();
 					CardLayout c = (CardLayout) (panel.getLayout());
@@ -195,19 +195,19 @@ public class Explorar extends JPanel {
 				if (control) {
 					int index = listaVideos.getSelectedIndex();
 					if (index != -1) {
-						Video v = App.getInstancia().findVideoURL((modeloVideos.get(index).getUrl()));
-						v = App.getInstancia().incrementarVisualizaciones(v);
+						Video v = App.getUnicaInstancia().findVideoURL((modeloVideos.get(index).getUrl()));
+						v = App.getUnicaInstancia().incrementarVisualizaciones(v);
 						CardLayout c = (CardLayout) (panel.getLayout());
 						panel.add(panelReproductor, REPRODUCTOR);
 						c.show(panel, REPRODUCTOR);
-						App.getInstancia().pararVideo();
+						App.getUnicaInstancia().pararVideo();
 						pVideo.remove(main.Lanzador.videoWeb);
 						pVideo.add(main.Lanzador.videoWeb);
 						txtTitulo.setText(v.getTitulo());
-						v = App.getInstancia().incrementarVisualizaciones(v);
+						v = App.getUnicaInstancia().incrementarVisualizaciones(v);
 						txtTitulo.setVisible(true);
 						pVideo.setVisible(true);
-						App.getInstancia().reproducirVideo(v);
+						App.getUnicaInstancia().reproducirVideo(v);
 						validate();
 						control = false;
 					}
@@ -220,7 +220,7 @@ public class Explorar extends JPanel {
 	// ******************************************************MÉTODOS******************************************************
 	public void cargarEtiquetas() {
 		int i = 0;
-		List<Etiqueta> listaEtiquetas = App.getInstancia().recuperarEtiquetas();
+		List<Etiqueta> listaEtiquetas = App.getUnicaInstancia().recuperarEtiquetas();
 		etiquetas = new String[listaEtiquetas.size()];
 		for (Etiqueta e : listaEtiquetas) {
 			etiquetas[i] = e.getNombre();
@@ -397,7 +397,7 @@ public class Explorar extends JPanel {
 				ll.add((String) o);
 		}
 
-		Videos = App.getInstancia().busquedaDeVideos(txtNombre.getText(), (String) filtros.getSelectedItem(), ll);
+		Videos = App.getUnicaInstancia().busquedaDeVideos(txtNombre.getText(), (String) filtros.getSelectedItem(), ll);
 		for (Video v : Videos) {
 			Miniatura m = new Miniatura(v, 150, 150);
 			modeloVideos.addElement(m);

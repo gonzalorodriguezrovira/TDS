@@ -106,7 +106,7 @@ public class AppVideo extends JFrame {
 
 		bPremium.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				premium = App.getInstancia().usuarioSetPremium();
+				premium = App.getUnicaInstancia().usuarioSetPremium();
 				cambiarPremium();
 			}
 		});
@@ -139,7 +139,7 @@ public class AppVideo extends JFrame {
 	}
 
 	public void cambiarPremium() {
-		premium = App.getInstancia().getUsuarioActual().isPremium();
+		premium = App.getUnicaInstancia().getUsuarioActual().isPremium();
 		if(premium) {
 			bGenerarPDF.setEnabled(true);
 			bPremium.setText("NoPremium");
@@ -154,7 +154,7 @@ public class AppVideo extends JFrame {
 	
 	public void registrarUsuario(String nombre, String apellidos, String email, String usuario, String password,
 			Date nacimiento) {
-		if (App.getInstancia().registrarUsuario(nombre, apellidos, email, usuario, password, nacimiento)) {
+		if (App.getUnicaInstancia().registrarUsuario(nombre, apellidos, email, usuario, password, nacimiento)) {
 			CardLayout c = (CardLayout) (vDisplay.getLayout());
 			c.show(vDisplay, INICIO_SESION);
 		}
@@ -185,7 +185,7 @@ public class AppVideo extends JFrame {
 			CardLayout c = (CardLayout) (vDisplay.getLayout());
 			c.show(vDisplay, INICIO_SESION);
 			setUsuario("");
-			App.getInstancia().setUsuarioActual(null);
+			App.getUnicaInstancia().setUsuarioActual(null);
 			bGenerarPDF.setEnabled(false);
 			bRegistro.setEnabled(true);
 			bLogin.setEnabled(true);
@@ -206,7 +206,7 @@ public class AppVideo extends JFrame {
 	}
 	
 	public void generarPDF() throws DocumentException, MalformedURLException, IOException {
-		App.getInstancia().generarPDF();
+		App.getUnicaInstancia().generarPDF();
 	}
 	//*******************************************************************************************************************
 	

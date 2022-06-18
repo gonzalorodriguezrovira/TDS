@@ -191,12 +191,12 @@ public class Recientes extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				int index = listaVideos.getSelectedIndex();
 				if (index != -1) {
-					App.getInstancia().pararVideo();
+					App.getUnicaInstancia().pararVideo();
 					pVideo.remove(main.Lanzador.videoWeb);
 					pVideo.add(main.Lanzador.videoWeb);
-					Video v = App.getInstancia().findVideoURL((modeloVideos.get(index).getUrl()));
+					Video v = App.getUnicaInstancia().findVideoURL((modeloVideos.get(index).getUrl()));
 					txtTitulo.setText(v.getTitulo());
-					v = App.getInstancia().incrementarVisualizaciones(v);
+					v = App.getUnicaInstancia().incrementarVisualizaciones(v);
 					mostrarListaVideos();
 					txtVisualizaciones.setText(String.valueOf(v.getNumRepro()));
 					txtEtiquetas.setText("");
@@ -211,7 +211,7 @@ public class Recientes extends JPanel {
 					bEtiquetasNuevas.setVisible(true);
 					bEtiquetasNuevas.setEnabled(true);
 					pVideo.setVisible(true);
-					App.getInstancia().reproducirVideo(v);
+					App.getUnicaInstancia().reproducirVideo(v);
 					validate();
 				}
 			}
@@ -221,7 +221,7 @@ public class Recientes extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				for (Component c : pVideo.getComponents())
 					pVideo.remove(c);
-				App.getInstancia().pararVideo();
+				App.getUnicaInstancia().pararVideo();
 				pVideo.revalidate();
 				pVideo.repaint();
 				txtTitulo.setVisible(false);
@@ -240,8 +240,8 @@ public class Recientes extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				String nombreE = txtFEtiquetas.getText();
 				Etiqueta etiqueta = new Etiqueta(nombreE);
-				if (App.getInstancia().addEtiquetaAVideo(
-						App.getInstancia().findVideoURL((modeloVideos.get(listaVideos.getSelectedIndex()).getUrl())),
+				if (App.getUnicaInstancia().addEtiquetaAVideo(
+						App.getUnicaInstancia().findVideoURL((modeloVideos.get(listaVideos.getSelectedIndex()).getUrl())),
 						etiqueta)) {
 					txtEtiquetas.setText(txtEtiquetas.getText() + " - " + nombreE);
 					v.actualizarEtiquetasExplorar();
@@ -264,14 +264,14 @@ public class Recientes extends JPanel {
 		int index = boxListaVideos.getSelectedIndex();
 		if (index != -1) {
 			if (index == 0) {
-				List<Video> aux2 = App.getInstancia().obtenerRecientes();
+				List<Video> aux2 = App.getUnicaInstancia().obtenerRecientes();
 				for (Video v : aux2) {
 					modeloVideos.addElement(new Miniatura(v, 100, 100));
 				}
 				listaVideos.setSelectedIndex(0);
 				listaVideos.revalidate();
 			} else {
-				List<Video> aux2 = App.getInstancia().recuperarMasVistos();
+				List<Video> aux2 = App.getUnicaInstancia().recuperarMasVistos();
 				for (Video v : aux2) {
 					modeloVideos.addElement(new Miniatura(v, 100, 100));
 				}
@@ -283,6 +283,6 @@ public class Recientes extends JPanel {
 	}
 
 	public void habilitar() {
-		boxListaVideos.setEnabled(App.getInstancia().getUsuarioActual().isPremium());
+		boxListaVideos.setEnabled(App.getUnicaInstancia().getUsuarioActual().isPremium());
 	}
 }

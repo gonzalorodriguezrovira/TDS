@@ -52,8 +52,7 @@ public class App implements VideosListener {
 
 	private ComponenteBuscadorVideos componenteVideo;
 
-	
-	public static App getInstancia() {
+	public static App getUnicaInstancia() {
 		if (aplicacion == null)
 			aplicacion = new App();
 		return aplicacion;
@@ -95,13 +94,12 @@ public class App implements VideosListener {
 		adaptadorListaVideos = factoria.getListaVideosDAO();
 	}
 
-	// REPRODUCTOR VIDEO 
+	// REPRODUCTOR VIDEO
 
 	public void reproducirVideo(Video v) {
 
 		Lanzador.videoWeb.playVideo(v.getUrl());
 		adaptadorVideo.modificarVideo(v);
-
 		usuarioActual.addRecientes(v);
 		adaptadorUsuario.modificarUsuario(usuarioActual);
 
@@ -119,8 +117,8 @@ public class App implements VideosListener {
 		LinkedList<Video> lista = getVideosXML(((EventVideos) e).getVideos());
 		for (int i = 0; i < lista.size(); i++) {
 			if (lista.get(i) != null) {
-				if (repositorioVideo.addVideo(lista.get(i))) { 
-					adaptadorVideo.addVideo(lista.get(i)); 
+				if (repositorioVideo.addVideo(lista.get(i))) {
+					adaptadorVideo.addVideo(lista.get(i));
 				}
 			}
 		}
@@ -165,11 +163,11 @@ public class App implements VideosListener {
 			adaptadorUsuario.addUsuario(usr);
 			return true;
 		}
-		return false; 
+		return false;
 	}
 
 	public Usuario findUsuario(String user) {
-		
+
 		return repositorioUsuario.findUsuario(user);
 	}
 
@@ -186,7 +184,7 @@ public class App implements VideosListener {
 	}
 
 	// MÉTODOS VIDEO
-	
+
 	public List<Video> recuperarMasVistos() {
 		List<Video> l = recuperarVideos();
 		List<Video> lista = new LinkedList<Video>();
@@ -204,14 +202,14 @@ public class App implements VideosListener {
 	public List<Video> recuperarVideos() {
 		return repositorioVideo.recuperarVideos();
 	}
-	
+
 	public Video findVideo(Video video) {
-		
+
 		return repositorioVideo.findVideo(video);
 	}
 
 	public Video findVideoURL(String url) {
-		
+
 		return repositorioVideo.findVideoURL(url);
 	}
 
@@ -219,27 +217,26 @@ public class App implements VideosListener {
 	public void addListaVideo(ListaVideos lista) {
 		repositorioUsuario.addListaVideo(usuarioActual, lista);
 		adaptadorListaVideos.addListaVideos(lista);
-		
+
 		adaptadorUsuario.modificarUsuario(usuarioActual);
 	}
 
 	public ListaVideos findListaVideo(String name) {
-		
+
 		return repositorioUsuario.findListaVideo(usuarioActual, name);
 	}
 
-
 	public void setVideosALista(String nombreLista, List<String> listaAdd, List<String> listaRmv) {
-        ListaVideos l = findListaVideo(nombreLista);
-        for(String url : listaAdd) {
-	        l.addVideo(repositorioVideo.findVideoURL(url));
-        }
-        for(String url : listaRmv) {
-            l.removeVideo(repositorioVideo.findVideoURL(url));
-        }
-        adaptadorListaVideos.modificarListaVideos(l);
-        adaptadorUsuario.modificarUsuario(usuarioActual);
-    }
+		ListaVideos l = findListaVideo(nombreLista);
+		for (String url : listaAdd) {
+			l.addVideo(repositorioVideo.findVideoURL(url));
+		}
+		for (String url : listaRmv) {
+			l.removeVideo(repositorioVideo.findVideoURL(url));
+		}
+		adaptadorListaVideos.modificarListaVideos(l);
+		adaptadorUsuario.modificarUsuario(usuarioActual);
+	}
 
 	public void generarPDF() throws DocumentException, MalformedURLException, IOException {
 		Document doc = new Document();
@@ -312,8 +309,8 @@ public class App implements VideosListener {
 			Set<Etiqueta> conjuntoE = v.getEtiquetas();
 			for (Etiqueta e : conjuntoE) {
 				if (etiquetas.contains(e.getNombre())) {
-					if(!l.contains(v))
-					l.add(v);
+					if (!l.contains(v))
+						l.add(v);
 				}
 			}
 		}

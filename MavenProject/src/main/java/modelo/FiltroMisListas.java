@@ -8,7 +8,7 @@ import controlador.App;
 public class FiltroMisListas implements FiltroVideo{
 	@Override
 	public boolean esVideoOK(Video v) {
-		List<ListaVideos> llv = App.getInstancia().getUsuarioActual().getListaVideos();
+		List<ListaVideos> llv = App.getUnicaInstancia().getUsuarioActual().getListaVideos();
 		List<Video> l = new LinkedList<Video>();
 		for (ListaVideos lv : llv) {
 			l.addAll(lv.getVideos());

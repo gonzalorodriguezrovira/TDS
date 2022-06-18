@@ -241,7 +241,7 @@ public class Registro extends JPanel {
 
 				if (!nombre.isEmpty()) {
 					if (nacimiento != null) {
-						if (!usuario.isEmpty() && App.getInstancia().findUsuario(usuario) == null) {
+						if (!usuario.isEmpty() && App.getUnicaInstancia().findUsuario(usuario) == null) {
 							if (!password.isEmpty()) {
 								if (passwordRep.equals(password)) {
 									txtApellidos.setText("");

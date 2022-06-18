@@ -78,7 +78,7 @@ public class NuevaLista extends JPanel {
 				if (!txtBuscarLista.getText().isEmpty()) {
 					listaAdd.clear();
                     listaRmv.clear();
-					listaVideos = App.getInstancia().findListaVideo(txtBuscarLista.getText());
+					listaVideos = App.getUnicaInstancia().findListaVideo(txtBuscarLista.getText());
 					if (listaVideos == null) {
 						listaVideos = new ListaVideos(txtBuscarLista.getText());
 						JFrame jFrame = new JFrame();
@@ -248,12 +248,12 @@ public class NuevaLista extends JPanel {
 		bAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (listaVideos != null) {
-					if (App.getInstancia().findListaVideo(listaVideos.getName()) != null) {
-						App.getInstancia().setVideosALista(listaVideos.getName(), listaAdd, listaRmv);
+					if (App.getUnicaInstancia().findListaVideo(listaVideos.getName()) != null) {
+						App.getUnicaInstancia().setVideosALista(listaVideos.getName(), listaAdd, listaRmv);
 						listaAdd.clear();
                         listaRmv.clear();
 					} else {
-						App.getInstancia().addListaVideo(listaVideos);
+						App.getUnicaInstancia().addListaVideo(listaVideos);
 						v.actualizarListavideos();
 						listaAdd.clear();
                         listaRmv.clear();
@@ -264,8 +264,8 @@ public class NuevaLista extends JPanel {
 
 		bBuscarVideos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				List<Video> aux = App.getInstancia().videosPorNombre(txtBuscarVideos.getText(),
-						App.getInstancia().recuperarVideos());
+				List<Video> aux = App.getUnicaInstancia().videosPorNombre(txtBuscarVideos.getText(),
+						App.getUnicaInstancia().recuperarVideos());
 				for (Video v : aux) {
 					Miniatura l = new Miniatura(v, 150, 140);
 					modeloVideosB.addElement(l);
