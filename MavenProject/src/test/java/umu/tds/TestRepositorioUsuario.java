@@ -1,13 +1,12 @@
 package umu.tds;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 
@@ -33,61 +32,39 @@ public class TestRepositorioUsuario {
 
 		repositorio = RepositorioUsuario.getUnicaInstancia();
 
-
-		for (Usuario u : repositorio.getUsuarios()) {
-			repositorio.removeUsuario(u);
+		ArrayList<Usuario> aux = (ArrayList<Usuario>) repositorio.getUsuarios();
+		
+		for(int i = 0; i < aux.size(); i++) {
+			repositorio.removeUsuario(aux.get(i));
 		}
-
+				
 		usuarios = new LinkedList<Usuario>();
-
+			
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-		Date date = formatter.parse("26-09-1989");
 
-		Usuario u1 = new Usuario("Paco", "Mermelada", "paco@como.es", "paquito", "1234", date);
-		u1.setCodigo(1);
+		Usuario u1 = new Usuario("Paco", "Mermelada", "paco@como.es", "paquito", "1234", formatter.parse("26-09-1989"));
 		usuarios.add(u1);
 
-		Usuario u2 = new Usuario("Pepe", "Fernandez", "pepe@como.es", "pepito", "1234", date);
-		u2.setCodigo(2);
+		Usuario u2 = new Usuario("Pepe", "Fernandez", "pepe@como.es", "pepito", "1234", formatter.parse("26-09-1989"));
 		usuarios.add(u2);
 
-		Usuario u3 = new Usuario("Jony", "Melabo", "jony@como.es", "joni", "1234", date);
-		u3.setCodigo(3);
+		Usuario u3 = new Usuario("Jony", "Melabo", "jony@como.es", "joni", "1234", formatter.parse("26-09-1989"));
 		usuarios.add(u3);
+		
 	}
 
 	@Before
 	public void iniciarRepositorio() {
-
 		for (Usuario u : usuarios) {
 
 			repositorio.addUsuario(u);
+			
 		}
 
-		Collection<Usuario> repositorio2 = repositorio.getUsuarios();
-
 		for (Usuario u : usuarios) {
+			
+			assertTrue(repositorio.findUsuario(u.getUsuario()) != null);
 
-			assertTrue(repositorio2.contains(u));
-
-		}
-
-	}
-
-	@Test
-	public void borrarUsuarios() {
-
-		for (Usuario u : usuarios) {
-
-			repositorio.removeUsuario(u);
-
-		}
-
-		Collection<Usuario> repositorio2 = repositorio.getUsuarios();
-
-		for (Usuario u : usuarios) {
-
-			assertFalse(repositorio2.contains(u));
 		}
 
 	}
@@ -95,8 +72,11 @@ public class TestRepositorioUsuario {
 	@Test
 	public void tesListaVideos() {
 
-		Video v1 = new Video("https://www.youtube.com/watch?v=efoTZzqOrI8&ab_channel=LaHiperactina",
-				"Bebidas energeticas", new HashSet<Etiqueta>());
+		HashSet<Etiqueta> etiquetas = new HashSet<Etiqueta>();
+		etiquetas.add(new Etiqueta("Video"));
+		
+		Video v1 = new Video("https://youtu.be/P3hSmSNMFEg",
+				"Bebidas energeticas", etiquetas);
 		
 		ListaVideos l = new ListaVideos("hola");
 		
@@ -106,17 +86,20 @@ public class TestRepositorioUsuario {
 		
 		repositorio.addListaVideo(u1, l);
 		
-		assertEquals(repositorio.findListaVideo(u1, "hola"), l);
+		assertTrue(repositorio.findListaVideo(u1, "hola") != null);
 		
-		
+		for (Video v : repositorio.findListaVideo(u1, "hola").getVideos())
+			assertTrue(l.getVideos().contains(v));
 	}
-	
+
 	@Test
 	public void tesRecientes() {
-		Video v1 = new Video("https://www.youtube.com/watch?v=efoTZzqOrI8&ab_channel=LaHiperactina",
-				"Bebidas energeticas", new HashSet<Etiqueta>());
-		Video v2 = new Video("https://www.youtube.com/watch?v=dUgd_dWocDY&ab_channel=DemarcoFlamenco",
-				"Cancion", new HashSet<Etiqueta>());
+		HashSet<Etiqueta> etiquetas = new HashSet<Etiqueta>();
+		etiquetas.add(new Etiqueta("Video"));
+		Video v1 = new Video("https://youtu.be/LuNnGxeqLKQ",
+				"Bebidas energeticas", etiquetas);
+		Video v2 = new Video("https://youtu.be/R0krUthYxF4",
+				"Cancion", etiquetas);
 		
 		Usuario u1 = repositorio.findUsuario("pepito");
 		
@@ -132,6 +115,24 @@ public class TestRepositorioUsuario {
 			assertTrue(u1.getRecientes().contains(v));
 		}
 		
+	}
+	
+	@Test
+	public void borrarUsuarios() {
+
+		for (Usuario u : usuarios) {
+
+			repositorio.removeUsuario(repositorio.findUsuario(u.getUsuario()));
+
+		}
+
+		Collection<Usuario> repositorio2 = repositorio.getUsuarios();
+
+		for (Usuario u : usuarios) {
+
+			assertFalse(repositorio2.contains(u));
+		}
+
 	}
 	
 
