@@ -35,8 +35,7 @@ public class TestRepositorioUsuario {
 
 
 		for (Usuario u : repositorio.getUsuarios()) {
-
-			repositorio.recuperarListaVideos(u);
+			repositorio.removeUsuario(u);
 		}
 
 		usuarios = new LinkedList<Usuario>();
