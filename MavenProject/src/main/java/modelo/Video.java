@@ -69,7 +69,7 @@ public class Video {
 		if (getClass() != obj.getClass())
 			return false;
 		Video otro = (Video) obj;
-		return codigo == otro.getCodigo();
+		return codigo == otro.getCodigo(); 
 	}
 
 	@Override

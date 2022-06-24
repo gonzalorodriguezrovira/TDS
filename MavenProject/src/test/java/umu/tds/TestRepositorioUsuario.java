@@ -14,11 +14,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-
-
+import controlador.App;
 import modelo.Etiqueta;
 import modelo.ListaVideos;
 import modelo.RepositorioUsuario;
+import modelo.RepositorioVideo;
 import modelo.Usuario;
 import modelo.Video;
 
@@ -77,6 +77,7 @@ public class TestRepositorioUsuario {
 		
 		Video v1 = new Video("https://youtu.be/P3hSmSNMFEg",
 				"Bebidas energeticas", etiquetas);
+		
 		
 		ListaVideos l = new ListaVideos("hola");
 		
